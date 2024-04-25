@@ -49,12 +49,12 @@ typedef struct mplane_s
 typedef struct texture_s
 {
 	char		name[16];
-	unsigned	width, height;
+	uint32_t	width, height;
 	int32_t			anim_total;				// total tenths in sequence ( 0 = no)
 	int32_t			anim_min, anim_max;		// time for this frame min <=time< max
 	struct texture_s *anim_next;		// in the animation sequence
 	struct texture_s *alternate_anims;	// bmodels in frmae 1 use these
-	unsigned	offsets[MIPLEVELS];		// four mip maps stored
+	uint32_t	offsets[MIPLEVELS];		// four mip maps stored
 } texture_t;
 
 

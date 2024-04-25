@@ -18,16 +18,16 @@ typedef struct
 	pixel_t			*colormap;		// 256 * VID_GRADES size
 	uint16_t	*colormap16;	// 256 * VID_GRADES size
 	int32_t				fullbright;		// index of first fullbright color
-	unsigned		rowbytes;	// may be > width if displayed in a window
-	unsigned		width;		
-	unsigned		height;
+	uint32_t		rowbytes;	// may be > width if displayed in a window
+	uint32_t		width;		
+	uint32_t		height;
 	float			aspect;		// width / height -- < 0 is taller than wide
 	int32_t				numpages;
 	int32_t				recalc_refdef;	// if true, recalc vid-based stuff
 	pixel_t			*conbuffer;
 	int32_t				conrowbytes;
-	unsigned		conwidth;
-	unsigned		conheight;
+	uint32_t		conwidth;
+	uint32_t		conheight;
 	int32_t				maxwarpwidth;
 	int32_t				maxwarpheight;
 	pixel_t			*direct;		// direct drawing to framebuffer, if not
@@ -36,7 +36,7 @@ typedef struct
 
 extern	viddef_t	vid;				// global video state
 extern	uint16_t	d_8to16table[256];
-extern	unsigned	d_8to24table[256];
+extern	uint32_t	d_8to24table[256];
 extern void (*vid_menudrawfn)(void);
 extern void (*vid_menukeyfn)(int32_t key);
 

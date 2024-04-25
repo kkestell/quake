@@ -80,7 +80,7 @@ void R_MakeSky (void)
 	int32_t			x, y;
 	int32_t			ofs, baseofs;
 	int32_t			xshift, yshift;
-	unsigned	*pnewsky;
+	uint32_t 	*pnewsky;
 	static int32_t	xlast = -1, ylast = -1;
 
 	xshift = skytime*skyspeed;
@@ -107,7 +107,7 @@ void R_MakeSky (void)
 
 		// PORT: unaligned dword access to bottommask and bottomsky
 
-			*pnewsky = (*(pnewsky + (128 / sizeof (unsigned))) &
+			*pnewsky = (*(pnewsky + (128 / sizeof (uint32_t))) &
 						*(uint32_t *)&bottommask[ofs]) |
 						*(uint32_t *)&bottomsky[ofs];
 			pnewsky++;
@@ -127,7 +127,7 @@ void R_MakeSky (void)
 
 #endif
 
-		pnewsky += 128 / sizeof (unsigned);
+		pnewsky += 128 / sizeof (uint32_t);
 	}
 
 	r_skymade = 1;
@@ -144,8 +144,8 @@ void R_GenSkyTile (void *pdest)
 	int32_t			x, y;
 	int32_t			ofs, baseofs;
 	int32_t			xshift, yshift;
-	unsigned	*pnewsky;
-	unsigned	*pd;
+	uint32_t 	*pnewsky;
+	uint32_t 	*pd;
 
 	xshift = skytime*skyspeed;
 	yshift = skytime*skyspeed;
@@ -166,7 +166,7 @@ void R_GenSkyTile (void *pdest)
 
 		// PORT: unaligned dword access to bottommask and bottomsky
 
-			*pd = (*(pnewsky + (128 / sizeof (unsigned))) &
+			*pd = (*(pnewsky + (128 / sizeof (uint32_t))) &
 				   *(uint32_t *)&bottommask[ofs]) |
 				   *(uint32_t *)&bottomsky[ofs];
 			pnewsky++;
@@ -188,7 +188,7 @@ void R_GenSkyTile (void *pdest)
 
 #endif
 
-		pnewsky += 128 / sizeof (unsigned);
+		pnewsky += 128 / sizeof (uint32_t);
 	}
 }
 

@@ -361,7 +361,7 @@ R_RenderFace
 void R_RenderFace (msurface_t *fa, int32_t clipflags)
 {
 	int32_t			i, lindex;
-	unsigned	mask;
+	uint32_t	mask;
 	mplane_t	*pplane;
 	float		distinv;
 	vec3_t		p_normal;
@@ -559,7 +559,7 @@ R_RenderBmodelFace
 void R_RenderBmodelFace (bedge_t *pedges, msurface_t *psurf)
 {
 	int32_t			i;
-	unsigned	mask;
+	uint32_t	mask;
 	mplane_t	*pplane;
 	float		distinv;
 	vec3_t		p_normal;
@@ -675,7 +675,7 @@ void R_RenderPoly (msurface_t *fa, int32_t clipflags)
 {
 	int32_t			i, lindex, lnumverts, s_axis, t_axis;
 	float		dist, lastdist, lzi, scale, u, v, frac;
-	unsigned	mask;
+	uint32_t	mask;
 	vec3_t		local, transformed;
 	clipplane_t	*pclip;
 	medge_t		*pedges;

@@ -364,7 +364,7 @@ void D_DrawZSpans (espan_t *pspan)
 	int32_t				count, doublecount, izistep;
 	int32_t				izi;
 	int16_t			*pdest;
-	unsigned		ltemp;
+	uint32_t		ltemp;
 	double			zi;
 	float			du, dv;
 

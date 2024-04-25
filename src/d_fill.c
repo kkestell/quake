@@ -12,7 +12,7 @@ void D_FillRect (vrect_t *rect, int32_t color)
 {
 	int32_t				rx, ry, rwidth, rheight;
 	unsigned char	*dest;
-	unsigned		*ldest;
+	uint32_t 	*ldest;
 
 	rx = rect->x;
 	ry = rect->y;

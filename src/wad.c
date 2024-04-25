@@ -50,7 +50,7 @@ void W_LoadWadFile (char *filename)
 {
 	lumpinfo_t		*lump_p;
 	wadinfo_t		*header;
-	unsigned		i;
+	uint32_t		i;
 	int32_t 				infotableofs;
 	
 	wad_base = COM_LoadHunkFile (filename);
