@@ -18,12 +18,12 @@ typedef struct
 	vec3_t		mins2, maxs2;	// size when clipping against mosnters
 	float		*start, *end;
 	trace_t		trace;
-	int			type;
+	int32_t 			type;
 	edict_t		*passedict;
 } moveclip_t;
 
 
-int SV_HullPointContents (hull_t *hull, int num, vec3_t p);
+int32_t SV_HullPointContents (hull_t *hull, int32_t num, vec3_t p);
 
 /*
 ===============================================================================
@@ -48,8 +48,8 @@ can just be stored out and get a proper hull_t structure.
 */
 void SV_InitBoxHull (void)
 {
-	int		i;
-	int		side;
+	int32_t 		i;
+	int32_t 		side;
 
 	box_hull.clipnodes = box_clipnodes;
 	box_hull.planes = box_planes;
@@ -120,7 +120,7 @@ hull_t *SV_HullForEntity (edict_t *ent, vec3_t mins, vec3_t maxs, vec3_t offset)
 		if (ent->v.movetype != MOVETYPE_PUSH)
 			Sys_Error ("SOLID_BSP without MOVETYPE_PUSH");
 
-		model = sv.models[ (int)ent->v.modelindex ];
+		model = sv.models[ (int32_t )ent->v.modelindex ];
 
 		if (!model || model->type != mod_brush)
 			Sys_Error ("MOVETYPE_PUSH with a non bsp model");
@@ -161,7 +161,7 @@ ENTITY AREA CHECKING
 
 typedef struct areanode_s
 {
-	int		axis;		// -1 = leaf node
+	int32_t 		axis;		// -1 = leaf node
 	float	dist;
 	struct areanode_s	*children[2];
 	link_t	trigger_edicts;
@@ -172,7 +172,7 @@ typedef struct areanode_s
 #define	AREA_NODES	32
 
 static	areanode_t	sv_areanodes[AREA_NODES];
-static	int			sv_numareanodes;
+static	int32_t 			sv_numareanodes;
 
 /*
 ===============
@@ -180,7 +180,7 @@ SV_CreateAreaNode
 
 ===============
 */
-areanode_t *SV_CreateAreaNode (int depth, vec3_t mins, vec3_t maxs)
+areanode_t *SV_CreateAreaNode (int32_t depth, vec3_t mins, vec3_t maxs)
 {
 	areanode_t	*anode;
 	vec3_t		size;
@@ -259,7 +259,7 @@ void SV_TouchLinks ( edict_t *ent, areanode_t *node )
 {
 	link_t		*l, *next;
 	edict_t		*touch;
-	int			old_self, old_other;
+	int32_t 			old_self, old_other;
 
 // touch linked edicts
 	for (l = node->trigger_edicts.next ; l != &node->trigger_edicts ; l = next)
@@ -310,8 +310,8 @@ void SV_FindTouchedLeafs (edict_t *ent, mnode_t *node)
 {
 	mplane_t	*splitplane;
 	mleaf_t		*leaf;
-	int			sides;
-	int			leafnum;
+	int32_t 			sides;
+	int32_t 			leafnum;
 
 	if (node->contents == CONTENTS_SOLID)
 		return;
@@ -371,7 +371,7 @@ void SV_LinkEdict (edict_t *ent, qboolean touch_triggers)
 // to make items easier to pick up and allow them to be grabbed off
 // of shelves, the abs sizes are expanded
 //
-	if ((int)ent->v.flags & FL_ITEM)
+	if ((int32_t )ent->v.flags & FL_ITEM)
 	{
 		ent->v.absmin[0] -= 15;
 		ent->v.absmin[1] -= 15;
@@ -439,7 +439,7 @@ SV_HullPointContents
 
 ==================
 */
-int SV_HullPointContents (hull_t *hull, int num, vec3_t p)
+int32_t SV_HullPointContents (hull_t *hull, int32_t num, vec3_t p)
 {
 	float		d;
 	dclipnode_t	*node;
@@ -472,7 +472,7 @@ SV_PointContents
 
 ==================
 */
-int SV_PointContents (vec3_t p)
+int32_t SV_PointContents (vec3_t p)
 {
 	int		cont;
 
@@ -482,7 +482,7 @@ int SV_PointContents (vec3_t p)
 	return cont;
 }
 
-int SV_TruePointContents (vec3_t p)
+int32_t SV_TruePointContents (vec3_t p)
 {
 	return SV_HullPointContents (&sv.worldmodel->hulls[0], 0, p);
 }
@@ -526,7 +526,7 @@ SV_RecursiveHullCheck
 
 ==================
 */
-qboolean SV_RecursiveHullCheck (hull_t *hull, int num, float p1f, float p2f, vec3_t p1, vec3_t p2, trace_t *trace)
+qboolean SV_RecursiveHullCheck (hull_t *hull, int32_t num, float p1f, float p2f, vec3_t p1, vec3_t p2, trace_t *trace)
 {
 	dclipnode_t	*node;
 	mplane_t	*plane;
@@ -834,7 +834,7 @@ boxmaxs[0] = boxmaxs[1] = boxmaxs[2] = 9999;
 SV_Move
 ==================
 */
-trace_t SV_Move (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, int type, edict_t *passedict)
+trace_t SV_Move (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, int32_t type, edict_t *passedict)
 {
 	moveclip_t	clip;
 	int			i;

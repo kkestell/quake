@@ -45,8 +45,8 @@ Dumps the current net message, prefixed by the length and view angles
 */
 void CL_WriteDemoMessage (void)
 {
-	int		len;
-	int		i;
+	int32_t		len;
+	int32_t		i;
 	float	f;
 
 	len = LittleLong (net_message.cursize);
@@ -67,9 +67,9 @@ CL_GetMessage
 Handles recording and playback of demos, on top of NET_ code
 ====================
 */
-int CL_GetMessage (void)
+int32_t CL_GetMessage (void)
 {
-	int		r, i;
+	int32_t		r, i;
 	float	f;
 	
 	if	(cls.demoplayback)
@@ -175,9 +175,9 @@ record <demoname> <map> [cd track]
 */
 void CL_Record_f (void)
 {
-	int		c;
+	int32_t		c;
 	char	name[MAX_OSPATH];
-	int		track;
+	int32_t		track;
 
 	if (cmd_source != src_command)
 		return;
@@ -248,7 +248,7 @@ play [demoname]
 void CL_PlayDemo_f (void)
 {
 	char	name[256];
-	int c;
+	int32_t c;
 	qboolean neg = false;
 
 	if (cmd_source != src_command)
@@ -304,7 +304,7 @@ CL_FinishTimeDemo
 */
 void CL_FinishTimeDemo (void)
 {
-	int		frames;
+	int32_t		frames;
 	float	time;
 	
 	cls.timedemo = false;

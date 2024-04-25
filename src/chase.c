@@ -40,7 +40,7 @@ void TraceLine (vec3_t start, vec3_t end, vec3_t impact)
 
 void Chase_Update (void)
 {
-	int		i;
+	int32_t		i;
 	float	dist;
 	vec3_t	forward, up, right;
 	vec3_t	dest, stop;

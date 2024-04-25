@@ -2,7 +2,7 @@
 
 #include "quakedef.h"
 
-int			wad_numlumps;
+int32_t 			wad_numlumps;
 lumpinfo_t	*wad_lumps;
 byte		*wad_base;
 
@@ -21,8 +21,8 @@ Can safely be performed in place.
 */
 void W_CleanupName (char *in, char *out)
 {
-	int		i;
-	int		c;
+	int32_t 		i;
+	int32_t 		c;
 	
 	for (i=0 ; i<16 ; i++ )
 	{
@@ -51,7 +51,7 @@ void W_LoadWadFile (char *filename)
 	lumpinfo_t		*lump_p;
 	wadinfo_t		*header;
 	unsigned		i;
-	int				infotableofs;
+	int32_t 				infotableofs;
 	
 	wad_base = COM_LoadHunkFile (filename);
 	if (!wad_base)
@@ -87,7 +87,7 @@ W_GetLumpinfo
 */
 lumpinfo_t	*W_GetLumpinfo (char *name)
 {
-	int		i;
+	int32_t 		i;
 	lumpinfo_t	*lump_p;
 	char	clean[16];
 	
@@ -112,7 +112,7 @@ void *W_GetLumpName (char *name)
 	return (void *)(wad_base + lump->filepos);
 }
 
-void *W_GetLumpNum (int num)
+void *W_GetLumpNum (int32_t  num)
 {
 	lumpinfo_t	*lump;
 	

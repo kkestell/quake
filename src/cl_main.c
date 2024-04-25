@@ -31,7 +31,7 @@ entity_t		cl_static_entities[MAX_STATIC_ENTITIES];
 lightstyle_t	cl_lightstyle[MAX_LIGHTSTYLES];
 dlight_t		cl_dlights[MAX_DLIGHTS];
 
-int				cl_numvisedicts;
+int32_t				cl_numvisedicts;
 entity_t		*cl_visedicts[MAX_VISEDICTS];
 
 /*
@@ -42,7 +42,7 @@ CL_ClearState
 */
 void CL_ClearState (void)
 {
-	int			i;
+	int32_t			i;
 
 	if (!sv.active)
 		Host_ClearMemory ();
@@ -253,7 +253,7 @@ SetPal
 Debugging tool, just flashes the screen
 ===============
 */
-void SetPal (int i)
+void SetPal (int32_t i)
 {
 #if 0
 	static int old;
@@ -295,7 +295,7 @@ CL_AllocDlight
 
 ===============
 */
-dlight_t *CL_AllocDlight (int key)
+dlight_t *CL_AllocDlight (int32_t key)
 {
 	int		i;
 	dlight_t	*dl;
@@ -587,7 +587,7 @@ CL_ReadFromServer
 Read all incoming data from the server
 ===============
 */
-int CL_ReadFromServer (void)
+int32_t CL_ReadFromServer (void)
 {
 	int		ret;
 

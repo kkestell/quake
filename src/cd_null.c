@@ -44,7 +44,7 @@ void CDAudio_Update(void)
 }
 
 
-int CDAudio_Init(void)
+int32_t CDAudio_Init(void)
 {
 	return 0;
 }

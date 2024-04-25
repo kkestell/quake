@@ -84,7 +84,7 @@ typedef struct
 #define	MIPLEVELS	4
 typedef struct miptex_s
 {
-	char		name[16];
+	int8_t		name[16];
 	uint32_t	width, height;
 	uint32_t	offsets[MIPLEVELS];		// four mip maps stored
 } miptex_t;
@@ -136,17 +136,17 @@ typedef struct
 typedef struct
 {
 	int32_t			planenum;
-	short		children[2];	// negative numbers are -(leafs+1), not nodes
-	short		mins[3];		// for sphere culling
-	short		maxs[3];
-	unsigned short	firstface;
-	unsigned short	numfaces;	// counting both sides
+	int16_t		children[2];	// negative numbers are -(leafs+1), not nodes
+	int16_t		mins[3];		// for sphere culling
+	int16_t		maxs[3];
+	uint16_t	firstface;
+	uint16_t	numfaces;	// counting both sides
 } dnode_t;
 
 typedef struct
 {
 	int32_t			planenum;
-	short		children[2];	// negative numbers are contents
+	int16_t		children[2];	// negative numbers are contents
 } dclipnode_t;
 
 
@@ -162,18 +162,18 @@ typedef struct texinfo_s
 // counterclockwise use of the edge in a face
 typedef struct
 {
-	unsigned short	v[2];		// vertex numbers
+	uint16_t	v[2];		// vertex numbers
 } dedge_t;
 
 #define	MAXLIGHTMAPS	4
 typedef struct
 {
-	short		planenum;
-	short		side;
+	int16_t		planenum;
+	int16_t		side;
 
 	int32_t			firstedge;		// we must support > 64k edges
-	short		numedges;	
-	short		texinfo;
+	int16_t		numedges;	
+	int16_t		texinfo;
 
 // lighting info
 	byte		styles[MAXLIGHTMAPS];
@@ -196,11 +196,11 @@ typedef struct
 	int32_t			contents;
 	int32_t			visofs;				// -1 = no visibility info
 
-	short		mins[3];			// for frustum culling
-	short		maxs[3];
+	int16_t		mins[3];			// for frustum culling
+	int16_t		maxs[3];
 
-	unsigned short		firstmarksurface;
-	unsigned short		nummarksurfaces;
+	uint16_t		firstmarksurface;
+	uint16_t		nummarksurfaces;
 
 	byte		ambient_level[NUM_AMBIENTS];
 } dleaf_t;
@@ -229,7 +229,7 @@ extern	int32_t			texdatasize;
 extern	byte		dtexdata[MAX_MAP_MIPTEX]; // (dmiptexlump_t)
 
 extern	int32_t			entdatasize;
-extern	char		dentdata[MAX_MAP_ENTSTRING];
+extern	int8_t		dentdata[MAX_MAP_ENTSTRING];
 
 extern	int32_t			numleafs;
 extern	dleaf_t		dleafs[MAX_MAP_LEAFS];
@@ -256,7 +256,7 @@ extern	int32_t			numedges;
 extern	dedge_t		dedges[MAX_MAP_EDGES];
 
 extern	int32_t			nummarksurfaces;
-extern	unsigned short	dmarksurfaces[MAX_MAP_MARKSURFACES];
+extern	uint16_t	dmarksurfaces[MAX_MAP_MARKSURFACES];
 
 extern	int32_t			numsurfedges;
 extern	int32_t			dsurfedges[MAX_MAP_SURFEDGES];
@@ -265,8 +265,8 @@ extern	int32_t			dsurfedges[MAX_MAP_SURFEDGES];
 void DecompressVis (byte *in, byte *decompressed);
 int32_t CompressVis (byte *vis, byte *dest);
 
-void	LoadBSPFile (char *filename);
-void	WriteBSPFile (char *filename);
+void	LoadBSPFile (int8_t *filename);
+void	WriteBSPFile (int8_t *filename);
 void	PrintBSPFileSizes (void);
 
 //===============
@@ -275,8 +275,8 @@ void	PrintBSPFileSizes (void);
 typedef struct epair_s
 {
 	struct epair_s	*next;
-	char	*key;
-	char	*value;
+	int8_t	*key;
+	int8_t	*value;
 } epair_t;
 
 typedef struct
@@ -293,12 +293,12 @@ extern	entity_t	entities[MAX_MAP_ENTITIES];
 void	ParseEntities (void);
 void	UnparseEntities (void);
 
-void 	SetKeyValue (entity_t *ent, char *key, char *value);
-char 	*ValueForKey (entity_t *ent, char *key);
+void 	SetKeyValue (entity_t *ent, int8_t *key, int8_t *value);
+int8_t 	*ValueForKey (entity_t *ent, int8_t *key);
 // will return "" if not present
 
-vec_t	FloatForKey (entity_t *ent, char *key);
-void 	GetVectorForKey (entity_t *ent, char *key, vec3_t vec);
+vec_t	FloatForKey (entity_t *ent, int8_t *key);
+void 	GetVectorForKey (entity_t *ent, int8_t *key, vec3_t vec);
 
 epair_t *ParseEpair (void);
 
