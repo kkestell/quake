@@ -2,11 +2,7 @@
 
 #include "quakedef.h"
 
-#ifdef _WIN32
-#include "winquake.h"
-#else
 #define DWORD	uint32_t
-#endif
 
 #define	PAINTBUFFER_SIZE	512
 portable_samplepair_t paintbuffer[PAINTBUFFER_SIZE];
@@ -47,53 +43,12 @@ void S_TransferStereo16 (int32_t endtime)
 	int32_t		lpaintedtime;
 	DWORD	*pbuf;
 
-/*
-#ifdef _WIN32
-	int32_t		reps;
-	DWORD	dwSize,dwSize2;
-	DWORD	*pbuf2;
-	HRESULT	hresult;
-#endif
-*/
-
 	snd_vol = volume.value*256;
 
 	snd_p = (int32_t *) paintbuffer;
 	lpaintedtime = paintedtime;
 
-/*
-#ifdef _WIN32
-	if (pDSBuf)
-	{
-		reps = 0;
-
-		while ((hresult = pDSBuf->lpVtbl->Lock(pDSBuf, 0, gSndBufSize, &pbuf, &dwSize, 
-									   &pbuf2, &dwSize2, 0)) != DS_OK)
-		{
-			if (hresult != DSERR_BUFFERLOST)
-			{
-				Con_Printf ("S_TransferStereo16: DS::Lock Sound Buffer Failed\n");
-				S_Shutdown ();
-				S_Startup ();
-				return;
-			}
-
-			if (++reps > 10000)
-			{
-				Con_Printf ("S_TransferStereo16: DS: couldn't restore buffer\n");
-				S_Shutdown ();
-				S_Startup ();
-				return;
-			}
-		}
-	}
-	else
-#endif
-*/
-
-	{
-		pbuf = (DWORD *)shm->buffer;
-	}
+	pbuf = (DWORD *)shm->buffer;
 
 	while (lpaintedtime < endtime)
 	{
@@ -114,13 +69,6 @@ void S_TransferStereo16 (int32_t endtime)
 		snd_p += snd_linear_count;
 		lpaintedtime += (snd_linear_count>>1);
 	}
-
-/*
-#ifdef _WIN32
-	if (pDSBuf)
-		pDSBuf->lpVtbl->Unlock(pDSBuf, pbuf, dwSize, NULL, 0);
-#endif
-*/
 }
 
 void S_TransferPaintBuffer(int32_t endtime)

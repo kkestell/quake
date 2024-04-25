@@ -261,11 +261,7 @@ int32_t Sys_FileTime(char *path)
 
 void Sys_mkdir(char *path)
 {
-#ifdef _WIN32
-    mkdir(path);
-#else
     mkdir(path, 0777);
-#endif
 }
 
 void Sys_DebugLog(char *file, char *fmt, ...)
@@ -284,17 +280,6 @@ void Sys_DebugLog(char *file, char *fmt, ...)
 
 double Sys_FloatTime(void)
 {
-#ifdef _WIN32
-
-    static int32_t starttime = 0;
-
-    if (!starttime)
-        starttime = clock();
-
-    return (clock() - starttime) * 1.0 / 1024;
-
-#else
-
     struct timeval tp;
     struct timezone tzp;
     static int32_t secbase;
@@ -308,8 +293,6 @@ double Sys_FloatTime(void)
     }
 
     return (tp.tv_sec - secbase) + tp.tv_usec / 1000000.0;
-
-#endif
 }
 
 // =======================================================================
