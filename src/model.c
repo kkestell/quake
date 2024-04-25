@@ -236,7 +236,7 @@ Loads a model into the cache
 */
 model_t *Mod_LoadModel (model_t *mod, qboolean crash)
 {
-	unsigned *buf;
+	uint32_t *buf;
 	byte	stackbuf[1024];		// avoid dirtying the cache heap
 
 	if (mod->type == mod_alias)
@@ -260,7 +260,7 @@ model_t *Mod_LoadModel (model_t *mod, qboolean crash)
 //
 // load the file
 //
-	buf = (unsigned *)COM_LoadStackFile (mod->name, stackbuf, sizeof(stackbuf));
+	buf = (uint32_t *)COM_LoadStackFile (mod->name, stackbuf, sizeof(stackbuf));
 	if (!buf)
 	{
 		if (crash)
@@ -282,7 +282,7 @@ model_t *Mod_LoadModel (model_t *mod, qboolean crash)
 // call the apropriate loader
 	mod->needload = NL_PRESENT;
 
-	switch (LittleLong(*(unsigned *)buf))
+	switch (LittleLong(*(uint32_t *)buf))
 	{
 	case IDPOLYHEADER:
 		Mod_LoadAliasModel (mod, buf);
