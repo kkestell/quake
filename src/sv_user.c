@@ -517,7 +517,7 @@ bool SV_ReadClientMessage(void) {
 
       case clc_disconnect:
         //				Sys_Printf ("SV_ReadClientMessage:
-        //client disconnected\n");
+        // client disconnected\n");
         return false;
 
       case clc_move:

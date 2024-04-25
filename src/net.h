@@ -29,7 +29,8 @@ struct qsockaddr {
 //
 // General notes:
 //	game_name is currently always "QUAKE", but is there so this same
-//protocol 		can be used for future games as well; can you say Quake2?
+// protocol 		can be used for future games as well; can you say
+// Quake2?
 //
 // CCREQ_CONNECT
 //		string	game_name				"QUAKE"
@@ -75,13 +76,13 @@ struct qsockaddr {
 
 //	note:
 //		There are two address forms used above.  The short form is just
-//a 		port number.  The address that goes along with the port is defined as
-//		"whatever address you receive this reponse from".  This lets us
-//use 		the host OS to solve the problem of multiple host addresses (possibly 		with
-//no routing between them); the host will use the right address 		when we reply to
-//the inbound connection request.  The long from is 		a full address and port in a
-//string.  It is used for returning the 		address of a server that is not running
-//locally.
+// a 		port number.  The address that goes along with the port is
+// defined as 		"whatever address you receive this reponse from".  This lets us
+// use 		the host OS to solve the problem of multiple host addresses
+// (possibly 		with no routing between them); the host will use the
+// right address 		when we reply to the inbound connection request.
+// The long from is 		a full address and port in a string.  It is used
+// for returning the 		address of a server that is not running locally.
 
 #define CCREQ_CONNECT 0x01
 #define CCREQ_SERVER_INFO 0x02
