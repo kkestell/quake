@@ -22,5 +22,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_custom_target(test
     COMMAND Quake +timedemo demo1
+    COMMAND Quake +timedemo demo2
+    COMMAND Quake +timedemo demo3
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )

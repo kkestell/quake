@@ -431,7 +431,7 @@ int main(int argc, char *argv[])
 Sys_MakeCodeWriteable
 ================
 */
-void Sys_MakeCodeWriteable(unsigned long startaddr, unsigned long length)
+void Sys_MakeCodeWriteable(uint32_t startaddr, uint32_t length)
 {
     /*
     int r;

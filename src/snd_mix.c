@@ -5,7 +5,7 @@
 #ifdef _WIN32
 #include "winquake.h"
 #else
-#define DWORD	unsigned long
+#define DWORD	uint32_t
 #endif
 
 #define	PAINTBUFFER_SIZE	512

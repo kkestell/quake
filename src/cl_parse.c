@@ -57,7 +57,7 @@ CL_EntityNum
 This error checks and tracks the total number of entities
 ===============
 */
-entity_t	*CL_EntityNum (int num)
+entity_t	*CL_EntityNum (int32_t num)
 {
 	if (num >= cl.num_entities)
 	{
@@ -82,12 +82,12 @@ CL_ParseStartSoundPacket
 void CL_ParseStartSoundPacket(void)
 {
     vec3_t  pos;
-    int 	channel, ent;
-    int 	sound_num;
-    int 	volume;
-    int 	field_mask;
+    int32_t 	channel, ent;
+    int32_t 	sound_num;
+    int32_t 	volume;
+    int32_t 	field_mask;
     float 	attenuation;  
- 	int		i;
+ 	int32_t		i;
 	           
     field_mask = MSG_ReadByte(); 
 
@@ -128,7 +128,7 @@ void CL_KeepaliveMessage (void)
 {
 	float	time;
 	static float lastmsg;
-	int		ret;
+	int32_t		ret;
 	sizebuf_t	old;
 	byte		olddata[8192];
 	
@@ -185,8 +185,8 @@ CL_ParseServerInfo
 void CL_ParseServerInfo (void)
 {
 	char	*str;
-	int		i;
-	int		nummodels, numsounds;
+	int32_t		i;
+	int32_t		nummodels, numsounds;
 	char	model_precache[MAX_MODELS][MAX_QPATH];
 	char	sound_precache[MAX_SOUNDS][MAX_QPATH];
 	
@@ -306,17 +306,17 @@ If an entities model or origin changes from frame to frame, it must be
 relinked.  Other attributes can change without relinking.
 ==================
 */
-int	bitcounts[16];
+int32_t	bitcounts[16];
 
-void CL_ParseUpdate (int bits)
+void CL_ParseUpdate (int32_t bits)
 {
-	int			i;
+	int32_t			i;
 	model_t		*model;
-	int			modnum;
+	int32_t			modnum;
 	qboolean	forcelink;
 	entity_t	*ent;
-	int			num;
-	int			skin;
+	int32_t			num;
+	int32_t			skin;
 
 	if (cls.signon == SIGNONS - 1)
 	{	// first update is the final signon stage
@@ -453,7 +453,7 @@ CL_ParseBaseline
 */
 void CL_ParseBaseline (entity_t *ent)
 {
-	int			i;
+	int32_t			i;
 	
 	ent->baseline.modelindex = MSG_ReadByte ();
 	ent->baseline.frame = MSG_ReadByte ();
@@ -474,9 +474,9 @@ CL_ParseClientdata
 Server information pertaining to this client only
 ==================
 */
-void CL_ParseClientdata (int bits)
+void CL_ParseClientdata (int32_t bits)
 {
-	int		i, j;
+	int32_t		i, j;
 	
 	if (bits & SU_VIEWHEIGHT)
 		cl.viewheight = MSG_ReadChar ();
@@ -590,10 +590,10 @@ void CL_ParseClientdata (int bits)
 CL_NewTranslation
 =====================
 */
-void CL_NewTranslation (int slot)
+void CL_NewTranslation (int32_t slot)
 {
-	int		i, j;
-	int		top, bottom;
+	int32_t		i, j;
+	int32_t		top, bottom;
 	byte	*dest, *source;
 	
 	if (slot > cl.maxclients)
@@ -628,7 +628,7 @@ CL_ParseStatic
 void CL_ParseStatic (void)
 {
 	entity_t *ent;
-	int		i;
+	int32_t		i;
 		
 	i = cl.num_statics;
 	if (i >= MAX_STATIC_ENTITIES)
@@ -657,8 +657,8 @@ CL_ParseStaticSound
 void CL_ParseStaticSound (void)
 {
 	vec3_t		org;
-	int			sound_num, vol, atten;
-	int			i;
+	int32_t			sound_num, vol, atten;
+	int32_t			i;
 	
 	for (i=0 ; i<3 ; i++)
 		org[i] = MSG_ReadCoord ();
@@ -679,8 +679,8 @@ CL_ParseServerMessage
 */
 void CL_ParseServerMessage (void)
 {
-	int			cmd;
-	int			i;
+	int32_t			cmd;
+	int32_t			i;
 	
 //
 // if recording demos, copy the message out
