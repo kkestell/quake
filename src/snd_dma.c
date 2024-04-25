@@ -264,7 +264,7 @@ sfx_t *S_FindName (char *name)
 		Sys_Error ("S_FindName: NULL\n");
 
 	if (Q_strlen(name) >= MAX_QPATH)
-		Sys_Error ("Sound name too long: %s", name);
+		Sys_Error ("Sound name too int32_t: %s", name);
 
 // see if already loaded
 	for (i=0 ; i < num_sfx ; i++)
