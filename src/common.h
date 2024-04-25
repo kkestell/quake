@@ -5,16 +5,21 @@
 #undef true
 #undef false
 
-typedef enum { false, true } bool;
+typedef enum
+{
+    false,
+    true
+} bool;
 
 //============================================================================
 
-typedef struct sizebuf_s {
-  bool allowoverflow; // if false, do a Sys_Error
-  bool overflowed;    // set to true if the buffer size failed
-  uint8_t *data;
-  int32_t maxsize;
-  int32_t cursize;
+typedef struct sizebuf_s
+{
+    bool allowoverflow; // if false, do a Sys_Error
+    bool overflowed;    // set to true if the buffer size failed
+    uint8_t *data;
+    int32_t maxsize;
+    int32_t cursize;
 } sizebuf_t;
 
 void SZ_Alloc(sizebuf_t *buf, int32_t startsize);
@@ -26,8 +31,9 @@ void SZ_Print(sizebuf_t *buf, char *data); // strcats onto the sizebuf
 
 //============================================================================
 
-typedef struct link_s {
-  struct link_s *prev, *next;
+typedef struct link_s
+{
+    struct link_s *prev, *next;
 } link_t;
 
 void ClearLink(link_t *l);
@@ -38,8 +44,7 @@ void InsertLinkAfter(link_t *l, link_t *after);
 // (type *)STRUCT_FROM_LINK(link_t *link, type, member)
 // ent = STRUCT_FROM_LINK(link,entity_t,order)
 // FIXME: remove this mess!
-#define STRUCT_FROM_LINK(l, t, m)                                              \
-  ((t *)((uint8_t *)l - (int32_t) & (((t *)0)->m)))
+#define STRUCT_FROM_LINK(l, t, m) ((t *)((uint8_t *)l - (int32_t) & (((t *)0)->m)))
 
 //============================================================================
 

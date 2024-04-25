@@ -1,8 +1,9 @@
 // net.h -- quake's interface to the networking layer
 
-struct qsockaddr {
-  int16_t sa_family;
-  unsigned char sa_data[14];
+struct qsockaddr
+{
+    int16_t sa_family;
+    unsigned char sa_data[14];
 };
 
 #define NET_NAMELEN 64
@@ -95,34 +96,35 @@ struct qsockaddr {
 #define CCREP_PLAYER_INFO 0x84
 #define CCREP_RULE_INFO 0x85
 
-typedef struct qsocket_s {
-  struct qsocket_s *next;
-  double connecttime;
-  double lastMessageTime;
-  double lastSendTime;
+typedef struct qsocket_s
+{
+    struct qsocket_s *next;
+    double connecttime;
+    double lastMessageTime;
+    double lastSendTime;
 
-  bool disconnected;
-  bool canSend;
-  bool sendNext;
+    bool disconnected;
+    bool canSend;
+    bool sendNext;
 
-  int32_t driver;
-  int32_t landriver;
-  int32_t socket;
-  void *driverdata;
+    int32_t driver;
+    int32_t landriver;
+    int32_t socket;
+    void *driverdata;
 
-  uint32_t ackSequence;
-  uint32_t sendSequence;
-  uint32_t unreliableSendSequence;
-  int32_t sendMessageLength;
-  uint8_t sendMessage[NET_MAXMESSAGE];
+    uint32_t ackSequence;
+    uint32_t sendSequence;
+    uint32_t unreliableSendSequence;
+    int32_t sendMessageLength;
+    uint8_t sendMessage[NET_MAXMESSAGE];
 
-  uint32_t receiveSequence;
-  uint32_t unreliableReceiveSequence;
-  int32_t receiveMessageLength;
-  uint8_t receiveMessage[NET_MAXMESSAGE];
+    uint32_t receiveSequence;
+    uint32_t unreliableReceiveSequence;
+    int32_t receiveMessageLength;
+    uint8_t receiveMessage[NET_MAXMESSAGE];
 
-  struct qsockaddr addr;
-  char address[NET_NAMELEN];
+    struct qsockaddr addr;
+    char address[NET_NAMELEN];
 
 } qsocket_t;
 
@@ -130,52 +132,52 @@ extern qsocket_t *net_activeSockets;
 extern qsocket_t *net_freeSockets;
 extern int32_t net_numsockets;
 
-typedef struct {
-  char *name;
-  bool initialized;
-  int32_t controlSock;
-  int32_t (*Init)(void);
-  void (*Shutdown)(void);
-  void (*Listen)(bool state);
-  int32_t (*OpenSocket)(int32_t port);
-  int32_t (*CloseSocket)(int32_t socket);
-  int32_t (*Connect)(int32_t socket, struct qsockaddr *addr);
-  int32_t (*CheckNewConnections)(void);
-  int32_t (*Read)(int32_t socket, uint8_t *buf, int32_t len,
-                  struct qsockaddr *addr);
-  int32_t (*Write)(int32_t socket, uint8_t *buf, int32_t len,
-                   struct qsockaddr *addr);
-  int32_t (*Broadcast)(int32_t socket, uint8_t *buf, int32_t len);
-  char *(*AddrToString)(struct qsockaddr *addr);
-  int32_t (*StringToAddr)(char *string, struct qsockaddr *addr);
-  int32_t (*GetSocketAddr)(int32_t socket, struct qsockaddr *addr);
-  int32_t (*GetNameFromAddr)(struct qsockaddr *addr, char *name);
-  int32_t (*GetAddrFromName)(char *name, struct qsockaddr *addr);
-  int32_t (*AddrCompare)(struct qsockaddr *addr1, struct qsockaddr *addr2);
-  int32_t (*GetSocketPort)(struct qsockaddr *addr);
-  int32_t (*SetSocketPort)(struct qsockaddr *addr, int32_t port);
+typedef struct
+{
+    char *name;
+    bool initialized;
+    int32_t controlSock;
+    int32_t (*Init)(void);
+    void (*Shutdown)(void);
+    void (*Listen)(bool state);
+    int32_t (*OpenSocket)(int32_t port);
+    int32_t (*CloseSocket)(int32_t socket);
+    int32_t (*Connect)(int32_t socket, struct qsockaddr *addr);
+    int32_t (*CheckNewConnections)(void);
+    int32_t (*Read)(int32_t socket, uint8_t *buf, int32_t len, struct qsockaddr *addr);
+    int32_t (*Write)(int32_t socket, uint8_t *buf, int32_t len, struct qsockaddr *addr);
+    int32_t (*Broadcast)(int32_t socket, uint8_t *buf, int32_t len);
+    char *(*AddrToString)(struct qsockaddr *addr);
+    int32_t (*StringToAddr)(char *string, struct qsockaddr *addr);
+    int32_t (*GetSocketAddr)(int32_t socket, struct qsockaddr *addr);
+    int32_t (*GetNameFromAddr)(struct qsockaddr *addr, char *name);
+    int32_t (*GetAddrFromName)(char *name, struct qsockaddr *addr);
+    int32_t (*AddrCompare)(struct qsockaddr *addr1, struct qsockaddr *addr2);
+    int32_t (*GetSocketPort)(struct qsockaddr *addr);
+    int32_t (*SetSocketPort)(struct qsockaddr *addr, int32_t port);
 } net_landriver_t;
 
 #define MAX_NET_DRIVERS 8
 extern int32_t net_numlandrivers;
 extern net_landriver_t net_landrivers[MAX_NET_DRIVERS];
 
-typedef struct {
-  char *name;
-  bool initialized;
-  int32_t (*Init)(void);
-  void (*Listen)(bool state);
-  void (*SearchForHosts)(bool xmit);
-  qsocket_t *(*Connect)(char *host);
-  qsocket_t *(*CheckNewConnections)(void);
-  int32_t (*QGetMessage)(qsocket_t *sock);
-  int32_t (*QSendMessage)(qsocket_t *sock, sizebuf_t *data);
-  int32_t (*SendUnreliableMessage)(qsocket_t *sock, sizebuf_t *data);
-  bool (*CanSendMessage)(qsocket_t *sock);
-  bool (*CanSendUnreliableMessage)(qsocket_t *sock);
-  void (*Close)(qsocket_t *sock);
-  void (*Shutdown)(void);
-  int32_t controlSock;
+typedef struct
+{
+    char *name;
+    bool initialized;
+    int32_t (*Init)(void);
+    void (*Listen)(bool state);
+    void (*SearchForHosts)(bool xmit);
+    qsocket_t *(*Connect)(char *host);
+    qsocket_t *(*CheckNewConnections)(void);
+    int32_t (*QGetMessage)(qsocket_t *sock);
+    int32_t (*QSendMessage)(qsocket_t *sock, sizebuf_t *data);
+    int32_t (*SendUnreliableMessage)(qsocket_t *sock, sizebuf_t *data);
+    bool (*CanSendMessage)(qsocket_t *sock);
+    bool (*CanSendUnreliableMessage)(qsocket_t *sock);
+    void (*Close)(qsocket_t *sock);
+    void (*Shutdown)(void);
+    int32_t controlSock;
 } net_driver_t;
 
 extern int32_t net_numdrivers;
@@ -200,15 +202,16 @@ double SetNetTime(void);
 
 #define HOSTCACHESIZE 8
 
-typedef struct {
-  char name[16];
-  char map[16];
-  char cname[32];
-  int32_t users;
-  int32_t maxusers;
-  int32_t driver;
-  int32_t ldriver;
-  struct qsockaddr addr;
+typedef struct
+{
+    char name[16];
+    char map[16];
+    char cname[32];
+    int32_t users;
+    int32_t maxusers;
+    int32_t driver;
+    int32_t ldriver;
+    struct qsockaddr addr;
 } hostcache_t;
 
 extern int32_t hostCacheCount;
@@ -284,11 +287,12 @@ void NET_Close(struct qsocket_s *sock);
 
 void NET_Poll(void);
 
-typedef struct _PollProcedure {
-  struct _PollProcedure *next;
-  double nextTime;
-  void (*procedure)();
-  void *arg;
+typedef struct _PollProcedure
+{
+    struct _PollProcedure *next;
+    double nextTime;
+    void (*procedure)();
+    void *arg;
 } PollProcedure;
 
 void SchedulePollProcedure(PollProcedure *pp, double timeOffset);
@@ -298,14 +302,10 @@ extern bool ipxAvailable;
 extern bool tcpipAvailable;
 extern char my_ipx_address[NET_NAMELEN];
 extern char my_tcpip_address[NET_NAMELEN];
-extern void (*GetComPortConfig)(int32_t portNumber, int32_t *port, int32_t *irq,
-                                int32_t *baud, bool *useModem);
-extern void (*SetComPortConfig)(int32_t portNumber, int32_t port, int32_t irq,
-                                int32_t baud, bool useModem);
-extern void (*GetModemConfig)(int32_t portNumber, char *dialType, char *clear,
-                              char *init, char *hangup);
-extern void (*SetModemConfig)(int32_t portNumber, char *dialType, char *clear,
-                              char *init, char *hangup);
+extern void (*GetComPortConfig)(int32_t portNumber, int32_t *port, int32_t *irq, int32_t *baud, bool *useModem);
+extern void (*SetComPortConfig)(int32_t portNumber, int32_t port, int32_t irq, int32_t baud, bool useModem);
+extern void (*GetModemConfig)(int32_t portNumber, char *dialType, char *clear, char *init, char *hangup);
+extern void (*SetModemConfig)(int32_t portNumber, char *dialType, char *clear, char *init, char *hangup);
 
 extern bool slistInProgress;
 extern bool slistSilent;

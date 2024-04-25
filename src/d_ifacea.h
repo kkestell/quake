@@ -41,10 +41,10 @@
 
 // finalvert_t structure
 // !!! if this is changed, it must be changed in d_iface.h too !!!
-#define fv_v                                                                   \
-  0 // !!! if this is moved, cases where the !!!
-    // !!! address of this field is pushed in !!!
-    // !!! d_polysa.s must be changed !!!
+#define fv_v                                                                                                           \
+    0 // !!! if this is moved, cases where the !!!
+      // !!! address of this field is pushed in !!!
+      // !!! d_polysa.s must be changed !!!
 #define fv_flags 24
 #define fv_reserved 28
 #define fv_size 32

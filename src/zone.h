@@ -89,8 +89,9 @@ void *Hunk_TempAlloc(int32_t size);
 
 void Hunk_Check(void);
 
-typedef struct cache_user_s {
-  void *data;
+typedef struct cache_user_s
+{
+    void *data;
 } cache_user_t;
 
 void Cache_Flush(void);

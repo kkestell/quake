@@ -17,25 +17,28 @@
 #define TYP_SOUND 67
 #define TYP_MIPTEX 68
 
-typedef struct {
-  int32_t width, height;
-  uint8_t data[4]; // variably sized
+typedef struct
+{
+    int32_t width, height;
+    uint8_t data[4]; // variably sized
 } qpic_t;
 
-typedef struct {
-  char identification[4]; // should be WAD2 or 2DAW
-  int32_t numlumps;
-  int32_t infotableofs;
+typedef struct
+{
+    char identification[4]; // should be WAD2 or 2DAW
+    int32_t numlumps;
+    int32_t infotableofs;
 } wadinfo_t;
 
-typedef struct {
-  int32_t filepos;
-  int32_t disksize;
-  int32_t size; // uncompressed
-  char type;
-  char compression;
-  char pad1, pad2;
-  char name[16]; // must be null terminated
+typedef struct
+{
+    int32_t filepos;
+    int32_t disksize;
+    int32_t size; // uncompressed
+    char type;
+    char compression;
+    char pad1, pad2;
+    char name[16]; // must be null terminated
 } lumpinfo_t;
 
 extern int32_t wad_numlumps;

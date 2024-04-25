@@ -44,20 +44,25 @@
 // must match definition in modelgen.h
 #ifndef SYNCTYPE_T
 #define SYNCTYPE_T
-typedef enum { ST_SYNC = 0, ST_RAND } synctype_t;
+typedef enum
+{
+    ST_SYNC = 0,
+    ST_RAND
+} synctype_t;
 #endif
 
 // TODO: shorten these?
-typedef struct {
-  int32_t ident;
-  int32_t version;
-  int32_t type;
-  float boundingradius;
-  int32_t width;
-  int32_t height;
-  int32_t numframes;
-  float beamlength;
-  synctype_t synctype;
+typedef struct
+{
+    int32_t ident;
+    int32_t version;
+    int32_t type;
+    float boundingradius;
+    int32_t width;
+    int32_t height;
+    int32_t numframes;
+    float beamlength;
+    synctype_t synctype;
 } dsprite_t;
 
 #define SPR_VP_PARALLEL_UPRIGHT 0
@@ -66,24 +71,32 @@ typedef struct {
 #define SPR_ORIENTED 3
 #define SPR_VP_PARALLEL_ORIENTED 4
 
-typedef struct {
-  int32_t origin[2];
-  int32_t width;
-  int32_t height;
+typedef struct
+{
+    int32_t origin[2];
+    int32_t width;
+    int32_t height;
 } dspriteframe_t;
 
-typedef struct {
-  int32_t numframes;
+typedef struct
+{
+    int32_t numframes;
 } dspritegroup_t;
 
-typedef struct {
-  float interval;
+typedef struct
+{
+    float interval;
 } dspriteinterval_t;
 
-typedef enum { SPR_SINGLE = 0, SPR_GROUP } spriteframetype_t;
+typedef enum
+{
+    SPR_SINGLE = 0,
+    SPR_GROUP
+} spriteframetype_t;
 
-typedef struct {
-  spriteframetype_t type;
+typedef struct
+{
+    spriteframetype_t type;
 } dspriteframetype_t;
 
 #define IDSPRITEHEADER (('P' << 24) + ('S' << 16) + ('D' << 8) + 'I')

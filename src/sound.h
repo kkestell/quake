@@ -7,68 +7,73 @@
 #define DEFAULT_SOUND_PACKET_ATTENUATION 1.0
 
 // !!! if this is changed, it much be changed in asm_i386.h too !!!
-typedef struct {
-  int32_t left;
-  int32_t right;
+typedef struct
+{
+    int32_t left;
+    int32_t right;
 } portable_samplepair_t;
 
-typedef struct sfx_s {
-  char name[MAX_QPATH];
-  cache_user_t cache;
+typedef struct sfx_s
+{
+    char name[MAX_QPATH];
+    cache_user_t cache;
 } sfx_t;
 
 // !!! if this is changed, it much be changed in asm_i386.h too !!!
-typedef struct {
-  int32_t length;
-  int32_t loopstart;
-  int32_t speed;
-  int32_t width;
-  int32_t stereo;
-  uint8_t data[1]; // variable sized
+typedef struct
+{
+    int32_t length;
+    int32_t loopstart;
+    int32_t speed;
+    int32_t width;
+    int32_t stereo;
+    uint8_t data[1]; // variable sized
 } sfxcache_t;
 
-typedef struct {
-  bool gamealive;
-  bool soundalive;
-  bool splitbuffer;
-  int32_t channels;
-  int32_t samples;          // mono samples in buffer
-  int32_t submission_chunk; // don't mix less than this #
-  int32_t samplepos;        // in mono samples
-  int32_t samplebits;
-  int32_t speed;
-  unsigned char *buffer;
+typedef struct
+{
+    bool gamealive;
+    bool soundalive;
+    bool splitbuffer;
+    int32_t channels;
+    int32_t samples;          // mono samples in buffer
+    int32_t submission_chunk; // don't mix less than this #
+    int32_t samplepos;        // in mono samples
+    int32_t samplebits;
+    int32_t speed;
+    unsigned char *buffer;
 } dma_t;
 
 // !!! if this is changed, it much be changed in asm_i386.h too !!!
-typedef struct {
-  sfx_t *sfx;         // sfx number
-  int32_t leftvol;    // 0-255 volume
-  int32_t rightvol;   // 0-255 volume
-  int32_t end;        // end time in global paintsamples
-  int32_t pos;        // sample position in sfx
-  int32_t looping;    // where to loop, -1 = no looping
-  int32_t entnum;     // to allow overriding a specific sound
-  int32_t entchannel; //
-  vec3_t origin;      // origin of sound effect
-  vec_t dist_mult;    // distance multiplier (attenuation/clipK)
-  int32_t master_vol; // 0-255 master volume
+typedef struct
+{
+    sfx_t *sfx;         // sfx number
+    int32_t leftvol;    // 0-255 volume
+    int32_t rightvol;   // 0-255 volume
+    int32_t end;        // end time in global paintsamples
+    int32_t pos;        // sample position in sfx
+    int32_t looping;    // where to loop, -1 = no looping
+    int32_t entnum;     // to allow overriding a specific sound
+    int32_t entchannel; //
+    vec3_t origin;      // origin of sound effect
+    vec_t dist_mult;    // distance multiplier (attenuation/clipK)
+    int32_t master_vol; // 0-255 master volume
 } channel_t;
 
-typedef struct {
-  int32_t rate;
-  int32_t width;
-  int32_t channels;
-  int32_t loopstart;
-  int32_t samples;
-  int32_t dataofs; // chunk starts this many bytes from file start
+typedef struct
+{
+    int32_t rate;
+    int32_t width;
+    int32_t channels;
+    int32_t loopstart;
+    int32_t samples;
+    int32_t dataofs; // chunk starts this many bytes from file start
 } wavinfo_t;
 
 void S_Init(void);
 void S_Startup(void);
 void S_Shutdown(void);
-void S_StartSound(int32_t entnum, int32_t entchannel, sfx_t *sfx, vec3_t origin,
-                  float fvol, float attenuation);
+void S_StartSound(int32_t entnum, int32_t entchannel, sfx_t *sfx, vec3_t origin, float fvol, float attenuation);
 void S_StaticSound(sfx_t *sfx, vec3_t origin, float vol, float attenuation);
 void S_StopSound(int32_t entnum, int32_t entchannel);
 void S_StopAllSounds(bool clear);

@@ -6,29 +6,32 @@
 // normalizing factor so player model works out to about
 //  1 pixel per triangle
 
-#define BMODEL_FULLY_CLIPPED                                                   \
-  0x10 // value returned by R_BmodelCheckBBox ()
-       //  if bbox is trivially rejected
+#define BMODEL_FULLY_CLIPPED                                                                                           \
+    0x10 // value returned by R_BmodelCheckBBox ()
+         //  if bbox is trivially rejected
 
 //===========================================================================
 // viewmodel lighting
 
-typedef struct {
-  int32_t ambientlight;
-  int32_t shadelight;
-  float *plightvec;
+typedef struct
+{
+    int32_t ambientlight;
+    int32_t shadelight;
+    float *plightvec;
 } alight_t;
 
 //===========================================================================
 // clipped bmodel edges
 
-typedef struct bedge_s {
-  mvertex_t *v[2];
-  struct bedge_s *pnext;
+typedef struct bedge_s
+{
+    mvertex_t *v[2];
+    struct bedge_s *pnext;
 } bedge_t;
 
-typedef struct {
-  float fv[3]; // viewspace x, y
+typedef struct
+{
+    float fv[3]; // viewspace x, y
 } auxvert_t;
 
 //===========================================================================
@@ -64,13 +67,14 @@ extern cvar_t r_numedges;
 #define DIST_NOT_SET 98765
 
 // !!! if this is changed, it must be changed in asm_draw.h too !!!
-typedef struct clipplane_s {
-  vec3_t normal;
-  float dist;
-  struct clipplane_s *next;
-  uint8_t leftedge;
-  uint8_t rightedge;
-  uint8_t reserved[2];
+typedef struct clipplane_s
+{
+    vec3_t normal;
+    float dist;
+    struct clipplane_s *next;
+    uint8_t leftedge;
+    uint8_t rightedge;
+    uint8_t reserved[2];
 } clipplane_t;
 
 extern clipplane_t view_clipplanes[4];
@@ -160,9 +164,9 @@ extern int32_t vstartscan;
 extern fixed16_t sadjust, tadjust;
 extern fixed16_t bbextents, bbextentt;
 
-#define MAXBVERTINDEXES                                                        \
-  1000 // new clipped vertices when clipping bmodels
-       //  to the world BSP
+#define MAXBVERTINDEXES                                                                                                \
+    1000 // new clipped vertices when clipping bmodels
+         //  to the world BSP
 extern mvertex_t *r_ptverts, *r_ptvertsmax;
 
 extern vec3_t sbaseaxis[3], tbaseaxis[3];
@@ -173,9 +177,10 @@ extern int32_t reinit_surfcache;
 extern int32_t r_currentkey;
 extern int32_t r_currentbkey;
 
-typedef struct btofpoly_s {
-  int32_t clipflags;
-  msurface_t *psurf;
+typedef struct btofpoly_s
+{
+    int32_t clipflags;
+    msurface_t *psurf;
 } btofpoly_t;
 
 #define MAX_BTOFPOLYS 5000 // FIXME: tune this

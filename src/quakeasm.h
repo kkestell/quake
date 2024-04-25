@@ -177,18 +177,14 @@
     .extern C(D_PolysetSetEdgeTable)
     .extern C(D_RasterizeAliasPolySmooth)
 
-    .extern float_point5.extern Float2ToThe31nd.extern izistep.extern izi
-    .extern FloatMinus2ToThe31nd.extern float_1.extern float_particle_z_clip
-    .extern float_minus_1.extern float_0.extern fp_16.extern fp_64k.extern fp_1m
-    .extern fp_1m_minus_1.extern fp_8.extern entryvec_table.extern advancetable
-    .extern sstep.extern tstep.extern pspantemp.extern counttemp.extern jumptemp
-    .extern reciprocal_table.extern DP_Count.extern DP_u.extern DP_v
-    .extern DP_32768.extern DP_Color.extern DP_Pix.extern DP_EntryTable
-    .extern pbase.extern s.extern t.extern sfracf.extern tfracf.extern snext
-    .extern tnext.extern spancountminus1.extern zi16stepu.extern sdivz16stepu
-    .extern tdivz16stepu.extern zi8stepu.extern sdivz8stepu.extern tdivz8stepu
-    .extern reciprocal_table_16.extern entryvec_table_16.extern ceil_cw
-    .extern single_cw.extern fp_64kx64k.extern pz
+    .extern float_point5.extern Float2ToThe31nd.extern izistep.extern izi.extern FloatMinus2ToThe31nd.extern float_1
+    .extern float_particle_z_clip.extern float_minus_1.extern float_0.extern fp_16.extern fp_64k.extern fp_1m
+    .extern fp_1m_minus_1.extern fp_8.extern entryvec_table.extern advancetable.extern sstep.extern tstep
+    .extern pspantemp.extern counttemp.extern jumptemp.extern reciprocal_table.extern DP_Count.extern DP_u.extern DP_v
+    .extern DP_32768.extern DP_Color.extern DP_Pix.extern DP_EntryTable.extern pbase.extern s.extern t.extern sfracf
+    .extern tfracf.extern snext.extern tnext.extern spancountminus1.extern zi16stepu.extern sdivz16stepu
+    .extern tdivz16stepu.extern zi8stepu.extern sdivz8stepu.extern tdivz8stepu.extern reciprocal_table_16
+    .extern entryvec_table_16.extern ceil_cw.extern single_cw.extern fp_64kx64k.extern pz
     .extern spr8entryvec_table
 
     .extern C(snd_scaletable)

@@ -15,22 +15,24 @@
 
 #define SURFCACHE_SIZE_AT_320X200 600 * 1024
 
-typedef struct surfcache_s {
-  struct surfcache_s *next;
-  struct surfcache_s **owner;     // NULL is an empty chunk of memory
-  int32_t lightadj[MAXLIGHTMAPS]; // checked for strobe flush
-  int32_t dlight;
-  int32_t size; // including header
-  uint32_t width;
-  uint32_t height; // DEBUG only needed for debug
-  float mipscale;
-  struct texture_s *texture; // checked for animating textures
-  uint8_t data[4];           // width*height elements
+typedef struct surfcache_s
+{
+    struct surfcache_s *next;
+    struct surfcache_s **owner;     // NULL is an empty chunk of memory
+    int32_t lightadj[MAXLIGHTMAPS]; // checked for strobe flush
+    int32_t dlight;
+    int32_t size; // including header
+    uint32_t width;
+    uint32_t height; // DEBUG only needed for debug
+    float mipscale;
+    struct texture_s *texture; // checked for animating textures
+    uint8_t data[4];           // width*height elements
 } surfcache_t;
 
 // !!! if this is changed, it must be changed in asm_draw.h too !!!
-typedef struct sspan_s {
-  int32_t u, v, count;
+typedef struct sspan_s
+{
+    int32_t u, v, count;
 } sspan_t;
 
 extern cvar_t d_subdiv16;
@@ -69,8 +71,7 @@ extern uint32_t d_zrowbytes, d_zwidth;
 extern int32_t *d_pscantable;
 extern int32_t d_scantable[MAXHEIGHT];
 
-extern int32_t d_vrectx, d_vrecty, d_vrectright_particle,
-    d_vrectbottom_particle;
+extern int32_t d_vrectx, d_vrecty, d_vrectright_particle, d_vrectbottom_particle;
 
 extern int32_t d_y_aspect_shift, d_pix_min, d_pix_max, d_pix_shift;
 

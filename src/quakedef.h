@@ -165,14 +165,15 @@ void VID_UnlockBuffer(void);
 #include "zone.h"
 #include "mathlib.h"
 
-typedef struct {
-  vec3_t origin;
-  vec3_t angles;
-  int32_t modelindex;
-  int32_t frame;
-  int32_t colormap;
-  int32_t skin;
-  int32_t effects;
+typedef struct
+{
+    vec3_t origin;
+    vec3_t angles;
+    int32_t modelindex;
+    int32_t frame;
+    int32_t colormap;
+    int32_t skin;
+    int32_t effects;
 } entity_state_t;
 
 #include "wad.h"
@@ -206,13 +207,14 @@ typedef struct {
 // command line parms passed to the program, and the amount of memory
 // available for the program to use
 
-typedef struct {
-  int8_t *basedir;
-  int8_t *cachedir; // for development over ISDN lines
-  int32_t argc;
-  int8_t **argv;
-  void *membase;
-  int32_t memsize;
+typedef struct
+{
+    int8_t *basedir;
+    int8_t *cachedir; // for development over ISDN lines
+    int32_t argc;
+    int8_t **argv;
+    void *membase;
+    int32_t memsize;
 } quakeparms_t;
 
 //=============================================================================
@@ -248,13 +250,11 @@ void Host_Quit_f(void);
 void Host_ClientCommands(char *fmt, ...);
 void Host_ShutdownServer(bool crash);
 
-extern bool
-    msg_suppress_1; // suppresses resolution and cache size console output
-                    //  an fullscreen DIB focus gain/loss
-extern int32_t
-    current_skill; // skill level for currently loaded level (in case
-                   //  the user changes the cvar while the level is
-                   //  running, this reflects the level actually in use)
+extern bool msg_suppress_1;   // suppresses resolution and cache size console output
+                              //  an fullscreen DIB focus gain/loss
+extern int32_t current_skill; // skill level for currently loaded level (in case
+                              //  the user changes the cvar while the level is
+                              //  running, this reflects the level actually in use)
 
 extern bool isDedicated;
 

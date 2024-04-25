@@ -6,30 +6,32 @@
 // a pixel can be one, two, or four bytes
 typedef uint8_t pixel_t;
 
-typedef struct vrect_s {
-  int32_t x, y, width, height;
-  struct vrect_s *pnext;
+typedef struct vrect_s
+{
+    int32_t x, y, width, height;
+    struct vrect_s *pnext;
 } vrect_t;
 
-typedef struct {
-  pixel_t *buffer;      // invisible buffer
-  pixel_t *colormap;    // 256 * VID_GRADES size
-  uint16_t *colormap16; // 256 * VID_GRADES size
-  int32_t fullbright;   // index of first fullbright color
-  uint32_t rowbytes;    // may be > width if displayed in a window
-  uint32_t width;
-  uint32_t height;
-  float aspect; // width / height -- < 0 is taller than wide
-  int32_t numpages;
-  int32_t recalc_refdef; // if true, recalc vid-based stuff
-  pixel_t *conbuffer;
-  int32_t conrowbytes;
-  uint32_t conwidth;
-  uint32_t conheight;
-  int32_t maxwarpwidth;
-  int32_t maxwarpheight;
-  pixel_t *direct; // direct drawing to framebuffer, if not
-                   //  NULL
+typedef struct
+{
+    pixel_t *buffer;      // invisible buffer
+    pixel_t *colormap;    // 256 * VID_GRADES size
+    uint16_t *colormap16; // 256 * VID_GRADES size
+    int32_t fullbright;   // index of first fullbright color
+    uint32_t rowbytes;    // may be > width if displayed in a window
+    uint32_t width;
+    uint32_t height;
+    float aspect; // width / height -- < 0 is taller than wide
+    int32_t numpages;
+    int32_t recalc_refdef; // if true, recalc vid-based stuff
+    pixel_t *conbuffer;
+    int32_t conrowbytes;
+    uint32_t conwidth;
+    uint32_t conheight;
+    int32_t maxwarpwidth;
+    int32_t maxwarpheight;
+    pixel_t *direct; // direct drawing to framebuffer, if not
+                     //  NULL
 } viddef_t;
 
 extern viddef_t vid; // global video state

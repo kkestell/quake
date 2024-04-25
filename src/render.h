@@ -8,73 +8,76 @@
 
 //=============================================================================
 
-typedef struct efrag_s {
-  struct mleaf_s *leaf;
-  struct efrag_s *leafnext;
-  struct entity_s *entity;
-  struct efrag_s *entnext;
+typedef struct efrag_s
+{
+    struct mleaf_s *leaf;
+    struct efrag_s *leafnext;
+    struct entity_s *entity;
+    struct efrag_s *entnext;
 } efrag_t;
 
-typedef struct entity_s {
-  bool forcelink; // model changed
+typedef struct entity_s
+{
+    bool forcelink; // model changed
 
-  int32_t update_type;
+    int32_t update_type;
 
-  entity_state_t baseline; // to fill in defaults in updates
+    entity_state_t baseline; // to fill in defaults in updates
 
-  double msgtime;        // time of last update
-  vec3_t msg_origins[2]; // last two updates (0 is newest)
-  vec3_t origin;
-  vec3_t msg_angles[2]; // last two updates (0 is newest)
-  vec3_t angles;
-  struct model_s *model; // NULL = no model
-  struct efrag_s *efrag; // linked list of efrags
-  int32_t frame;
-  float syncbase; // for client-side animations
-  uint8_t *colormap;
-  int32_t effects;  // light, particals, etc
-  int32_t skinnum;  // for Alias models
-  int32_t visframe; // last frame this entity was
-                    //  found in an active leaf
+    double msgtime;        // time of last update
+    vec3_t msg_origins[2]; // last two updates (0 is newest)
+    vec3_t origin;
+    vec3_t msg_angles[2]; // last two updates (0 is newest)
+    vec3_t angles;
+    struct model_s *model; // NULL = no model
+    struct efrag_s *efrag; // linked list of efrags
+    int32_t frame;
+    float syncbase; // for client-side animations
+    uint8_t *colormap;
+    int32_t effects;  // light, particals, etc
+    int32_t skinnum;  // for Alias models
+    int32_t visframe; // last frame this entity was
+                      //  found in an active leaf
 
-  int32_t dlightframe; // dynamic lighting
-  int32_t dlightbits;
+    int32_t dlightframe; // dynamic lighting
+    int32_t dlightbits;
 
-  // FIXME: could turn these into a union
-  int32_t trivial_accept;
-  struct mnode_s *topnode; // for bmodels, first world node
-                           //  that splits bmodel, or NULL if
-                           //  not split
+    // FIXME: could turn these into a union
+    int32_t trivial_accept;
+    struct mnode_s *topnode; // for bmodels, first world node
+                             //  that splits bmodel, or NULL if
+                             //  not split
 } entity_t;
 
 // !!! if this is changed, it must be changed in asm_draw.h too !!!
-typedef struct {
-  vrect_t vrect;                   // subwindow in video for refresh
-                                   // FIXME: not need vrect next field here?
-  vrect_t aliasvrect;              // scaled Alias version
-  int32_t vrectright, vrectbottom; // right & bottom screen coords
-  int32_t aliasvrectright, aliasvrectbottom; // scaled Alias versions
-  float vrectrightedge;           // rightmost right edge we care about,
-                                  //  for use in edge list
-  float fvrectx, fvrecty;         // for floating-point compares
-  float fvrectx_adj, fvrecty_adj; // left and top edges, for clamping
-  int32_t vrect_x_adj_shift20;    // (vrect.x + 0.5 - epsilon) << 20
-  int32_t vrectright_adj_shift20; // (vrectright + 0.5 - epsilon) << 20
-  float fvrectright_adj, fvrectbottom_adj;
-  // right and bottom edges, for clamping
-  float fvrectright;           // rightmost edge, for Alias clamping
-  float fvrectbottom;          // bottommost edge, for Alias clamping
-  float horizontalFieldOfView; // at Z = 1.0, this many X is visible
-                               // 2.0 = 90 degrees
-  float xOrigin;               // should probably allways be 0.5
-  float yOrigin;               // between be around 0.3 to 0.5
+typedef struct
+{
+    vrect_t vrect;                             // subwindow in video for refresh
+                                               // FIXME: not need vrect next field here?
+    vrect_t aliasvrect;                        // scaled Alias version
+    int32_t vrectright, vrectbottom;           // right & bottom screen coords
+    int32_t aliasvrectright, aliasvrectbottom; // scaled Alias versions
+    float vrectrightedge;                      // rightmost right edge we care about,
+                                               //  for use in edge list
+    float fvrectx, fvrecty;                    // for floating-point compares
+    float fvrectx_adj, fvrecty_adj;            // left and top edges, for clamping
+    int32_t vrect_x_adj_shift20;               // (vrect.x + 0.5 - epsilon) << 20
+    int32_t vrectright_adj_shift20;            // (vrectright + 0.5 - epsilon) << 20
+    float fvrectright_adj, fvrectbottom_adj;
+    // right and bottom edges, for clamping
+    float fvrectright;           // rightmost edge, for Alias clamping
+    float fvrectbottom;          // bottommost edge, for Alias clamping
+    float horizontalFieldOfView; // at Z = 1.0, this many X is visible
+                                 // 2.0 = 90 degrees
+    float xOrigin;               // should probably allways be 0.5
+    float yOrigin;               // between be around 0.3 to 0.5
 
-  vec3_t vieworg;
-  vec3_t viewangles;
+    vec3_t vieworg;
+    vec3_t viewangles;
 
-  float fov_x, fov_y;
+    float fov_x, fov_y;
 
-  int32_t ambientlight;
+    int32_t ambientlight;
 } refdef_t;
 
 //

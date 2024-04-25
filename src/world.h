@@ -1,18 +1,20 @@
 // world.h
 
-typedef struct {
-  vec3_t normal;
-  float dist;
+typedef struct
+{
+    vec3_t normal;
+    float dist;
 } plane_t;
 
-typedef struct {
-  bool allsolid;   // if true, plane is not valid
-  bool startsolid; // if true, the initial point was in a solid area
-  bool inopen, inwater;
-  float fraction; // time completed, 1.0 = didn't hit anything
-  vec3_t endpos;  // final position
-  plane_t plane;  // surface normal at impact
-  edict_t *ent;   // entity the surface is on
+typedef struct
+{
+    bool allsolid;   // if true, plane is not valid
+    bool startsolid; // if true, the initial point was in a solid area
+    bool inopen, inwater;
+    float fraction; // time completed, 1.0 = didn't hit anything
+    vec3_t endpos;  // final position
+    plane_t plane;  // surface normal at impact
+    edict_t *ent;   // entity the surface is on
 } trace_t;
 
 #define MOVE_NORMAL 0
@@ -41,8 +43,7 @@ int32_t SV_TruePointContents(vec3_t p);
 
 edict_t *SV_TestEntityPosition(edict_t *ent);
 
-trace_t SV_Move(vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end,
-                int32_t type, edict_t *passedict);
+trace_t SV_Move(vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, int32_t type, edict_t *passedict);
 // mins and maxs are reletive
 
 // if the entire move stays in a solid volume, trace.allsolid will be set
