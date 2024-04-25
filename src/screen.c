@@ -525,8 +525,8 @@ typedef struct
 WritePCXfile 
 ============== 
 */ 
-void WritePCXfile (char *filename, byte *data, int32_t width, int32_t height,
-	int32_t rowbytes, byte *palette) 
+void WritePCXfile (char *filename, uint8_t *data, int32_t width, int32_t height,
+	int32_t rowbytes, uint8_t *palette) 
 {
 	int32_t		i, j, length;
 	pcx_t	*pcx;
@@ -580,7 +580,7 @@ void WritePCXfile (char *filename, byte *data, int32_t width, int32_t height,
 		*pack++ = *palette++;
 		
 // write output file 
-	length = pack - (byte *)pcx;
+	length = pack - (uint8_t *)pcx;
 	COM_WriteFile (filename, pcx, length);
 } 
  

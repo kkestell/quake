@@ -323,7 +323,7 @@ void alarm_handler(int32_t x)
     oktogo = 1;
 }
 
-byte *Sys_ZoneBase(int32_t *size)
+uint8_t *Sys_ZoneBase(int32_t *size)
 {
 
     char *QUAKEOPT = getenv("QUAKEOPT");

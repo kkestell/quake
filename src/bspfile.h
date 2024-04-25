@@ -262,8 +262,8 @@ extern	int32_t			numsurfedges;
 extern	int32_t			dsurfedges[MAX_MAP_SURFEDGES];
 
 
-void DecompressVis (byte *in, byte *decompressed);
-int32_t CompressVis (byte *vis, byte *dest);
+void DecompressVis (uint8_t *in, uint8_t *decompressed);
+int32_t CompressVis (uint8_t *vis, uint8_t *dest);
 
 void	LoadBSPFile (int8_t *filename);
 void	WriteBSPFile (int8_t *filename);

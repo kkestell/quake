@@ -529,11 +529,11 @@ while (1)
 	case OP_STOREP_FLD:		// integers
 	case OP_STOREP_S:
 	case OP_STOREP_FNC:		// pointers
-		ptr = (eval_t *)((byte *)sv.edicts + b->_int);
+		ptr = (eval_t *)((uint8_t *)sv.edicts + b->_int);
 		ptr->_int = a->_int;
 		break;
 	case OP_STOREP_V:
-		ptr = (eval_t *)((byte *)sv.edicts + b->_int);
+		ptr = (eval_t *)((uint8_t *)sv.edicts + b->_int);
 		ptr->vector[0] = a->vector[0];
 		ptr->vector[1] = a->vector[1];
 		ptr->vector[2] = a->vector[2];
@@ -543,7 +543,7 @@ while (1)
 		ed = PROG_TO_EDICT(a->edict);
 		if (ed == (edict_t *)sv.edicts && sv.state == ss_active)
 			PR_RunError ("assignment to world entity");
-		c->_int = (byte *)((int32_t *)&ed->v + b->_int) - (byte *)sv.edicts;
+		c->_int = (uint8_t *)((int32_t *)&ed->v + b->_int) - (uint8_t *)sv.edicts;
 		break;
 		
 	case OP_LOAD_F:

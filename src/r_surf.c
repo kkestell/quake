@@ -227,7 +227,7 @@ void R_DrawSurface (void)
 
 	mt = r_drawsurf.texture;
 	
-	r_source = (byte *)mt + mt->offsets[r_drawsurf.surfmip];
+	r_source = (uint8_t *)mt + mt->offsets[r_drawsurf.surfmip];
 	
 // the fractional light values should range from 0 to (VID_GRADES - 1) << 16
 // from a source range of 0 - 255
@@ -559,7 +559,7 @@ void R_GenTurbTile (pixel_t *pbasetex, void *pdest)
 	uint8_t	*pd;
 	
 	turb = sintable + ((int32_t)(cl.time*SPEED)&(CYCLE-1));
-	pd = (byte *)pdest;
+	pd = (uint8_t *)pdest;
 
 	for (i=0 ; i<TILE_SIZE ; i++)
 	{
@@ -611,12 +611,12 @@ void R_GenTile (msurface_t *psurf, void *pdest)
 		if (r_pixbytes == 1)
 		{
 			R_GenTurbTile ((pixel_t *)
-				((byte *)psurf->texinfo->texture + psurf->texinfo->texture->offsets[0]), pdest);
+				((uint8_t *)psurf->texinfo->texture + psurf->texinfo->texture->offsets[0]), pdest);
 		}
 		else
 		{
 			R_GenTurbTile16 ((pixel_t *)
-				((byte *)psurf->texinfo->texture + psurf->texinfo->texture->offsets[0]), pdest);
+				((uint8_t *)psurf->texinfo->texture + psurf->texinfo->texture->offsets[0]), pdest);
 		}
 	}
 	else if (psurf->flags & SURF_DRAWSKY)

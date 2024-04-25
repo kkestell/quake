@@ -38,7 +38,7 @@ void D_SpriteDrawSpans (sspan_t *pspan)
 
 	do
 	{
-		pdest = (byte *)d_viewbuffer + (screenwidth * pspan->v) + pspan->u;
+		pdest = (uint8_t *)d_viewbuffer + (screenwidth * pspan->v) + pspan->u;
 		pz = d_pzbuffer + (d_zwidth * pspan->v) + pspan->u;
 
 		count = pspan->count;
@@ -402,7 +402,7 @@ void D_DrawSprite (void)
 
 	cachewidth = r_spritedesc.pspriteframe->width;
 	sprite_height = r_spritedesc.pspriteframe->height;
-	cacheblock = (byte *)&r_spritedesc.pspriteframe->pixels[0];
+	cacheblock = (uint8_t *)&r_spritedesc.pspriteframe->pixels[0];
 
 // copy the first vertex to the last vertex, so we don't have to deal with
 // wrapping

@@ -124,7 +124,7 @@ extern vec3_t	r_pright, r_pup, r_ppn;
 
 
 void D_Aff8Patch (void *pcolormap);
-void D_BeginDirectRect (int32_t x, int32_t y, byte *pbitmap, int32_t width, int32_t height);
+void D_BeginDirectRect (int32_t x, int32_t y, uint8_t *pbitmap, int32_t width, int32_t height);
 void D_DisableBackBufferAccess (void);
 void D_EndDirectRect (int32_t x, int32_t y, int32_t width, int32_t height);
 void D_PolysetDraw (void);

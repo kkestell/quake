@@ -125,8 +125,8 @@ void M_DrawPic (int32_t x, int32_t y, qpic_t *pic)
 	Draw_Pic (x + ((vid.width - 320)>>1), y, pic);
 }
 
-byte identityTable[256];
-byte translationTable[256];
+uint8_t identityTable[256];
+uint8_t translationTable[256];
 
 void M_BuildTranslationTable(int32_t top, int32_t bottom)
 {

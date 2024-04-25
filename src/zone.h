@@ -10,7 +10,7 @@ pointers.
 Hunk allocations should be given a name, so the Hunk_Print () function
 can display usage.
 
-Hunk allocations are guaranteed to be 16 byte aligned.
+Hunk allocations are guaranteed to be 16 uint8_t aligned.
 
 The video buffers are allocated high to avoid leaving a hole underneath
 server allocations when changing to a higher video mode.

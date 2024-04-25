@@ -35,23 +35,23 @@ int32_t     D_SurfaceCacheForRes (int32_t width, int32_t height)
 
 void D_CheckCacheGuard (void)
 {
-	byte    *s;
+	uint8_t    *s;
 	int32_t             i;
 
-	s = (byte *)sc_base + sc_size;
+	s = (uint8_t *)sc_base + sc_size;
 	for (i=0 ; i<GUARDSIZE ; i++)
-		if (s[i] != (byte)i)
+		if (s[i] != (uint8_t)i)
 			Sys_Error ("D_CheckCacheGuard: failed");
 }
 
 void D_ClearCacheGuard (void)
 {
-	byte    *s;
+	uint8_t    *s;
 	int32_t             i;
 	
-	s = (byte *)sc_base + sc_size;
+	s = (uint8_t *)sc_base + sc_size;
 	for (i=0 ; i<GUARDSIZE ; i++)
-		s[i] = (byte)i;
+		s[i] = (uint8_t)i;
 }
 
 
@@ -127,7 +127,7 @@ surfcache_t     *D_SCAlloc (int32_t width, int32_t size)
 // if there is not size bytes after the rover, reset to the start
 	wrapped_this_time = false;
 
-	if ( !sc_rover || (byte *)sc_rover - (byte *)sc_base > sc_size - size)
+	if ( !sc_rover || (uint8_t *)sc_rover - (uint8_t *)sc_base > sc_size - size)
 	{
 		if (sc_rover)
 		{
@@ -157,7 +157,7 @@ surfcache_t     *D_SCAlloc (int32_t width, int32_t size)
 // create a fragment out of any leftovers
 	if (new->size - size > 256)
 	{
-		sc_rover = (surfcache_t *)( (byte *)new + size);
+		sc_rover = (surfcache_t *)( (uint8_t *)new + size);
 		sc_rover->size = new->size - size;
 		sc_rover->next = new->next;
 		sc_rover->width = 0;

@@ -145,9 +145,9 @@ typedef struct
 	int32_t 		(*CloseSocket) (int32_t socket);
 	int32_t 		(*Connect) (int32_t socket, struct qsockaddr *addr);
 	int32_t 		(*CheckNewConnections) (void);
-	int32_t 		(*Read) (int32_t socket, byte *buf, int32_t len, struct qsockaddr *addr);
-	int32_t 		(*Write) (int32_t socket, byte *buf, int32_t len, struct qsockaddr *addr);
-	int32_t 		(*Broadcast) (int32_t socket, byte *buf, int32_t len);
+	int32_t 		(*Read) (int32_t socket, uint8_t *buf, int32_t len, struct qsockaddr *addr);
+	int32_t 		(*Write) (int32_t socket, uint8_t *buf, int32_t len, struct qsockaddr *addr);
+	int32_t 		(*Broadcast) (int32_t socket, uint8_t *buf, int32_t len);
 	char *		(*AddrToString) (struct qsockaddr *addr);
 	int32_t 		(*StringToAddr) (char *string, struct qsockaddr *addr);
 	int32_t 		(*GetSocketAddr) (int32_t socket, struct qsockaddr *addr);

@@ -37,7 +37,7 @@ void D_FillRect (vrect_t *rect, int32_t color)
 	if (rwidth < 1 || rheight < 1)
 		return;
 
-	dest = ((byte *)vid.buffer + ry*vid.rowbytes + rx);
+	dest = ((uint8_t *)vid.buffer + ry*vid.rowbytes + rx);
 
 	if (((rwidth & 0x03) == 0) && (((int32_t)dest & 0x03) == 0))
 	{
@@ -52,7 +52,7 @@ void D_FillRect (vrect_t *rect, int32_t color)
 		{
 			for (rx=0 ; rx<rwidth ; rx++)
 				ldest[rx] = color;
-			ldest = (uint32_t *)((byte*)ldest + vid.rowbytes);
+			ldest = (uint32_t *)((uint8_t*)ldest + vid.rowbytes);
 		}
 	}
 	else

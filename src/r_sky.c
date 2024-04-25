@@ -39,7 +39,7 @@ void R_InitSky (texture_t *mt)
 	int32_t			i, j;
 	uint8_t		*src;
 
-	src = (byte *)mt + mt->offsets[0];
+	src = (uint8_t *)mt + mt->offsets[0];
 
 	for (i=0 ; i<128 ; i++)
 	{
@@ -119,10 +119,10 @@ void R_MakeSky (void)
 		{
 			ofs = baseofs + ((x+xshift) & SKYMASK);
 
-			*(byte *)pnewsky = (*((byte *)pnewsky + 128) &
-						*(byte *)&bottommask[ofs]) |
-						*(byte *)&bottomsky[ofs];
-			pnewsky = (uint32_t *)((byte *)pnewsky + 1);
+			*(uint8_t *)pnewsky = (*((uint8_t *)pnewsky + 128) &
+						*(uint8_t *)&bottommask[ofs]) |
+						*(uint8_t *)&bottomsky[ofs];
+			pnewsky = (uint32_t *)((uint8_t *)pnewsky + 1);
 		}
 
 #endif
@@ -179,11 +179,11 @@ void R_GenSkyTile (void *pdest)
 		{
 			ofs = baseofs + ((x+xshift) & SKYMASK);
 
-			*(byte *)pd = (*((byte *)pnewsky + 128) &
-						*(byte *)&bottommask[ofs]) |
-						*(byte *)&bottomsky[ofs];
-			pnewsky = (uint32_t *)((byte *)pnewsky + 1);
-			pd = (uint32_t *)((byte *)pd + 1);
+			*(uint8_t *)pd = (*((uint8_t *)pnewsky + 128) &
+						*(uint8_t *)&bottommask[ofs]) |
+						*(uint8_t *)&bottomsky[ofs];
+			pnewsky = (uint32_t *)((uint8_t *)pnewsky + 1);
+			pd = (uint32_t *)((uint8_t *)pd + 1);
 		}
 
 #endif
@@ -209,7 +209,7 @@ void R_GenSkyTile16 (void *pdest)
 	xshift = skytime * skyspeed;
 	yshift = skytime * skyspeed;
 
-	pnewsky = (byte *)&newsky[0];
+	pnewsky = (uint8_t *)&newsky[0];
 	pd = (uint16_t *)pdest;
 
 	for (y=0 ; y<SKYSIZE ; y++)
@@ -223,8 +223,8 @@ void R_GenSkyTile16 (void *pdest)
 			ofs = baseofs + ((x+xshift) & SKYMASK);
 
 			*pd = d_8to16table[(*(pnewsky + 128) &
-					*(byte *)&bottommask[ofs]) |
-					*(byte *)&bottomsky[ofs]];
+					*(uint8_t *)&bottommask[ofs]) |
+					*(uint8_t *)&bottomsky[ofs]];
 			pnewsky++;
 			pd++;
 		}

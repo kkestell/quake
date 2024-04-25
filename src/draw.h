@@ -9,7 +9,7 @@ void Draw_Character (int32_t x, int32_t y, int32_t num);
 void Draw_DebugChar (char num);
 void Draw_Pic (int32_t x, int32_t y, qpic_t *pic);
 void Draw_TransPic (int32_t x, int32_t y, qpic_t *pic);
-void Draw_TransPicTranslate (int32_t x, int32_t y, qpic_t *pic, byte *translation);
+void Draw_TransPicTranslate (int32_t x, int32_t y, qpic_t *pic, uint8_t *translation);
 void Draw_ConsoleBackground (int32_t lines);
 void Draw_BeginDisc (void);
 void Draw_EndDisc (void);

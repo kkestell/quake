@@ -51,7 +51,7 @@ void CRC_Init(uint16_t *crcvalue)
 	*crcvalue = CRC_INIT_VALUE;
 }
 
-void CRC_ProcessByte(uint16_t *crcvalue, byte data)
+void CRC_ProcessByte(uint16_t *crcvalue, uint8_t data)
 {
 	*crcvalue = (*crcvalue << 8) ^ crctable[(*crcvalue >> 8) ^ data];
 }

@@ -41,7 +41,7 @@ void InsertLinkAfter (link_t *l, link_t *after);
 // (type *)STRUCT_FROM_LINK(link_t *link, type, member)
 // ent = STRUCT_FROM_LINK(link,entity_t,order)
 // FIXME: remove this mess!
-#define	STRUCT_FROM_LINK(l,t,m) ((t *)((byte *)l - (int32_t)&(((t *)0)->m)))
+#define	STRUCT_FROM_LINK(l,t,m) ((t *)((uint8_t *)l - (int32_t)&(((t *)0)->m)))
 
 //============================================================================
 
@@ -150,9 +150,9 @@ int32_t COM_OpenFile (char *filename, int32_t *hndl);
 int32_t COM_FOpenFile (char *filename, FILE **file);
 void COM_CloseFile (int32_t h);
 
-byte *COM_LoadStackFile (char *path, void *buffer, int32_t bufsize);
-byte *COM_LoadTempFile (char *path);
-byte *COM_LoadHunkFile (char *path);
+uint8_t *COM_LoadStackFile (char *path, void *buffer, int32_t bufsize);
+uint8_t *COM_LoadTempFile (char *path);
+uint8_t *COM_LoadHunkFile (char *path);
 void COM_LoadCacheFile (char *path, struct cache_user_s *cu);
 
 

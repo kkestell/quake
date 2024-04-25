@@ -15,7 +15,7 @@ uint16_t  d_8to16table[256];
 #define    BASEHEIGHT   (400)
 
 int32_t    VGA_width, VGA_height, VGA_rowbytes, VGA_bufferrowbytes = 0;
-byte    *VGA_pagebase;
+uint8_t    *VGA_pagebase;
 
 static SDL_Window *window = NULL;
 static SDL_Surface *screen = NULL;
@@ -53,7 +53,7 @@ void    VID_ShiftPalette(unsigned char *palette)
 void    VID_Init(unsigned char *palette)
 {
     int32_t pnum, chunk;
-    byte *cache;
+    uint8_t *cache;
     int32_t cachesize;
     Uint8 video_bpp;
     Uint16 video_w, video_h;
@@ -140,7 +140,7 @@ void    VID_Init(unsigned char *palette)
         Sys_Error("Not enough memory for video mode\n");
 
     // initialize the cache memory
-    cache = (byte *)d_pzbuffer
+    cache = (uint8_t *)d_pzbuffer
             + vid.width * vid.height * sizeof(*d_pzbuffer);
     D_InitCaches(cache, cachesize);
 
@@ -193,7 +193,7 @@ void    VID_Update(vrect_t *rects)
 D_BeginDirectRect
 ================
 */
-void D_BeginDirectRect(int32_t x, int32_t y, byte *pbitmap, int32_t width, int32_t height)
+void D_BeginDirectRect(int32_t x, int32_t y, uint8_t *pbitmap, int32_t width, int32_t height)
 {
     /*
     Uint8 *offset;

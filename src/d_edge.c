@@ -70,27 +70,27 @@ void D_DrawSolidSurface (surf_t *surf, int32_t color)
 	pix = (color<<24) | (color<<16) | (color<<8) | color;
 	for (span=surf->spans ; span ; span=span->pnext)
 	{
-		pdest = (byte *)d_viewbuffer + screenwidth*span->v;
+		pdest = (uint8_t *)d_viewbuffer + screenwidth*span->v;
 		u = span->u;
 		u2 = span->u + span->count - 1;
-		((byte *)pdest)[u] = pix;
+		((uint8_t *)pdest)[u] = pix;
 
 		if (u2 - u < 8)
 		{
 			for (u++ ; u <= u2 ; u++)
-				((byte *)pdest)[u] = pix;
+				((uint8_t *)pdest)[u] = pix;
 		}
 		else
 		{
 			for (u++ ; u & 3 ; u++)
-				((byte *)pdest)[u] = pix;
+				((uint8_t *)pdest)[u] = pix;
 
 			u2 -= 4;
 			for ( ; u <= u2 ; u+=4)
-				*(int32_t *)((byte *)pdest + u) = pix;
+				*(int32_t *)((uint8_t *)pdest + u) = pix;
 			u2 += 4;
 			for ( ; u <= u2 ; u++)
-				((byte *)pdest)[u] = pix;
+				((uint8_t *)pdest)[u] = pix;
 		}
 	}
 }
@@ -219,7 +219,7 @@ void D_DrawSurfaces (void)
 				pface = s->data;
 				miplevel = 0;
 				cacheblock = (pixel_t *)
-						((byte *)pface->texinfo->texture +
+						((uint8_t *)pface->texinfo->texture +
 						pface->texinfo->texture->offsets[0]);
 				cachewidth = 64;
 

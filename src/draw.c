@@ -170,7 +170,7 @@ void Draw_Character (int32_t x, int32_t y, int32_t num)
 	{
 	// FIXME: pre-expand to native format?
 		pusdest = (uint16_t *)
-				((byte *)vid.conbuffer + y*vid.conrowbytes + (x<<1));
+				((uint8_t *)vid.conbuffer + y*vid.conrowbytes + (x<<1));
 
 		while (drawline--)
 		{
@@ -398,7 +398,7 @@ void Draw_TransPic (int32_t x, int32_t y, qpic_t *pic)
 Draw_TransPicTranslate
 =============
 */
-void Draw_TransPicTranslate (int32_t x, int32_t y, qpic_t *pic, byte *translation)
+void Draw_TransPicTranslate (int32_t x, int32_t y, qpic_t *pic, uint8_t *translation)
 {
 	uint8_t	*dest, *source, tbyte;
 	uint16_t	*pusdest;
@@ -480,7 +480,7 @@ void Draw_TransPicTranslate (int32_t x, int32_t y, qpic_t *pic, byte *translatio
 }
 
 
-void Draw_CharToConback (int32_t num, byte *dest)
+void Draw_CharToConback (int32_t num, uint8_t *dest)
 {
 	int32_t		row, col;
 	uint8_t	*source;
@@ -601,7 +601,7 @@ void Draw_ConsoleBackground (int32_t lines)
 R_DrawRect8
 ==============
 */
-void R_DrawRect8 (vrect_t *prect, int32_t rowbytes, byte *psrc,
+void R_DrawRect8 (vrect_t *prect, int32_t rowbytes, uint8_t *psrc,
 	int32_t transparent)
 {
 	uint8_t	t;
@@ -650,7 +650,7 @@ void R_DrawRect8 (vrect_t *prect, int32_t rowbytes, byte *psrc,
 R_DrawRect16
 ==============
 */
-void R_DrawRect16 (vrect_t *prect, int32_t rowbytes, byte *psrc,
+void R_DrawRect16 (vrect_t *prect, int32_t rowbytes, uint8_t *psrc,
 	int32_t transparent)
 {
 	uint8_t			t;
@@ -828,7 +828,7 @@ void Draw_FadeScreen (void)
 	{
 		int32_t	t;
 
-		pbuf = (byte *)(vid.buffer + vid.rowbytes*y);
+		pbuf = (uint8_t *)(vid.buffer + vid.rowbytes*y);
 		t = (y & 1) << 1;
 
 		for (x=0 ; x<vid.width ; x++)

@@ -6,7 +6,7 @@ extern int32_t con_totallines;
 extern int32_t con_backscroll;
 extern	qboolean con_forcedup;	// because no entities to refresh
 extern qboolean con_initialized;
-extern byte *con_chars;
+extern uint8_t *con_chars;
 extern	int32_t	con_notifylines;		// scan lines to clear for notify lines
 
 void Con_DrawCharacter (int32_t cx, int32_t line, int32_t num);
