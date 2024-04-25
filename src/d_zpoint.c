@@ -13,11 +13,11 @@ void D_DrawZPoint (void)
 {
 	byte	*pdest;
 	short	*pz;
-	int		izi;
+	int32_t		izi;
 	
 	pz = d_pzbuffer + (d_zwidth * r_zpointdesc.v) + r_zpointdesc.u;
 	pdest = d_viewbuffer + d_scantable[r_zpointdesc.v] + r_zpointdesc.u;
-	izi = (int)(r_zpointdesc.zi * 0x8000);
+	izi = (int32_t)(r_zpointdesc.zi * 0x8000);
 
 	if (*pz <= izi)
 	{

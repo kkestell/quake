@@ -3,7 +3,7 @@
 #include "quakedef.h"
 #include "net_vcr.h"
 
-extern int vcrFile;
+extern int32_t vcrFile;
 
 // This is the playback portion of the VCR.  It reads the file produced
 // by the recorder and plays it back to the host.  The recording contains
@@ -13,11 +13,11 @@ extern int vcrFile;
 static struct
 {
 	double	time;
-	int		op;
+	int32_t		op;
 	int32_t	session;
 }	next;
 
-int VCR_Init (void)
+int32_t VCR_Init (void)
 {
 	net_drivers[0].Init = VCR_Init;
 
@@ -56,21 +56,21 @@ void VCR_Shutdown (void)
 }
 
 
-int VCR_GetMessage (qsocket_t *sock)
+int32_t VCR_GetMessage (qsocket_t *sock)
 {
-	int	ret;
+	int32_t	ret;
 	
 	if (host_time != next.time || next.op != VCR_OP_GETMESSAGE || next.session != *(int32_t *)(&sock->driverdata))
 		Sys_Error ("VCR missmatch");
 
-	Sys_FileRead(vcrFile, &ret, sizeof(int));
+	Sys_FileRead(vcrFile, &ret, sizeof(int32_t));
 	if (ret != 1)
 	{
 		VCR_ReadNext ();
 		return ret;
 	}
 
-	Sys_FileRead(vcrFile, &net_message.cursize, sizeof(int));
+	Sys_FileRead(vcrFile, &net_message.cursize, sizeof(int32_t));
 	Sys_FileRead(vcrFile, net_message.data, net_message.cursize);
 
 	VCR_ReadNext ();
@@ -79,14 +79,14 @@ int VCR_GetMessage (qsocket_t *sock)
 }
 
 
-int VCR_SendMessage (qsocket_t *sock, sizebuf_t *data)
+int32_t VCR_SendMessage (qsocket_t *sock, sizebuf_t *data)
 {
-	int	ret;
+	int32_t	ret;
 
 	if (host_time != next.time || next.op != VCR_OP_SENDMESSAGE || next.session != *(int32_t *)(&sock->driverdata))
 		Sys_Error ("VCR missmatch");
 
-	Sys_FileRead(vcrFile, &ret, sizeof(int));
+	Sys_FileRead(vcrFile, &ret, sizeof(int32_t));
 
 	VCR_ReadNext ();
 
@@ -101,7 +101,7 @@ qboolean VCR_CanSendMessage (qsocket_t *sock)
 	if (host_time != next.time || next.op != VCR_OP_CANSENDMESSAGE || next.session != *(int32_t *)(&sock->driverdata))
 		Sys_Error ("VCR missmatch");
 
-	Sys_FileRead(vcrFile, &ret, sizeof(int));
+	Sys_FileRead(vcrFile, &ret, sizeof(int32_t));
 
 	VCR_ReadNext ();
 

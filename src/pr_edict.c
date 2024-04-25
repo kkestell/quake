@@ -10,13 +10,13 @@ ddef_t			*pr_globaldefs;
 dstatement_t	*pr_statements;
 globalvars_t	*pr_global_struct;
 float			*pr_globals;			// same as pr_global_struct
-int				pr_edict_size;	// in bytes
+int32_t				pr_edict_size;	// in bytes
 
 unsigned short		pr_crc;
 
-int		type_size[8] = {1,sizeof(string_t)/4,1,3,1,1,sizeof(func_t)/4,sizeof(void *)/4};
+int32_t		type_size[8] = {1,sizeof(string_t)/4,1,3,1,1,sizeof(func_t)/4,sizeof(void *)/4};
 
-ddef_t *ED_FieldAtOfs (int ofs);
+ddef_t *ED_FieldAtOfs (int32_t ofs);
 qboolean	ED_ParseEpair (void *base, ddef_t *key, char *s);
 
 cvar_t	nomonsters = {"nomonsters", "0"};
@@ -67,7 +67,7 @@ angles and bad trails.
 */
 edict_t *ED_Alloc (void)
 {
-	int			i;
+	int32_t			i;
 	edict_t		*e;
 
 	for ( i=svs.maxclients+1 ; i<sv.num_edicts ; i++)
@@ -126,10 +126,10 @@ void ED_Free (edict_t *ed)
 ED_GlobalAtOfs
 ============
 */
-ddef_t *ED_GlobalAtOfs (int ofs)
+ddef_t *ED_GlobalAtOfs (int32_t ofs)
 {
 	ddef_t		*def;
-	int			i;
+	int32_t			i;
 	
 	for (i=0 ; i<progs->numglobaldefs ; i++)
 	{
@@ -145,10 +145,10 @@ ddef_t *ED_GlobalAtOfs (int ofs)
 ED_FieldAtOfs
 ============
 */
-ddef_t *ED_FieldAtOfs (int ofs)
+ddef_t *ED_FieldAtOfs (int32_t ofs)
 {
 	ddef_t		*def;
-	int			i;
+	int32_t			i;
 	
 	for (i=0 ; i<progs->numfielddefs ; i++)
 	{
@@ -167,7 +167,7 @@ ED_FindField
 ddef_t *ED_FindField (char *name)
 {
 	ddef_t		*def;
-	int			i;
+	int32_t			i;
 	
 	for (i=0 ; i<progs->numfielddefs ; i++)
 	{
@@ -187,7 +187,7 @@ ED_FindGlobal
 ddef_t *ED_FindGlobal (char *name)
 {
 	ddef_t		*def;
-	int			i;
+	int32_t			i;
 	
 	for (i=0 ; i<progs->numglobaldefs ; i++)
 	{
@@ -207,7 +207,7 @@ ED_FindFunction
 dfunction_t *ED_FindFunction (char *name)
 {
 	dfunction_t		*func;
-	int				i;
+	int32_t				i;
 	
 	for (i=0 ; i<progs->numfunctions ; i++)
 	{
@@ -222,8 +222,8 @@ dfunction_t *ED_FindFunction (char *name)
 eval_t *GetEdictFieldValue(edict_t *ed, char *field)
 {
 	ddef_t			*def = NULL;
-	int				i;
-	static int		rep = 0;
+	int32_t				i;
+	static int32_t		rep = 0;
 
 	for (i=0 ; i<GEFV_CACHESIZE ; i++)
 	{
@@ -359,10 +359,10 @@ Returns a string with a description and the contents of a global,
 padded to 20 field width
 ============
 */
-char *PR_GlobalString (int ofs)
+char *PR_GlobalString (int32_t ofs)
 {
 	char	*s;
-	int		i;
+	int32_t		i;
 	ddef_t	*def;
 	void	*val;
 	static char	line[128];
@@ -385,9 +385,9 @@ char *PR_GlobalString (int ofs)
 	return line;
 }
 
-char *PR_GlobalStringNoContents (int ofs)
+char *PR_GlobalStringNoContents (int32_t ofs)
 {
-	int		i;
+	int32_t		i;
 	ddef_t	*def;
 	static char	line[128];
 	
@@ -415,12 +415,12 @@ For debugging
 */
 void ED_Print (edict_t *ed)
 {
-	int		l;
+	int32_t		l;
 	ddef_t	*d;
-	int		*v;
-	int		i, j;
+	int32_t		*v;
+	int32_t		i, j;
 	char	*name;
-	int		type;
+	int32_t		type;
 
 	if (ed->free)
 	{
@@ -436,7 +436,7 @@ void ED_Print (edict_t *ed)
 		if (name[strlen(name)-2] == '_')
 			continue;	// skip _x, _y, _z vars
 			
-		v = (int *)((char *)&ed->v + d->ofs*4);
+		v = (int32_t *)((char *)&ed->v + d->ofs*4);
 
 	// if the value is still all 0, skip the field
 		type = d->type & ~DEF_SAVEGLOBAL;
@@ -466,10 +466,10 @@ For savegames
 void ED_Write (FILE *f, edict_t *ed)
 {
 	ddef_t	*d;
-	int		*v;
-	int		i, j;
+	int32_t		*v;
+	int32_t		i, j;
 	char	*name;
-	int		type;
+	int32_t		type;
 
 	fprintf (f, "{\n");
 
@@ -486,7 +486,7 @@ void ED_Write (FILE *f, edict_t *ed)
 		if (name[strlen(name)-2] == '_')
 			continue;	// skip _x, _y, _z vars
 			
-		v = (int *)((char *)&ed->v + d->ofs*4);
+		v = (int32_t *)((char *)&ed->v + d->ofs*4);
 
 	// if the value is still all 0, skip the field
 		type = d->type & ~DEF_SAVEGLOBAL;
@@ -503,7 +503,7 @@ void ED_Write (FILE *f, edict_t *ed)
 	fprintf (f, "}\n");
 }
 
-void ED_PrintNum (int ent)
+void ED_PrintNum (int32_t ent)
 {
 	ED_Print (EDICT_NUM(ent));
 }
@@ -517,7 +517,7 @@ For debugging, prints all the entities in the current server
 */
 void ED_PrintEdicts (void)
 {
-	int		i;
+	int32_t		i;
 	
 	Con_Printf ("%i entities\n", sv.num_edicts);
 	for (i=0 ; i<sv.num_edicts ; i++)
@@ -533,7 +533,7 @@ For debugging, prints a single edicy
 */
 void ED_PrintEdict_f (void)
 {
-	int		i;
+	int32_t		i;
 	
 	i = Q_atoi (Cmd_Argv(1));
 	if (i >= sv.num_edicts)
@@ -553,9 +553,9 @@ For debugging
 */
 void ED_Count (void)
 {
-	int		i;
+	int32_t		i;
 	edict_t	*ent;
-	int		active, models, solid, step;
+	int32_t		active, models, solid, step;
 
 	active = models = solid = step = 0;
 	for (i=0 ; i<sv.num_edicts ; i++)
@@ -597,9 +597,9 @@ ED_WriteGlobals
 void ED_WriteGlobals (FILE *f)
 {
 	ddef_t		*def;
-	int			i;
+	int32_t			i;
 	char		*name;
-	int			type;
+	int32_t			type;
 
 	fprintf (f,"{\n");
 	for (i=0 ; i<progs->numglobaldefs ; i++)
@@ -674,7 +674,7 @@ ED_NewString
 char *ED_NewString (char *string)
 {
 	char	*new, *new_p;
-	int		i,l;
+	int32_t		i,l;
 	
 	l = strlen(string) + 1;
 	new = Hunk_Alloc (l);
@@ -708,14 +708,14 @@ returns false if error
 */
 qboolean	ED_ParseEpair (void *base, ddef_t *key, char *s)
 {
-	int		i;
+	int32_t		i;
 	char	string[128];
 	ddef_t	*def;
 	char	*v, *w;
 	void	*d;
 	dfunction_t	*func;
 	
-	d = (void *)((int *)base + key->ofs);
+	d = (void *)((int32_t *)base + key->ofs);
 	
 	switch (key->type & ~DEF_SAVEGLOBAL)
 	{
@@ -742,7 +742,7 @@ qboolean	ED_ParseEpair (void *base, ddef_t *key, char *s)
 		break;
 		
 	case ev_entity:
-		*(int *)d = EDICT_TO_PROG(EDICT_NUM(atoi (s)));
+		*(int32_t *)d = EDICT_TO_PROG(EDICT_NUM(atoi (s)));
 		break;
 		
 	case ev_field:
@@ -752,7 +752,7 @@ qboolean	ED_ParseEpair (void *base, ddef_t *key, char *s)
 			Con_Printf ("Can't find field %s\n", s);
 			return false;
 		}
-		*(int *)d = G_INT(def->ofs);
+		*(int32_t *)d = G_INT(def->ofs);
 		break;
 	
 	case ev_function:
@@ -786,7 +786,7 @@ char *ED_ParseEdict (char *data, edict_t *ent)
 	qboolean	anglehack;
 	qboolean	init;
 	char		keyname[256];
-	int			n;
+	int32_t			n;
 
 	init = false;
 
@@ -886,7 +886,7 @@ to call ED_CallSpawnFunctions () to let the objects initialize themselves.
 void ED_LoadFromFile (char *data)
 {	
 	edict_t		*ent;
-	int			inhibit;
+	int32_t			inhibit;
 	dfunction_t	*func;
 	
 	ent = NULL;
@@ -912,16 +912,16 @@ void ED_LoadFromFile (char *data)
 // remove things from different skill levels or deathmatch
 		if (deathmatch.value)
 		{
-			if (((int)ent->v.spawnflags & SPAWNFLAG_NOT_DEATHMATCH))
+			if (((int32_t)ent->v.spawnflags & SPAWNFLAG_NOT_DEATHMATCH))
 			{
 				ED_Free (ent);	
 				inhibit++;
 				continue;
 			}
 		}
-		else if ((current_skill == 0 && ((int)ent->v.spawnflags & SPAWNFLAG_NOT_EASY))
-				|| (current_skill == 1 && ((int)ent->v.spawnflags & SPAWNFLAG_NOT_MEDIUM))
-				|| (current_skill >= 2 && ((int)ent->v.spawnflags & SPAWNFLAG_NOT_HARD)) )
+		else if ((current_skill == 0 && ((int32_t)ent->v.spawnflags & SPAWNFLAG_NOT_EASY))
+				|| (current_skill == 1 && ((int32_t)ent->v.spawnflags & SPAWNFLAG_NOT_MEDIUM))
+				|| (current_skill >= 2 && ((int32_t)ent->v.spawnflags & SPAWNFLAG_NOT_HARD)) )
 		{
 			ED_Free (ent);	
 			inhibit++;
@@ -965,7 +965,7 @@ PR_LoadProgs
 */
 void PR_LoadProgs (void)
 {
-	int		i;
+	int32_t		i;
 
 // flush the non-C variable lookup cache
 	for (i=0 ; i<GEFV_CACHESIZE ; i++)
@@ -983,7 +983,7 @@ void PR_LoadProgs (void)
 
 // byte swap the header
 	for (i=0 ; i<sizeof(*progs)/4 ; i++)
-		((int *)progs)[i] = LittleLong ( ((int *)progs)[i] );		
+		((int32_t *)progs)[i] = LittleLong ( ((int32_t *)progs)[i] );		
 
 	if (progs->version != PROG_VERSION)
 		Sys_Error ("progs.dat has wrong version number (%i should be %i)", progs->version, PROG_VERSION);
@@ -1037,7 +1037,7 @@ void PR_LoadProgs (void)
 	}
 
 	for (i=0 ; i<progs->numglobals ; i++)
-		((int *)pr_globals)[i] = LittleLong (((int *)pr_globals)[i]);
+		((int32_t *)pr_globals)[i] = LittleLong (((int32_t *)pr_globals)[i]);
 }
 
 
@@ -1067,16 +1067,16 @@ void PR_Init (void)
 
 
 
-edict_t *EDICT_NUM(int n)
+edict_t *EDICT_NUM(int32_t n)
 {
 	if (n < 0 || n >= sv.max_edicts)
 		Sys_Error ("EDICT_NUM: bad number %i", n);
 	return (edict_t *)((byte *)sv.edicts+ (n)*pr_edict_size);
 }
 
-int NUM_FOR_EDICT(edict_t *e)
+int32_t NUM_FOR_EDICT(edict_t *e)
 {
-	int		b;
+	int32_t		b;
 	
 	b = (byte *)e - (byte *)sv.edicts;
 	b = b / pr_edict_size;

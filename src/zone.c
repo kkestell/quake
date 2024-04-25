@@ -9,16 +9,16 @@
 
 typedef struct memblock_s
 {
-	int		size;           // including the header and possibly tiny fragments
+	int32_t		size;           // including the header and possibly tiny fragments
 	int32_t     tag;            // a tag of 0 is a free block
 	int32_t     id;        		// should be ZONEID
 	struct memblock_s       *next, *prev;
-	int		pad;			// pad to 64 bit boundary
+	int32_t		pad;			// pad to 64 bit boundary
 } memblock_t;
 
 typedef struct
 {
-	int		size;		// total bytes malloced, including header
+	int32_t		size;		// total bytes malloced, including header
 	memblock_t	blocklist;		// start / end cap for linked list
 	memblock_t	*rover;
 } memzone_t;
@@ -135,7 +135,7 @@ Z_CheckHeap ();	// DEBUG
 
 void *Z_TagMalloc (int32_t size, int32_t tag)
 {
-	int		extra;
+	int32_t		extra;
 	memblock_t	*start, *rover, *new, *base;
 
 	if (!tag)
@@ -248,19 +248,19 @@ void Z_CheckHeap (void)
 
 typedef struct
 {
-	int		sentinal;
-	int		size;		// including sizeof(hunk_t), -1 = not allocated
+	int32_t		sentinal;
+	int32_t		size;		// including sizeof(hunk_t), -1 = not allocated
 	char	name[8];
 } hunk_t;
 
 byte	*hunk_base;
-int		hunk_size;
+int32_t		hunk_size;
 
-int		hunk_low_used;
-int		hunk_high_used;
+int32_t		hunk_low_used;
+int32_t		hunk_high_used;
 
 qboolean	hunk_tempactive;
-int		hunk_tempmark;
+int32_t		hunk_tempmark;
 
 void R_FreeTextures (void);
 
@@ -296,8 +296,8 @@ Otherwise, allocations with the same name will be totaled up before printing.
 void Hunk_Print (qboolean all)
 {
 	hunk_t	*h, *next, *endlow, *starthigh, *endhigh;
-	int		count, sum;
-	int		totalblocks;
+	int32_t		count, sum;
+	int32_t		totalblocks;
 	char	name[9];
 
 	name[8] = 0;
@@ -413,7 +413,7 @@ void *Hunk_Alloc (int32_t size)
 	return Hunk_AllocName (size, "unknown");
 }
 
-int	Hunk_LowMark (void)
+int32_t	Hunk_LowMark (void)
 {
 	return hunk_low_used;
 }
@@ -426,7 +426,7 @@ void Hunk_FreeToLowMark (int32_t mark)
 	hunk_low_used = mark;
 }
 
-int	Hunk_HighMark (void)
+int32_t	Hunk_HighMark (void)
 {
 	if (hunk_tempactive)
 	{
@@ -529,7 +529,7 @@ CACHE MEMORY
 
 typedef struct cache_system_s
 {
-	int						size;		// including this header
+	int32_t						size;		// including this header
 	cache_user_t			*user;
 	char					name[16];
 	struct cache_system_s	*prev, *next;

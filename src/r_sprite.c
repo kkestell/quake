@@ -3,9 +3,9 @@
 #include "quakedef.h"
 #include "r_local.h"
 
-static int				clip_current;
+static int32_t				clip_current;
 static vec5_t			clip_verts[2][MAXWORKINGVERTS];
-static int				sprite_width, sprite_height;
+static int32_t				sprite_width, sprite_height;
 
 spritedesc_t			r_spritedesc;
 	
@@ -36,9 +36,9 @@ Clips the winding at clip_verts[clip_current] and changes clip_current
 Throws out the back side
 ==============
 */
-int R_ClipSpriteFace (int nump, clipplane_t *pclipplane)
+int32_t R_ClipSpriteFace (int32_t nump, clipplane_t *pclipplane)
 {
-	int		i, outcount;
+	int32_t		i, outcount;
 	float	dists[MAXWORKINGVERTS+1];
 	float	frac, clipdist, *pclipnormal;
 	float	*in, *instep, *outstep, *vert2;
@@ -116,7 +116,7 @@ R_SetupAndDrawSprite
 */
 void R_SetupAndDrawSprite ()
 {
-	int			i, nump;
+	int32_t			i, nump;
 	float		dot, scale, *pv;
 	vec5_t		*pverts;
 	vec3_t		left, up, right, down, transformed, local;
@@ -218,7 +218,7 @@ mspriteframe_t *R_GetSpriteframe (msprite_t *psprite)
 {
 	mspritegroup_t	*pspritegroup;
 	mspriteframe_t	*pspriteframe;
-	int				i, numframes, frame;
+	int32_t				i, numframes, frame;
 	float			*pintervals, fullinterval, targettime, time;
 
 	frame = currententity->frame;
@@ -244,7 +244,7 @@ mspriteframe_t *R_GetSpriteframe (msprite_t *psprite)
 
 	// when loading in Mod_LoadSpriteGroup, we guaranteed all interval values
 	// are positive, so we don't have to worry about division by 0
-		targettime = time - ((int)(time / fullinterval)) * fullinterval;
+		targettime = time - ((int32_t)(time / fullinterval)) * fullinterval;
 
 		for (i=0 ; i<(numframes-1) ; i++)
 		{
@@ -266,7 +266,7 @@ R_DrawSprite
 */
 void R_DrawSprite (void)
 {
-	int				i;
+	int32_t				i;
 	msprite_t		*psprite;
 	vec3_t			tvec;
 	float			dot, angle, sr, cr;

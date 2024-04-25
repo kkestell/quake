@@ -4,8 +4,8 @@
 #include "r_local.h"
 
 // only the refresh window will be updated unless these variables are flagged 
-int			scr_copytop;
-int			scr_copyeverything;
+int32_t			scr_copytop;
+int32_t			scr_copyeverything;
 
 float		scr_con_current;
 float		scr_conlines;		// lines of console to display
@@ -26,10 +26,10 @@ qpic_t		*scr_ram;
 qpic_t		*scr_net;
 qpic_t		*scr_turtle;
 
-int			scr_fullupdate;
+int32_t			scr_fullupdate;
 
-int			clearconsole;
-int			clearnotify;
+int32_t			clearconsole;
+int32_t			clearnotify;
 
 viddef_t	vid;				// global video state
 
@@ -56,9 +56,9 @@ CENTER PRINTING
 char		scr_centerstring[1024];
 float		scr_centertime_start;	// for slow victory printing
 float		scr_centertime_off;
-int			scr_center_lines;
-int			scr_erase_lines;
-int			scr_erase_center;
+int32_t			scr_center_lines;
+int32_t			scr_erase_lines;
+int32_t			scr_erase_center;
 
 /*
 ==============
@@ -86,7 +86,7 @@ void SCR_CenterPrint (char *str)
 
 void SCR_EraseCenterString (void)
 {
-	int		y;
+	int32_t		y;
 
 	if (scr_erase_center++ > vid.numpages)
 	{
@@ -106,10 +106,10 @@ void SCR_EraseCenterString (void)
 void SCR_DrawCenterString (void)
 {
 	char	*start;
-	int		l;
-	int		j;
-	int		x, y;
-	int		remaining;
+	int32_t		l;
+	int32_t		j;
+	int32_t		x, y;
+	int32_t		remaining;
 
 // the finale prints the characters one at a time
 	if (cl.intermission)
@@ -342,7 +342,7 @@ SCR_DrawTurtle
 */
 void SCR_DrawTurtle (void)
 {
-	static int	count;
+	static int32_t	count;
 	
 	if (!scr_showturtle.value)
 		return;
@@ -461,7 +461,7 @@ void SCR_SetUpToDrawConsole (void)
 	if (clearconsole++ < vid.numpages)
 	{
 		scr_copytop = 1;
-		Draw_TileClear (0,(int)scr_con_current,vid.width, vid.height - (int)scr_con_current);
+		Draw_TileClear (0,(int32_t)scr_con_current,vid.width, vid.height - (int32_t)scr_con_current);
 		Sbar_Changed ();
 	}
 	else if (clearnotify++ < vid.numpages)
@@ -525,10 +525,10 @@ typedef struct
 WritePCXfile 
 ============== 
 */ 
-void WritePCXfile (char *filename, byte *data, int width, int height,
-	int rowbytes, byte *palette) 
+void WritePCXfile (char *filename, byte *data, int32_t width, int32_t height,
+	int32_t rowbytes, byte *palette) 
 {
-	int		i, j, length;
+	int32_t		i, j, length;
 	pcx_t	*pcx;
 	byte		*pack;
 	  
@@ -593,7 +593,7 @@ SCR_ScreenShot_f
 */  
 void SCR_ScreenShot_f (void) 
 { 
-	int     i; 
+	int32_t     i; 
 	char		pcxname[80]; 
 	char		checkname[MAX_OSPATH];
 
@@ -687,9 +687,9 @@ qboolean	scr_drawdialog;
 void SCR_DrawNotifyString (void)
 {
 	char	*start;
-	int		l;
-	int		j;
-	int		x, y;
+	int32_t		l;
+	int32_t		j;
+	int32_t		x, y;
 
 	start = scr_notifystring;
 
@@ -724,7 +724,7 @@ Displays a text string in the center of the screen and waits for a Y or N
 keypress.  
 ==================
 */
-int SCR_ModalMessage (char *text)
+int32_t SCR_ModalMessage (char *text)
 {
 	if (cls.state == ca_dedicated)
 		return true;
@@ -763,7 +763,7 @@ Brings the console down and fades the palettes back to normal
 */
 void SCR_BringDownConsole (void)
 {
-	int		i;
+	int32_t		i;
 	
 	scr_centertime_off = 0;
 	

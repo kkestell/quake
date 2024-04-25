@@ -29,13 +29,13 @@ edge_t	*removeedges[MAXHEIGHT];
 
 espan_t	*span_p, *max_span_p;
 
-int		r_currentkey;
+int32_t		r_currentkey;
 
-extern	int	screenwidth;
+extern	int32_t	screenwidth;
 
-int	current_iv;
+int32_t	current_iv;
 
-int	edge_head_u_shift20, edge_tail_u_shift20;
+int32_t	edge_head_u_shift20, edge_tail_u_shift20;
 
 static void (*pdrawfunc)(void);
 
@@ -107,7 +107,7 @@ R_BeginEdgeFrame
 */
 void R_BeginEdgeFrame (void)
 {
-	int		v;
+	int32_t		v;
 
 	edge_p = r_edges;
 	edge_max = &r_edges[r_numallocatededges];
@@ -267,7 +267,7 @@ R_CleanupSpan
 void R_CleanupSpan ()
 {
 	surf_t	*surf;
-	int		iu;
+	int32_t		iu;
 	espan_t	*span;
 
 // now that we've reached the right edge of the screen, we're done with any
@@ -302,7 +302,7 @@ void R_LeadingEdgeBackwards (edge_t *edge)
 {
 	espan_t			*span;
 	surf_t			*surf, *surf2;
-	int				iu;
+	int32_t				iu;
 
 // it's adding a new surface in, so find the correct place
 	surf = &surfaces[edge->surfs[1]];
@@ -381,7 +381,7 @@ R_TrailingEdge
 void R_TrailingEdge (surf_t *surf, edge_t *edge)
 {
 	espan_t			*span;
-	int				iu;
+	int32_t				iu;
 
 // don't generate a span if this is an inverted span, with the end
 // edge preceding the start edge (that is, we haven't seen the
@@ -423,7 +423,7 @@ void R_LeadingEdge (edge_t *edge)
 {
 	espan_t			*span;
 	surf_t			*surf, *surf2;
-	int				iu;
+	int32_t				iu;
 	double			fu, newzi, testzi, newzitop, newzibottom;
 
 	if (edge->surfs[1])
@@ -621,7 +621,7 @@ Each surface has a linked list of its visible spans
 */
 void R_ScanEdges (void)
 {
-	int		iv, bottom;
+	int32_t		iv, bottom;
 	byte	basespans[MAXSPANS*sizeof(espan_t)+CACHE_SIZE];
 	espan_t	*basespan_p;
 	surf_t	*s;

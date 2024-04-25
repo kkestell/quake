@@ -7,14 +7,14 @@
 #define ABSOLUTE_MIN_PARTICLES	512		// no fewer than this no matter what's
 										//  on the command line
 
-int		ramp1[8] = {0x6f, 0x6d, 0x6b, 0x69, 0x67, 0x65, 0x63, 0x61};
-int		ramp2[8] = {0x6f, 0x6e, 0x6d, 0x6c, 0x6b, 0x6a, 0x68, 0x66};
-int		ramp3[8] = {0x6d, 0x6b, 6, 5, 4, 3};
+int32_t		ramp1[8] = {0x6f, 0x6d, 0x6b, 0x69, 0x67, 0x65, 0x63, 0x61};
+int32_t		ramp2[8] = {0x6f, 0x6e, 0x6d, 0x6c, 0x6b, 0x6a, 0x68, 0x66};
+int32_t		ramp3[8] = {0x6d, 0x6b, 6, 5, 4, 3};
 
 particle_t	*active_particles, *free_particles;
 
 particle_t	*particles;
-int			r_numparticles;
+int32_t			r_numparticles;
 
 vec3_t			r_pright, r_pup, r_ppn;
 
@@ -26,13 +26,13 @@ R_InitParticles
 */
 void R_InitParticles (void)
 {
-	int		i;
+	int32_t		i;
 
 	i = COM_CheckParm ("-particles");
 
 	if (i)
 	{
-		r_numparticles = (int)(Q_atoi(com_argv[i+1]));
+		r_numparticles = (int32_t)(Q_atoi(com_argv[i+1]));
 		if (r_numparticles < ABSOLUTE_MIN_PARTICLES)
 			r_numparticles = ABSOLUTE_MIN_PARTICLES;
 	}
@@ -62,8 +62,8 @@ float	timescale = 0.01;
 
 void R_EntityParticles (entity_t *ent)
 {
-	int			count;
-	int			i;
+	int32_t			count;
+	int32_t			i;
 	particle_t	*p;
 	float		angle;
 	float		sr, sp, sy, cr, cp, cy;
@@ -121,7 +121,7 @@ R_ClearParticles
 */
 void R_ClearParticles (void)
 {
-	int		i;
+	int32_t		i;
 	
 	free_particles = &particles[0];
 	active_particles = NULL;
@@ -136,8 +136,8 @@ void R_ReadPointFile_f (void)
 {
 	FILE	*f;
 	vec3_t	org;
-	int		r;
-	int		c;
+	int32_t		r;
+	int32_t		c;
 	particle_t	*p;
 	char	name[MAX_OSPATH];
 	
@@ -190,7 +190,7 @@ Parse an effect out of the server message
 void R_ParseParticleEffect (void)
 {
 	vec3_t		org, dir;
-	int			i, count, msgcount, color;
+	int32_t			i, count, msgcount, color;
 	
 	for (i=0 ; i<3 ; i++)
 		org[i] = MSG_ReadCoord ();
@@ -215,7 +215,7 @@ R_ParticleExplosion
 */
 void R_ParticleExplosion (vec3_t org)
 {
-	int			i, j;
+	int32_t			i, j;
 	particle_t	*p;
 	
 	for (i=0 ; i<1024 ; i++)
@@ -257,11 +257,11 @@ R_ParticleExplosion2
 
 ===============
 */
-void R_ParticleExplosion2 (vec3_t org, int colorStart, int colorLength)
+void R_ParticleExplosion2 (vec3_t org, int32_t colorStart, int32_t colorLength)
 {
-	int			i, j;
+	int32_t			i, j;
 	particle_t	*p;
-	int			colorMod = 0;
+	int32_t			colorMod = 0;
 
 	for (i=0; i<512; i++)
 	{
@@ -293,7 +293,7 @@ R_BlobExplosion
 */
 void R_BlobExplosion (vec3_t org)
 {
-	int			i, j;
+	int32_t			i, j;
 	particle_t	*p;
 	
 	for (i=0 ; i<1024 ; i++)
@@ -336,9 +336,9 @@ R_RunParticleEffect
 
 ===============
 */
-void R_RunParticleEffect (vec3_t org, vec3_t dir, int color, int count)
+void R_RunParticleEffect (vec3_t org, vec3_t dir, int32_t color, int32_t count)
 {
-	int			i, j;
+	int32_t			i, j;
 	particle_t	*p;
 	
 	for (i=0 ; i<count ; i++)
@@ -397,7 +397,7 @@ R_LavaSplash
 */
 void R_LavaSplash (vec3_t org)
 {
-	int			i, j, k;
+	int32_t			i, j, k;
 	particle_t	*p;
 	float		vel;
 	vec3_t		dir;
@@ -439,7 +439,7 @@ R_TeleportSplash
 */
 void R_TeleportSplash (vec3_t org)
 {
-	int			i, j, k;
+	int32_t			i, j, k;
 	particle_t	*p;
 	float		vel;
 	vec3_t		dir;
@@ -473,14 +473,14 @@ void R_TeleportSplash (vec3_t org)
 			}
 }
 
-void R_RocketTrail (vec3_t start, vec3_t end, int type)
+void R_RocketTrail (vec3_t start, vec3_t end, int32_t type)
 {
 	vec3_t		vec;
 	float		len;
-	int			j;
+	int32_t			j;
 	particle_t	*p;
-	int			dec;
-	static int	tracercount;
+	int32_t			dec;
+	static int32_t	tracercount;
 
 	VectorSubtract (end, start, vec);
 	len = VectorNormalize (vec);
@@ -510,7 +510,7 @@ void R_RocketTrail (vec3_t start, vec3_t end, int type)
 		{
 			case 0:	// rocket trail
 				p->ramp = (rand()&3);
-				p->color = ramp3[(int)p->ramp];
+				p->color = ramp3[(int32_t)p->ramp];
 				p->type = pt_fire;
 				for (j=0 ; j<3 ; j++)
 					p->org[j] = start[j] + ((rand()%6)-3);
@@ -518,7 +518,7 @@ void R_RocketTrail (vec3_t start, vec3_t end, int type)
 
 			case 1:	// smoke smoke
 				p->ramp = (rand()&3) + 2;
-				p->color = ramp3[(int)p->ramp];
+				p->color = ramp3[(int32_t)p->ramp];
 				p->type = pt_fire;
 				for (j=0 ; j<3 ; j++)
 					p->org[j] = start[j] + ((rand()%6)-3);
@@ -589,7 +589,7 @@ void R_DrawParticles (void)
 {
 	particle_t		*p, *kill;
 	float			grav;
-	int				i;
+	int32_t				i;
 	float			time2, time3;
 	float			time1;
 	float			dvel;
@@ -651,7 +651,7 @@ void R_DrawParticles (void)
 			if (p->ramp >= 6)
 				p->die = -1;
 			else
-				p->color = ramp3[(int)p->ramp];
+				p->color = ramp3[(int32_t)p->ramp];
 			p->vel[2] += grav;
 			break;
 
@@ -660,7 +660,7 @@ void R_DrawParticles (void)
 			if (p->ramp >=8)
 				p->die = -1;
 			else
-				p->color = ramp1[(int)p->ramp];
+				p->color = ramp1[(int32_t)p->ramp];
 			for (i=0 ; i<3 ; i++)
 				p->vel[i] += p->vel[i]*dvel;
 			p->vel[2] -= grav;
@@ -671,7 +671,7 @@ void R_DrawParticles (void)
 			if (p->ramp >=8)
 				p->die = -1;
 			else
-				p->color = ramp2[(int)p->ramp];
+				p->color = ramp2[(int32_t)p->ramp];
 			for (i=0 ; i<3 ; i++)
 				p->vel[i] -= p->vel[i]*frametime;
 			p->vel[2] -= grav;

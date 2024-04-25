@@ -21,7 +21,7 @@ typedef struct entity_s
 {
 	qboolean				forcelink;		// model changed
 
-	int						update_type;
+	int32_t						update_type;
 
 	entity_state_t			baseline;		// to fill in defaults in updates
 
@@ -32,19 +32,19 @@ typedef struct entity_s
 	vec3_t					angles;	
 	struct model_s			*model;			// NULL = no model
 	struct efrag_s			*efrag;			// linked list of efrags
-	int						frame;
+	int32_t						frame;
 	float					syncbase;		// for client-side animations
 	byte					*colormap;
-	int						effects;		// light, particals, etc
-	int						skinnum;		// for Alias models
-	int						visframe;		// last frame this entity was
+	int32_t						effects;		// light, particals, etc
+	int32_t						skinnum;		// for Alias models
+	int32_t						visframe;		// last frame this entity was
 											//  found in an active leaf
 											
-	int						dlightframe;	// dynamic lighting
-	int						dlightbits;
+	int32_t						dlightframe;	// dynamic lighting
+	int32_t						dlightbits;
 	
 // FIXME: could turn these into a union
-	int						trivial_accept;
+	int32_t						trivial_accept;
 	struct mnode_s			*topnode;		// for bmodels, first world node
 											//  that splits bmodel, or NULL if
 											//  not split
@@ -56,14 +56,14 @@ typedef struct
 	vrect_t		vrect;				// subwindow in video for refresh
 									// FIXME: not need vrect next field here?
 	vrect_t		aliasvrect;			// scaled Alias version
-	int			vrectright, vrectbottom;	// right & bottom screen coords
-	int			aliasvrectright, aliasvrectbottom;	// scaled Alias versions
+	int32_t			vrectright, vrectbottom;	// right & bottom screen coords
+	int32_t			aliasvrectright, aliasvrectbottom;	// scaled Alias versions
 	float		vrectrightedge;			// rightmost right edge we care about,
 										//  for use in edge list
 	float		fvrectx, fvrecty;		// for floating-point compares
 	float		fvrectx_adj, fvrecty_adj; // left and top edges, for clamping
-	int			vrect_x_adj_shift20;	// (vrect.x + 0.5 - epsilon) << 20
-	int			vrectright_adj_shift20;	// (vrectright + 0.5 - epsilon) << 20
+	int32_t			vrect_x_adj_shift20;	// (vrect.x + 0.5 - epsilon) << 20
+	int32_t			vrectright_adj_shift20;	// (vrectright + 0.5 - epsilon) << 20
 	float		fvrectright_adj, fvrectbottom_adj;
 										// right and bottom edges, for clamping
 	float		fvrectright;			// rightmost edge, for Alias clamping
@@ -78,14 +78,14 @@ typedef struct
 	
 	float		fov_x, fov_y;
 
-	int			ambientlight;
+	int32_t			ambientlight;
 } refdef_t;
 
 
 //
 // refresh
 //
-extern	int		reinit_surfcache;
+extern	int32_t		reinit_surfcache;
 
 
 extern	refdef_t	r_refdef;
@@ -98,7 +98,7 @@ void R_Init (void);
 void R_InitTextures (void);
 void R_InitEfrags (void);
 void R_RenderView (void);		// must set r_refdef first
-void R_ViewChanged (vrect_t *pvrect, int lineadj, float aspect);
+void R_ViewChanged (vrect_t *pvrect, int32_t lineadj, float aspect);
 								// called whenever r_refdef or vid change
 void R_InitSky (struct texture_s *mt);	// called at level load
 
@@ -109,13 +109,13 @@ void R_NewMap (void);
 
 
 void R_ParseParticleEffect (void);
-void R_RunParticleEffect (vec3_t org, vec3_t dir, int color, int count);
-void R_RocketTrail (vec3_t start, vec3_t end, int type);
+void R_RunParticleEffect (vec3_t org, vec3_t dir, int32_t color, int32_t count);
+void R_RocketTrail (vec3_t start, vec3_t end, int32_t type);
 
 void R_EntityParticles (entity_t *ent);
 void R_BlobExplosion (vec3_t org);
 void R_ParticleExplosion (vec3_t org);
-void R_ParticleExplosion2 (vec3_t org, int colorStart, int colorLength);
+void R_ParticleExplosion2 (vec3_t org, int32_t colorStart, int32_t colorLength);
 void R_LavaSplash (vec3_t org);
 void R_TeleportSplash (vec3_t org);
 
@@ -125,12 +125,12 @@ void R_PushDlights (void);
 //
 // surface cache related
 //
-extern	int		reinit_surfcache;	// if 1, surface cache is currently empty and
+extern	int32_t		reinit_surfcache;	// if 1, surface cache is currently empty and
 extern qboolean	r_cache_thrash;	// set if thrashing the surface cache
 
-int	D_SurfaceCacheForRes (int width, int height);
+int32_t	D_SurfaceCacheForRes (int32_t width, int32_t height);
 void D_FlushCaches (void);
 void D_DeleteSurfaceCache (void);
-void D_InitCaches (void *buffer, int size);
-void R_SetVrect (vrect_t *pvrect, vrect_t *pvrectin, int lineadj);
+void D_InitCaches (void *buffer, int32_t size);
+void R_SetVrect (vrect_t *pvrect, vrect_t *pvrectin, int32_t lineadj);
 

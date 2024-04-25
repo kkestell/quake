@@ -8,7 +8,7 @@ typedef byte pixel_t;
 
 typedef struct vrect_s
 {
-	int				x,y,width,height;
+	int32_t				x,y,width,height;
 	struct vrect_s	*pnext;
 } vrect_t;
 
@@ -17,19 +17,19 @@ typedef struct
 	pixel_t			*buffer;		// invisible buffer
 	pixel_t			*colormap;		// 256 * VID_GRADES size
 	unsigned short	*colormap16;	// 256 * VID_GRADES size
-	int				fullbright;		// index of first fullbright color
+	int32_t				fullbright;		// index of first fullbright color
 	unsigned		rowbytes;	// may be > width if displayed in a window
 	unsigned		width;		
 	unsigned		height;
 	float			aspect;		// width / height -- < 0 is taller than wide
-	int				numpages;
-	int				recalc_refdef;	// if true, recalc vid-based stuff
+	int32_t				numpages;
+	int32_t				recalc_refdef;	// if true, recalc vid-based stuff
 	pixel_t			*conbuffer;
-	int				conrowbytes;
+	int32_t				conrowbytes;
 	unsigned		conwidth;
 	unsigned		conheight;
-	int				maxwarpwidth;
-	int				maxwarpheight;
+	int32_t				maxwarpwidth;
+	int32_t				maxwarpheight;
 	pixel_t			*direct;		// direct drawing to framebuffer, if not
 									//  NULL
 } viddef_t;
@@ -38,7 +38,7 @@ extern	viddef_t	vid;				// global video state
 extern	unsigned short	d_8to16table[256];
 extern	unsigned	d_8to24table[256];
 extern void (*vid_menudrawfn)(void);
-extern void (*vid_menukeyfn)(int key);
+extern void (*vid_menukeyfn)(int32_t key);
 
 void	VID_SetPalette (unsigned char *palette);
 // called at startup and after any gamma correction
@@ -57,7 +57,7 @@ void	VID_Shutdown (void);
 void	VID_Update (vrect_t *rects);
 // flushes the given rectangles from the view buffer to the screen
 
-int VID_SetMode (int modenum, unsigned char *palette);
+int32_t VID_SetMode (int32_t modenum, unsigned char *palette);
 // sets the mode; only used by the Quake engine for resetting to mode 0 (the
 // base mode) on memory allocation failures
 

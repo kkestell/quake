@@ -102,13 +102,13 @@ typedef enum {key_game, key_console, key_message, key_menu} keydest_t;
 
 extern keydest_t	key_dest;
 extern char *keybindings[256];
-extern	int		key_repeats[256];
-extern	int		key_count;			// incremented every key event
-extern	int		key_lastpress;
+extern	int32_t		key_repeats[256];
+extern	int32_t		key_count;			// incremented every key event
+extern	int32_t		key_lastpress;
 
-void Key_Event (int key, qboolean down);
+void Key_Event (int32_t key, qboolean down);
 void Key_Init (void);
 void Key_WriteBindings (FILE *f);
-void Key_SetBinding (int keynum, char *binding);
+void Key_SetBinding (int32_t keynum, char *binding);
 void Key_ClearStates (void);
 

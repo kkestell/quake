@@ -5,16 +5,16 @@
 #include "d_local.h"
 
 
-int		iskyspeed = 8;
-int		iskyspeed2 = 2;
+int32_t		iskyspeed = 8;
+int32_t		iskyspeed2 = 2;
 float	skyspeed, skyspeed2;
 
 float		skytime;
 
 byte		*r_skysource;
 
-int r_skymade;
-int r_skydirect;		// not used?
+int32_t r_skymade;
+int32_t r_skydirect;		// not used?
 
 
 // TODO: clean up these routines
@@ -36,7 +36,7 @@ A sky texture is 256*128, with the right side being a masked overlay
 */
 void R_InitSky (texture_t *mt)
 {
-	int			i, j;
+	int32_t			i, j;
 	byte		*src;
 
 	src = (byte *)mt + mt->offsets[0];
@@ -77,11 +77,11 @@ R_MakeSky
 */
 void R_MakeSky (void)
 {
-	int			x, y;
-	int			ofs, baseofs;
-	int			xshift, yshift;
+	int32_t			x, y;
+	int32_t			ofs, baseofs;
+	int32_t			xshift, yshift;
 	unsigned	*pnewsky;
-	static int	xlast = -1, ylast = -1;
+	static int32_t	xlast = -1, ylast = -1;
 
 	xshift = skytime*skyspeed;
 	yshift = skytime*skyspeed;
@@ -141,9 +141,9 @@ R_GenSkyTile
 */
 void R_GenSkyTile (void *pdest)
 {
-	int			x, y;
-	int			ofs, baseofs;
-	int			xshift, yshift;
+	int32_t			x, y;
+	int32_t			ofs, baseofs;
+	int32_t			xshift, yshift;
 	unsigned	*pnewsky;
 	unsigned	*pd;
 
@@ -200,9 +200,9 @@ R_GenSkyTile16
 */
 void R_GenSkyTile16 (void *pdest)
 {
-	int				x, y;
-	int				ofs, baseofs;
-	int				xshift, yshift;
+	int32_t				x, y;
+	int32_t				ofs, baseofs;
+	int32_t				xshift, yshift;
 	byte			*pnewsky;
 	unsigned short	*pd;
 
@@ -241,7 +241,7 @@ R_SetSkyFrame
 */
 void R_SetSkyFrame (void)
 {
-	int		g, s1, s2;
+	int32_t		g, s1, s2;
 	float	temp;
 
 	skyspeed = iskyspeed;
@@ -252,7 +252,7 @@ void R_SetSkyFrame (void)
 	s2 = iskyspeed2 / g;
 	temp = SKYSIZE * s1 * s2;
 
-	skytime = cl.time - ((int)(cl.time / temp) * temp);
+	skytime = cl.time - ((int32_t)(cl.time / temp) * temp);
 	
 
 	r_skymade = 0;

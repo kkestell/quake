@@ -16,7 +16,7 @@ SV_Init
 */
 void SV_Init (void)
 {
-	int		i;
+	int32_t		i;
 	extern	cvar_t	sv_maxvelocity;
 	extern	cvar_t	sv_gravity;
 	extern	cvar_t	sv_nostep;
@@ -58,9 +58,9 @@ SV_StartParticle
 Make sure the event gets sent to all clients
 ==================
 */
-void SV_StartParticle (vec3_t org, vec3_t dir, int color, int count)
+void SV_StartParticle (vec3_t org, vec3_t dir, int32_t color, int32_t count)
 {
-	int		i, v;
+	int32_t		i, v;
 
 	if (sv.datagram.cursize > MAX_DATAGRAM-16)
 		return;	
@@ -96,13 +96,13 @@ Larger attenuations will drop off.  (max 4 attenuation)
 
 ==================
 */  
-void SV_StartSound (edict_t *entity, int channel, char *sample, int volume,
+void SV_StartSound (edict_t *entity, int32_t channel, char *sample, int32_t volume,
     float attenuation)
 {       
-    int         sound_num;
-    int field_mask;
-    int			i;
-	int			ent;
+    int32_t         sound_num;
+    int32_t field_mask;
+    int32_t			i;
+	int32_t			ent;
 	
 	if (volume < 0 || volume > 255)
 		Sys_Error ("SV_StartSound: volume = %i", volume);
@@ -221,13 +221,13 @@ Initializes a client_t for a new net connection.  This will only be called
 once for a player each game, not once for each level change.
 ================
 */
-void SV_ConnectClient (int clientnum)
+void SV_ConnectClient (int32_t clientnum)
 {
 	edict_t			*ent;
 	client_t		*client;
-	int				edictnum;
+	int32_t				edictnum;
 	struct qsocket_s *netconnection;
-	int				i;
+	int32_t				i;
 	float			spawn_parms[NUM_SPAWN_PARMS];
 
 	client = svs.clients + clientnum;
@@ -283,7 +283,7 @@ SV_CheckForNewClients
 void SV_CheckForNewClients (void)
 {
 	struct qsocket_s	*ret;
-	int				i;
+	int32_t				i;
 		
 //
 // check for new connections
@@ -342,12 +342,12 @@ crosses a waterline.
 =============================================================================
 */
 
-int		fatbytes;
+int32_t		fatbytes;
 byte	fatpvs[MAX_MAP_LEAFS/8];
 
 void SV_AddToFatPVS (vec3_t org, mnode_t *node)
 {
-	int		i;
+	int32_t		i;
 	byte	*pvs;
 	mplane_t	*plane;
 	float	d;
@@ -407,8 +407,8 @@ SV_WriteEntitiesToClient
 */
 void SV_WriteEntitiesToClient (edict_t	*clent, sizebuf_t *msg)
 {
-	int		e, i;
-	int		bits;
+	int32_t		e, i;
+	int32_t		bits;
 	byte	*pvs;
 	vec3_t	org;
 	float	miss;
@@ -531,13 +531,13 @@ SV_CleanupEnts
 */
 void SV_CleanupEnts (void)
 {
-	int		e;
+	int32_t		e;
 	edict_t	*ent;
 	
 	ent = NEXT_EDICT(sv.edicts);
 	for (e=1 ; e<sv.num_edicts ; e++, ent = NEXT_EDICT(ent))
 	{
-		ent->v.effects = (int)ent->v.effects & ~EF_MUZZLEFLASH;
+		ent->v.effects = (int32_t)ent->v.effects & ~EF_MUZZLEFLASH;
 	}
 
 }
@@ -550,10 +550,10 @@ SV_WriteClientdataToMessage
 */
 void SV_WriteClientdataToMessage (edict_t *ent, sizebuf_t *msg)
 {
-	int		bits;
-	int		i;
+	int32_t		bits;
+	int32_t		i;
 	edict_t	*other;
-	int		items;
+	int32_t		items;
 	eval_t	*val;
 
 //
@@ -599,13 +599,13 @@ void SV_WriteClientdataToMessage (edict_t *ent, sizebuf_t *msg)
 	val = GetEdictFieldValue(ent, "items2");
 
 	if (val)
-		items = (int)ent->v.items | ((int)val->_float << 23);
+		items = (int32_t)ent->v.items | ((int32_t)val->_float << 23);
 	else
-		items = (int)ent->v.items | ((int)pr_global_struct->serverflags << 28);
+		items = (int32_t)ent->v.items | ((int32_t)pr_global_struct->serverflags << 28);
 
 	bits |= SU_ITEMS;
 	
-	if ( (int)ent->v.flags & FL_ONGROUND)
+	if ( (int32_t)ent->v.flags & FL_ONGROUND)
 		bits |= SU_ONGROUND;
 	
 	if ( ent->v.waterlevel >= 2)
@@ -672,7 +672,7 @@ void SV_WriteClientdataToMessage (edict_t *ent, sizebuf_t *msg)
 	{
 		for(i=0;i<32;i++)
 		{
-			if ( ((int)ent->v.weapon) & (1<<i) )
+			if ( ((int32_t)ent->v.weapon) & (1<<i) )
 			{
 				MSG_WriteByte (msg, i);
 				break;
@@ -724,7 +724,7 @@ SV_UpdateToReliableMessages
 */
 void SV_UpdateToReliableMessages (void)
 {
-	int			i, j;
+	int32_t			i, j;
 	client_t *client;
 
 // check for changes to be sent over the reliable streams
@@ -787,7 +787,7 @@ SV_SendClientMessages
 */
 void SV_SendClientMessages (void)
 {
-	int			i;
+	int32_t			i;
 	
 // update frags, names, etc
 	SV_UpdateToReliableMessages ();
@@ -870,9 +870,9 @@ SV_ModelIndex
 
 ================
 */
-int SV_ModelIndex (char *name)
+int32_t SV_ModelIndex (char *name)
 {
-	int		i;
+	int32_t		i;
 	
 	if (!name || !name[0])
 		return 0;
@@ -893,9 +893,9 @@ SV_CreateBaseline
 */
 void SV_CreateBaseline (void)
 {
-	int			i;
+	int32_t			i;
 	edict_t			*svent;
-	int				entnum;	
+	int32_t				entnum;	
 		
 	for (entnum = 0; entnum < sv.num_edicts ; entnum++)
 	{
@@ -979,7 +979,7 @@ transition to another level
 */
 void SV_SaveSpawnparms (void)
 {
-	int		i, j;
+	int32_t		i, j;
 
 	svs.serverflags = pr_global_struct->serverflags;
 
@@ -1009,7 +1009,7 @@ extern float		scr_centertime_off;
 void SV_SpawnServer (char *server)
 {
 	edict_t		*ent;
-	int			i;
+	int32_t			i;
 
 	// let's not have any servers with no name
 	if (hostname.string[0] == 0)
@@ -1032,7 +1032,7 @@ void SV_SpawnServer (char *server)
 //
 	if (coop.value)
 		Cvar_SetValue ("deathmatch", 0);
-	current_skill = (int)(skill.value + 0.5);
+	current_skill = (int32_t)(skill.value + 0.5);
 	if (current_skill < 0)
 		current_skill = 0;
 	if (current_skill > 3)

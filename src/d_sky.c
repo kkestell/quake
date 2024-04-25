@@ -13,7 +13,7 @@
 D_Sky_uv_To_st
 =================
 */
-void D_Sky_uv_To_st (int u, int v, fixed16_t *s, fixed16_t *t)
+void D_Sky_uv_To_st (int32_t u, int32_t v, fixed16_t *s, fixed16_t *t)
 {
 	float	wu, wv, temp;
 	vec3_t	end;
@@ -23,8 +23,8 @@ void D_Sky_uv_To_st (int u, int v, fixed16_t *s, fixed16_t *t)
 	else
 		temp = (float)r_refdef.vrect.height;
 
-	wu = 8192.0 * (float)(u-((int)vid.width>>1)) / temp;
-	wv = 8192.0 * (float)(((int)vid.height>>1)-v) / temp;
+	wu = 8192.0 * (float)(u-((int32_t)vid.width>>1)) / temp;
+	wv = 8192.0 * (float)(((int32_t)vid.height>>1)-v) / temp;
 
 	end[0] = 4096*vpn[0] + wu*vright[0] + wv*vup[0];
 	end[1] = 4096*vpn[1] + wu*vright[1] + wv*vup[1];
@@ -33,8 +33,8 @@ void D_Sky_uv_To_st (int u, int v, fixed16_t *s, fixed16_t *t)
 	VectorNormalize (end);
 
 	temp = skytime*skyspeed;	// TODO: add D_SetupFrame & set this there
-	*s = (int)((temp + 6*(SKYSIZE/2-1)*end[0]) * 0x10000);
-	*t = (int)((temp + 6*(SKYSIZE/2-1)*end[1]) * 0x10000);
+	*s = (int32_t)((temp + 6*(SKYSIZE/2-1)*end[0]) * 0x10000);
+	*t = (int32_t)((temp + 6*(SKYSIZE/2-1)*end[1]) * 0x10000);
 }
 
 
@@ -45,10 +45,10 @@ D_DrawSkyScans8
 */
 void D_DrawSkyScans8 (espan_t *pspan)
 {
-	int				count, spancount, u, v;
+	int32_t				count, spancount, u, v;
 	unsigned char	*pdest;
 	fixed16_t		s, t, snext, tnext, sstep, tstep;
-	int				spancountminus1;
+	int32_t				spancountminus1;
 
 	sstep = 0;	// keep compiler happy
 	tstep = 0;	// ditto

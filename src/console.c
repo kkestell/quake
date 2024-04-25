@@ -6,7 +6,7 @@
 #include <fcntl.h>
 #include "quakedef.h"
 
-int 		con_linewidth;
+int32_t 		con_linewidth;
 
 float		con_cursorspeed = 4;
 
@@ -14,10 +14,10 @@ float		con_cursorspeed = 4;
 
 qboolean 	con_forcedup;		// because no entities to refresh
 
-int			con_totallines;		// total lines in console scrollback
-int			con_backscroll;		// lines up from bottom to display
-int			con_current;		// where next message will be printed
-int			con_x;				// offset in current line for next print
+int32_t			con_totallines;		// total lines in console scrollback
+int32_t			con_backscroll;		// lines up from bottom to display
+int32_t			con_current;		// where next message will be printed
+int32_t			con_x;				// offset in current line for next print
 char		*con_text=0;
 
 cvar_t		con_notifytime = {"con_notifytime","3"};		//seconds
@@ -26,19 +26,19 @@ cvar_t		con_notifytime = {"con_notifytime","3"};		//seconds
 float		con_times[NUM_CON_TIMES];	// realtime time the line was generated
 								// for transparent notify lines
 
-int			con_vislines;
+int32_t			con_vislines;
 
 qboolean	con_debuglog;
 
 #define		MAXCMDLINE	256
 extern	char	key_lines[32][MAXCMDLINE];
-extern	int		edit_line;
-extern	int		key_linepos;
+extern	int32_t		edit_line;
+extern	int32_t		key_linepos;
 		
 
 qboolean	con_initialized;
 
-int			con_notifylines;		// scan lines to clear for notify lines
+int32_t			con_notifylines;		// scan lines to clear for notify lines
 
 extern void M_Menu_Main_f (void);
 
@@ -88,7 +88,7 @@ Con_ClearNotify
 */
 void Con_ClearNotify (void)
 {
-	int		i;
+	int32_t		i;
 	
 	for (i=0 ; i<NUM_CON_TIMES ; i++)
 		con_times[i] = 0;
@@ -130,7 +130,7 @@ If the line width has changed, reformat the buffer.
 */
 void Con_CheckResize (void)
 {
-	int		i, j, width, oldwidth, oldtotallines, numlines, numchars;
+	int32_t		i, j, width, oldwidth, oldtotallines, numlines, numchars;
 	char	tbuf[CON_TEXTSIZE];
 
 	width = (vid.width >> 3) - 2;
@@ -248,10 +248,10 @@ If no console is visible, the notify window will pop up.
 */
 void Con_Print (char *txt)
 {
-	int		y;
-	int		c, l;
-	static int	cr;
-	int		mask;
+	int32_t		y;
+	int32_t		c, l;
+	static int32_t	cr;
+	int32_t		mask;
 	
 	con_backscroll = 0;
 
@@ -332,7 +332,7 @@ void Con_DebugLog(char *file, char *fmt, ...)
 {
     va_list argptr; 
     static char data[1024];
-    int fd;
+    int32_t fd;
     
     va_start(argptr, fmt);
     vsprintf(data, fmt, argptr);
@@ -426,7 +426,7 @@ void Con_SafePrintf (char *fmt, ...)
 {
 	va_list		argptr;
 	char		msg[1024];
-	int			temp;
+	int32_t			temp;
 		
 	va_start (argptr,fmt);
 	vsprintf (msg,fmt,argptr);
@@ -457,8 +457,8 @@ The input line scrolls horizontally if typing goes beyond the right edge
 */
 void Con_DrawInput (void)
 {
-	int		y;
-	int		i;
+	int32_t		y;
+	int32_t		i;
 	char	*text;
 
 	if (key_dest != key_console && !con_forcedup)
@@ -467,7 +467,7 @@ void Con_DrawInput (void)
 	text = key_lines[edit_line];
 	
 // add the cursor frame
-	text[key_linepos] = 10+((int)(realtime*con_cursorspeed)&1);
+	text[key_linepos] = 10+((int32_t)(realtime*con_cursorspeed)&1);
 	
 // fill out remainder with spaces
 	for (i=key_linepos+1 ; i< con_linewidth ; i++)
@@ -497,9 +497,9 @@ Draws the last few lines of output transparently over the game top
 */
 void Con_DrawNotify (void)
 {
-	int		x, v;
+	int32_t		x, v;
 	char	*text;
-	int		i;
+	int32_t		i;
 	float	time;
 	extern char chat_buffer[];
 
@@ -539,7 +539,7 @@ void Con_DrawNotify (void)
 			Draw_Character ( (x+5)<<3, v, chat_buffer[x]);
 			x++;
 		}
-		Draw_Character ( (x+5)<<3, v, 10+((int)(realtime*con_cursorspeed)&1));
+		Draw_Character ( (x+5)<<3, v, 10+((int32_t)(realtime*con_cursorspeed)&1));
 		v += 8;
 	}
 	
@@ -555,12 +555,12 @@ Draws the console with the solid background
 The typing input line at the bottom should only be drawn if typing is allowed
 ================
 */
-void Con_DrawConsole (int lines, qboolean drawinput)
+void Con_DrawConsole (int32_t lines, qboolean drawinput)
 {
-	int				i, x, y;
-	int				rows;
+	int32_t				i, x, y;
+	int32_t				rows;
 	char			*text;
-	int				j;
+	int32_t				j;
 	
 	if (lines <= 0)
 		return;

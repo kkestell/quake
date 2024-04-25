@@ -2,22 +2,22 @@
 
 #include "quakedef.h"
 
-int			cache_full_cycle;
+int32_t			cache_full_cycle;
 
-byte *S_Alloc (int size);
+byte *S_Alloc (int32_t size);
 
 /*
 ================
 ResampleSfx
 ================
 */
-void ResampleSfx (sfx_t *sfx, int inrate, int inwidth, byte *data)
+void ResampleSfx (sfx_t *sfx, int32_t inrate, int32_t inwidth, byte *data)
 {
-	int		outcount;
-	int		srcsample;
+	int32_t		outcount;
+	int32_t		srcsample;
 	float	stepscale;
-	int		i;
-	int		sample, samplefrac, fracstep;
+	int32_t		i;
+	int32_t		sample, samplefrac, fracstep;
 	sfxcache_t	*sc;
 	
 	sc = Cache_Check (&sfx->cache);
@@ -45,7 +45,7 @@ void ResampleSfx (sfx_t *sfx, int inrate, int inwidth, byte *data)
 // fast special case
 		for (i=0 ; i<outcount ; i++)
 			((signed char *)sc->data)[i]
-			= (int)( (unsigned char)(data[i]) - 128);
+			= (int32_t)( (unsigned char)(data[i]) - 128);
 	}
 	else
 	{
@@ -59,7 +59,7 @@ void ResampleSfx (sfx_t *sfx, int inrate, int inwidth, byte *data)
 			if (inwidth == 2)
 				sample = LittleShort ( ((short *)data)[srcsample] );
 			else
-				sample = (int)( (unsigned char)(data[srcsample]) - 128) << 8;
+				sample = (int32_t)( (unsigned char)(data[srcsample]) - 128) << 8;
 			if (sc->width == 2)
 				((short *)sc->data)[i] = sample;
 			else
@@ -80,7 +80,7 @@ sfxcache_t *S_LoadSound (sfx_t *s)
     char	namebuffer[256];
 	byte	*data;
 	wavinfo_t	info;
-	int		len;
+	int32_t		len;
 	float	stepscale;
 	sfxcache_t	*sc;
 	byte	stackbuf[1*1024];		// avoid dirtying the cache heap
@@ -147,7 +147,7 @@ byte	*data_p;
 byte 	*iff_end;
 byte 	*last_chunk;
 byte 	*iff_data;
-int 	iff_chunk_len;
+int32_t 	iff_chunk_len;
 
 
 short GetLittleShort(void)
@@ -159,9 +159,9 @@ short GetLittleShort(void)
 	return val;
 }
 
-int GetLittleLong(void)
+int32_t GetLittleLong(void)
 {
-	int val = 0;
+	int32_t val = 0;
 	val = *data_p;
 	val = val + (*(data_p+1)<<8);
 	val = val + (*(data_p+2)<<16);
@@ -216,7 +216,7 @@ void DumpChunks(void)
 		memcpy (str, data_p, 4);
 		data_p += 4;
 		iff_chunk_len = GetLittleLong();
-		Con_Printf ("0x%x : %s (%d)\n", (int)(data_p - 4), str, iff_chunk_len);
+		Con_Printf ("0x%x : %s (%d)\n", (int32_t)(data_p - 4), str, iff_chunk_len);
 		data_p += (iff_chunk_len + 1) & ~1;
 	} while (data_p < iff_end);
 }
@@ -226,12 +226,12 @@ void DumpChunks(void)
 GetWavinfo
 ============
 */
-wavinfo_t GetWavinfo (char *name, byte *wav, int wavlength)
+wavinfo_t GetWavinfo (char *name, byte *wav, int32_t wavlength)
 {
 	wavinfo_t	info;
-	int     i;
-	int     format;
-	int		samples;
+	int32_t     i;
+	int32_t     format;
+	int32_t		samples;
 
 	memset (&info, 0, sizeof(info));
 

@@ -61,7 +61,7 @@ Cvar_CompleteVariable
 char *Cvar_CompleteVariable (char *partial)
 {
 	cvar_t		*cvar;
-	int			len;
+	int32_t			len;
 	
 	len = Q_strlen(partial);
 	

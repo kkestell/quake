@@ -8,25 +8,25 @@
 
 typedef struct
 {
-	int				s;
+	int32_t				s;
 	dfunction_t		*f;
 } prstack_t;
 
 #define	MAX_STACK_DEPTH		32
 prstack_t	pr_stack[MAX_STACK_DEPTH];
-int			pr_depth;
+int32_t			pr_depth;
 
 #define	LOCALSTACK_SIZE		2048
-int			localstack[LOCALSTACK_SIZE];
-int			localstack_used;
+int32_t			localstack[LOCALSTACK_SIZE];
+int32_t			localstack_used;
 
 
 qboolean	pr_trace;
 dfunction_t	*pr_xfunction;
-int			pr_xstatement;
+int32_t			pr_xstatement;
 
 
-int		pr_argc;
+int32_t		pr_argc;
 
 char *pr_opnames[] =
 {
@@ -117,8 +117,8 @@ char *pr_opnames[] =
 "BITOR"
 };
 
-char *PR_GlobalString (int ofs);
-char *PR_GlobalStringNoContents (int ofs);
+char *PR_GlobalString (int32_t ofs);
+char *PR_GlobalStringNoContents (int32_t ofs);
 
 
 //=============================================================================
@@ -130,7 +130,7 @@ PR_PrintStatement
 */
 void PR_PrintStatement (dstatement_t *s)
 {
-	int		i;
+	int32_t		i;
 	
 	if ( (unsigned)s->op < sizeof(pr_opnames)/sizeof(pr_opnames[0]))
 	{
@@ -171,7 +171,7 @@ PR_StackTrace
 void PR_StackTrace (void)
 {
 	dfunction_t	*f;
-	int			i;
+	int32_t			i;
 	
 	if (pr_depth == 0)
 	{
@@ -203,9 +203,9 @@ PR_Profile_f
 void PR_Profile_f (void)
 {
 	dfunction_t	*f, *best;
-	int			max;
-	int			num;
-	int			i;
+	int32_t			max;
+	int32_t			num;
+	int32_t			i;
 	
 	num = 0;	
 	do
@@ -272,9 +272,9 @@ PR_EnterFunction
 Returns the new program statement counter
 ====================
 */
-int PR_EnterFunction (dfunction_t *f)
+int32_t PR_EnterFunction (dfunction_t *f)
 {
-	int		i, j, c, o;
+	int32_t		i, j, c, o;
 
 	pr_stack[pr_depth].s = pr_xstatement;
 	pr_stack[pr_depth].f = pr_xfunction;	
@@ -288,7 +288,7 @@ int PR_EnterFunction (dfunction_t *f)
 		PR_RunError ("PR_ExecuteProgram: locals stack overflow\n");
 
 	for (i=0 ; i < c ; i++)
-		localstack[localstack_used+i] = ((int *)pr_globals)[f->parm_start + i];
+		localstack[localstack_used+i] = ((int32_t *)pr_globals)[f->parm_start + i];
 	localstack_used += c;
 
 // copy parameters
@@ -297,7 +297,7 @@ int PR_EnterFunction (dfunction_t *f)
 	{
 		for (j=0 ; j<f->parm_size[i] ; j++)
 		{
-			((int *)pr_globals)[o] = ((int *)pr_globals)[OFS_PARM0+i*3+j];
+			((int32_t *)pr_globals)[o] = ((int32_t *)pr_globals)[OFS_PARM0+i*3+j];
 			o++;
 		}
 	}
@@ -311,9 +311,9 @@ int PR_EnterFunction (dfunction_t *f)
 PR_LeaveFunction
 ====================
 */
-int PR_LeaveFunction (void)
+int32_t PR_LeaveFunction (void)
 {
-	int		i, c;
+	int32_t		i, c;
 
 	if (pr_depth <= 0)
 		Sys_Error ("prog stack underflow");
@@ -325,7 +325,7 @@ int PR_LeaveFunction (void)
 		PR_RunError ("PR_ExecuteProgram: locals stack underflow\n");
 
 	for (i=0 ; i < c ; i++)
-		((int *)pr_globals)[pr_xfunction->parm_start + i] = localstack[localstack_used+i];
+		((int32_t *)pr_globals)[pr_xfunction->parm_start + i] = localstack[localstack_used+i];
 
 // up stack
 	pr_depth--;
@@ -342,13 +342,13 @@ PR_ExecuteProgram
 void PR_ExecuteProgram (func_t fnum)
 {
 	eval_t	*a, *b, *c;
-	int			s;
+	int32_t			s;
 	dstatement_t	*st;
 	dfunction_t	*f, *newf;
-	int		runaway;
-	int		i;
+	int32_t		runaway;
+	int32_t		i;
 	edict_t	*ed;
-	int		exitdepth;
+	int32_t		exitdepth;
 	eval_t	*ptr;
 
 	if (!fnum || fnum >= progs->numfunctions)
@@ -430,11 +430,11 @@ while (1)
 		break;
 	
 	case OP_BITAND:
-		c->_float = (int)a->_float & (int)b->_float;
+		c->_float = (int32_t)a->_float & (int32_t)b->_float;
 		break;
 	
 	case OP_BITOR:
-		c->_float = (int)a->_float | (int)b->_float;
+		c->_float = (int32_t)a->_float | (int32_t)b->_float;
 		break;
 	
 		
@@ -543,7 +543,7 @@ while (1)
 		ed = PROG_TO_EDICT(a->edict);
 		if (ed == (edict_t *)sv.edicts && sv.state == ss_active)
 			PR_RunError ("assignment to world entity");
-		c->_int = (byte *)((int *)&ed->v + b->_int) - (byte *)sv.edicts;
+		c->_int = (byte *)((int32_t *)&ed->v + b->_int) - (byte *)sv.edicts;
 		break;
 		
 	case OP_LOAD_F:
@@ -552,13 +552,13 @@ while (1)
 	case OP_LOAD_S:
 	case OP_LOAD_FNC:
 		ed = PROG_TO_EDICT(a->edict);
-		a = (eval_t *)((int *)&ed->v + b->_int);
+		a = (eval_t *)((int32_t *)&ed->v + b->_int);
 		c->_int = a->_int;
 		break;
 
 	case OP_LOAD_V:
 		ed = PROG_TO_EDICT(a->edict);
-		a = (eval_t *)((int *)&ed->v + b->_int);
+		a = (eval_t *)((int32_t *)&ed->v + b->_int);
 		c->vector[0] = a->vector[0];
 		c->vector[1] = a->vector[1];
 		c->vector[2] = a->vector[2];

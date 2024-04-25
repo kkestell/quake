@@ -5,17 +5,17 @@
 
 drawsurf_t	r_drawsurf;
 
-int				lightleft, sourcesstep, blocksize, sourcetstep;
-int				lightdelta, lightdeltastep;
-int				lightright, lightleftstep, lightrightstep, blockdivshift;
+int32_t				lightleft, sourcesstep, blocksize, sourcetstep;
+int32_t				lightdelta, lightdeltastep;
+int32_t				lightright, lightleftstep, lightrightstep, blockdivshift;
 unsigned		blockdivmask;
 void			*prowdestbase;
 unsigned char	*pbasesource;
-int				surfrowbytes;	// used by ASM files
+int32_t				surfrowbytes;	// used by ASM files
 unsigned		*r_lightptr;
-int				r_stepback;
-int				r_lightwidth;
-int				r_numhblocks, r_numvblocks;
+int32_t				r_stepback;
+int32_t				r_lightwidth;
+int32_t				r_numhblocks, r_numvblocks;
 unsigned char	*r_source, *r_sourcemax;
 
 void R_DrawSurfaceBlock8_mip0 (void);
@@ -42,13 +42,13 @@ R_AddDynamicLights
 void R_AddDynamicLights (void)
 {
 	msurface_t *surf;
-	int			lnum;
-	int			sd, td;
+	int32_t			lnum;
+	int32_t			sd, td;
 	float		dist, rad, minlight;
 	vec3_t		impact, local;
-	int			s, t;
-	int			i;
-	int			smax, tmax;
+	int32_t			s, t;
+	int32_t			i;
+	int32_t			smax, tmax;
 	mtexinfo_t	*tex;
 
 	surf = r_drawsurf.surf;
@@ -112,12 +112,12 @@ Combine and scale multiple lightmaps into the 8.8 format in blocklights
 */
 void R_BuildLightMap (void)
 {
-	int			smax, tmax;
-	int			t;
-	int			i, size;
+	int32_t			smax, tmax;
+	int32_t			t;
+	int32_t			i, size;
 	byte		*lightmap;
 	unsigned	scale;
-	int			maps;
+	int32_t			maps;
 	msurface_t	*surf;
 
 	surf = r_drawsurf.surf;
@@ -157,7 +157,7 @@ void R_BuildLightMap (void)
 // bound, invert, and shift
 	for (i=0 ; i<size ; i++)
 	{
-		t = (255*256 - (int)blocklights[i]) >> (8 - VID_CBITS);
+		t = (255*256 - (int32_t)blocklights[i]) >> (8 - VID_CBITS);
 
 		if (t < (1 << 6))
 			t = (1 << 6);
@@ -176,8 +176,8 @@ Returns the proper texture for a given time and base texture
 */
 texture_t *R_TextureAnimation (texture_t *base)
 {
-	int		reletive;
-	int		count;
+	int32_t		reletive;
+	int32_t		count;
 
 	if (currententity->frame)
 	{
@@ -188,7 +188,7 @@ texture_t *R_TextureAnimation (texture_t *base)
 	if (!base->anim_total)
 		return base;
 
-	reletive = (int)(cl.time*10) % base->anim_total;
+	reletive = (int32_t)(cl.time*10) % base->anim_total;
 
 	count = 0;	
 	while (base->anim_min > reletive || base->anim_max <= reletive)
@@ -212,10 +212,10 @@ R_DrawSurface
 void R_DrawSurface (void)
 {
 	unsigned char	*basetptr;
-	int				smax, tmax, twidth;
-	int				u;
-	int				soffset, basetoffset, texwidth;
-	int				horzblockstep;
+	int32_t				smax, tmax, twidth;
+	int32_t				u;
+	int32_t				soffset, basetoffset, texwidth;
+	int32_t				horzblockstep;
 	unsigned char	*pcolumndest;
 	void			(*pblockdrawer)(void);
 	texture_t		*mt;
@@ -304,7 +304,7 @@ R_DrawSurfaceBlock8_mip0
 */
 void R_DrawSurfaceBlock8_mip0 (void)
 {
-	int				v, i, b, lightstep, lighttemp, light;
+	int32_t				v, i, b, lightstep, lighttemp, light;
 	unsigned char	pix, *psource, *prowdest;
 
 	psource = pbasesource;
@@ -354,7 +354,7 @@ R_DrawSurfaceBlock8_mip1
 */
 void R_DrawSurfaceBlock8_mip1 (void)
 {
-	int				v, i, b, lightstep, lighttemp, light;
+	int32_t				v, i, b, lightstep, lighttemp, light;
 	unsigned char	pix, *psource, *prowdest;
 
 	psource = pbasesource;
@@ -404,7 +404,7 @@ R_DrawSurfaceBlock8_mip2
 */
 void R_DrawSurfaceBlock8_mip2 (void)
 {
-	int				v, i, b, lightstep, lighttemp, light;
+	int32_t				v, i, b, lightstep, lighttemp, light;
 	unsigned char	pix, *psource, *prowdest;
 
 	psource = pbasesource;
@@ -454,7 +454,7 @@ R_DrawSurfaceBlock8_mip3
 */
 void R_DrawSurfaceBlock8_mip3 (void)
 {
-	int				v, i, b, lightstep, lighttemp, light;
+	int32_t				v, i, b, lightstep, lighttemp, light;
 	unsigned char	pix, *psource, *prowdest;
 
 	psource = pbasesource;
@@ -506,9 +506,9 @@ FIXME: make this work
 */
 void R_DrawSurfaceBlock16 (void)
 {
-	int				k;
+	int32_t				k;
 	unsigned char	*psource;
-	int				lighttemp, lightstep, light;
+	int32_t				lighttemp, lightstep, light;
 	unsigned short	*prowdest;
 
 	prowdest = (unsigned short *)prowdestbase;
@@ -517,7 +517,7 @@ void R_DrawSurfaceBlock16 (void)
 	{
 		unsigned short	*pdest;
 		unsigned char	pix;
-		int				b;
+		int32_t				b;
 
 		psource = pbasesource;
 		lighttemp = lightright - lightleft;
@@ -554,11 +554,11 @@ R_GenTurbTile
 */
 void R_GenTurbTile (pixel_t *pbasetex, void *pdest)
 {
-	int		*turb;
-	int		i, j, s, t;
+	int32_t		*turb;
+	int32_t		i, j, s, t;
 	byte	*pd;
 	
-	turb = sintable + ((int)(cl.time*SPEED)&(CYCLE-1));
+	turb = sintable + ((int32_t)(cl.time*SPEED)&(CYCLE-1));
 	pd = (byte *)pdest;
 
 	for (i=0 ; i<TILE_SIZE ; i++)
@@ -580,11 +580,11 @@ R_GenTurbTile16
 */
 void R_GenTurbTile16 (pixel_t *pbasetex, void *pdest)
 {
-	int				*turb;
-	int				i, j, s, t;
+	int32_t				*turb;
+	int32_t				i, j, s, t;
 	unsigned short	*pd;
 
-	turb = sintable + ((int)(cl.time*SPEED)&(CYCLE-1));
+	turb = sintable + ((int32_t)(cl.time*SPEED)&(CYCLE-1));
 	pd = (unsigned short *)pdest;
 
 	for (i=0 ; i<TILE_SIZE ; i++)

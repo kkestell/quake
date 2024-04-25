@@ -14,7 +14,7 @@ unsigned short  d_8to16table[256];
 #define    BASEWIDTH    (640)
 #define    BASEHEIGHT   (400)
 
-int    VGA_width, VGA_height, VGA_rowbytes, VGA_bufferrowbytes = 0;
+int32_t    VGA_width, VGA_height, VGA_rowbytes, VGA_bufferrowbytes = 0;
 byte    *VGA_pagebase;
 
 static SDL_Window *window = NULL;
@@ -24,15 +24,15 @@ static SDL_Surface *surface32bpp = NULL;
 
 static qboolean mouse_avail;
 static float   mouse_x, mouse_y;
-static int mouse_oldbuttonstate = 0;
+static int32_t mouse_oldbuttonstate = 0;
 
 // No support for option menus
 void(*vid_menudrawfn)(void) = NULL;
-void(*vid_menukeyfn)(int key) = NULL;
+void(*vid_menukeyfn)(int32_t key) = NULL;
 
 void    VID_SetPalette(unsigned char *palette)
 {
-    int i;
+    int32_t i;
     SDL_Color colors[256];
 
     for (i = 0; i<256; ++i)
@@ -52,9 +52,9 @@ void    VID_ShiftPalette(unsigned char *palette)
 
 void    VID_Init(unsigned char *palette)
 {
-    int pnum, chunk;
+    int32_t pnum, chunk;
     byte *cache;
-    int cachesize;
+    int32_t cachesize;
     Uint8 video_bpp;
     Uint16 video_w, video_h;
     Uint32 flags;
@@ -78,8 +78,8 @@ void    VID_Init(unsigned char *palette)
             Sys_Error("VID: Bad window width/height\n");
     }
 
-    int window_width = BASEWIDTH * 2;
-    int window_height = BASEHEIGHT * 2;
+    int32_t window_width = BASEWIDTH * 2;
+    int32_t window_height = BASEHEIGHT * 2;
     Uint32 window_flags = SDL_WINDOW_SHOWN;
 
     if (COM_CheckParm("-fullscreen"))
@@ -124,7 +124,7 @@ void    VID_Init(unsigned char *palette)
     vid.aspect = ((float)vid.height / (float)vid.width) * (320.0 / 240.0);
     vid.numpages = 1;
     vid.colormap = host_colormap;
-    vid.fullbright = 256 - LittleLong(*((int *)vid.colormap + 2048));
+    vid.fullbright = 256 - LittleLong(*((int32_t *)vid.colormap + 2048));
     VGA_pagebase = vid.buffer = surface8bpp->pixels;
     VGA_rowbytes = vid.rowbytes = surface8bpp->pitch;
     vid.conbuffer = vid.buffer;
@@ -157,7 +157,7 @@ void    VID_Update(vrect_t *rects)
 {
     /*
     SDL_Rect *sdlrects;
-    int n, i;
+    int32_t n, i;
     vrect_t *rect;
 
     // Two-pass system, since Quake doesn't do it the SDL way...
@@ -193,7 +193,7 @@ void    VID_Update(vrect_t *rects)
 D_BeginDirectRect
 ================
 */
-void D_BeginDirectRect(int x, int y, byte *pbitmap, int width, int height)
+void D_BeginDirectRect(int32_t x, int32_t y, byte *pbitmap, int32_t width, int32_t height)
 {
     /*
     Uint8 *offset;
@@ -215,7 +215,7 @@ void D_BeginDirectRect(int x, int y, byte *pbitmap, int width, int height)
 D_EndDirectRect
 ================
 */
-void D_EndDirectRect(int x, int y, int width, int height)
+void D_EndDirectRect(int32_t x, int32_t y, int32_t width, int32_t height)
 {
     /*
     if (!screen) return;
@@ -234,8 +234,8 @@ Sys_SendKeyEvents
 void Sys_SendKeyEvents(void)
 {
     SDL_Event event;
-    int sym, state;
-    int modstate;
+    int32_t sym, state;
+    int32_t modstate;
 
     while (SDL_PollEvent(&event))
     {
@@ -374,8 +374,8 @@ void IN_Shutdown(void)
 
 void IN_Commands(void)
 {
-    int i;
-    int mouse_buttonstate;
+    int32_t i;
+    int32_t mouse_buttonstate;
 
     if (!mouse_avail) return;
 

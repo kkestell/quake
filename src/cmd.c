@@ -15,8 +15,8 @@ typedef struct cmdalias_s
 
 cmdalias_t	*cmd_alias;
 
-int trashtest;
-int *trashspot;
+int32_t trashtest;
+int32_t *trashspot;
 
 qboolean	cmd_wait;
 
@@ -66,7 +66,7 @@ Adds command text at the end of the buffer
 */
 void Cbuf_AddText (char *text)
 {
-	int		l;
+	int32_t		l;
 	
 	l = Q_strlen (text);
 
@@ -92,7 +92,7 @@ FIXME: actually change the command buffer to do less copying
 void Cbuf_InsertText (char *text)
 {
 	char	*temp;
-	int		templen;
+	int32_t		templen;
 
 // copy off any commands still remaining in the exec buffer
 	templen = cmd_text.cursize;
@@ -123,10 +123,10 @@ Cbuf_Execute
 */
 void Cbuf_Execute (void)
 {
-	int		i;
+	int32_t		i;
 	char	*text;
 	char	line[1024];
-	int		quotes;
+	int32_t		quotes;
 	
 	while (cmd_text.cursize)
 	{
@@ -193,8 +193,8 @@ quake -nosound +cmd amlev1
 */
 void Cmd_StuffCmds_f (void)
 {
-	int		i, j;
-	int		s;
+	int32_t		i, j;
+	int32_t		s;
 	char	*text, *build, c;
 		
 	if (Cmd_Argc () != 1)
@@ -264,7 +264,7 @@ Cmd_Exec_f
 void Cmd_Exec_f (void)
 {
 	char	*f;
-	int		mark;
+	int32_t		mark;
 
 	if (Cmd_Argc () != 2)
 	{
@@ -295,7 +295,7 @@ Just prints the rest of the line to the console
 */
 void Cmd_Echo_f (void)
 {
-	int		i;
+	int32_t		i;
 	
 	for (i=1 ; i<Cmd_Argc() ; i++)
 		Con_Printf ("%s ",Cmd_Argv(i));
@@ -323,7 +323,7 @@ void Cmd_Alias_f (void)
 {
 	cmdalias_t	*a;
 	char		cmd[1024];
-	int			i, c;
+	int32_t			i, c;
 	char		*s;
 
 	if (Cmd_Argc() == 1)
@@ -391,7 +391,7 @@ typedef struct cmd_function_s
 
 #define	MAX_ARGS		80
 
-static	int			cmd_argc;
+static	int32_t			cmd_argc;
 static	char		*cmd_argv[MAX_ARGS];
 static	char		*cmd_null_string = "";
 static	char		*cmd_args = NULL;
@@ -424,7 +424,7 @@ void Cmd_Init (void)
 Cmd_Argc
 ============
 */
-int		Cmd_Argc (void)
+int32_t		Cmd_Argc (void)
 {
 	return cmd_argc;
 }
@@ -434,7 +434,7 @@ int		Cmd_Argc (void)
 Cmd_Argv
 ============
 */
-char	*Cmd_Argv (int arg)
+char	*Cmd_Argv (int32_t arg)
 {
 	if ( (unsigned)arg >= cmd_argc )
 		return cmd_null_string;
@@ -461,7 +461,7 @@ Parses the given string into command line tokens.
 */
 void Cmd_TokenizeString (char *text)
 {
-	int		i;
+	int32_t		i;
 	
 // clear the args from the last string
 	for (i=0 ; i<cmd_argc ; i++)
@@ -569,7 +569,7 @@ Cmd_CompleteCommand
 char *Cmd_CompleteCommand (char *partial)
 {
 	cmd_function_t	*cmd;
-	int				len;
+	int32_t				len;
 	
 	len = Q_strlen(partial);
 	
@@ -671,9 +671,9 @@ where the given parameter apears, or 0 if not present
 ================
 */
 
-int Cmd_CheckParm (char *parm)
+int32_t Cmd_CheckParm (char *parm)
 {
-	int i;
+	int32_t i;
 	
 	if (!parm)
 		Sys_Error ("Cmd_CheckParm: NULL");

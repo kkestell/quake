@@ -6,10 +6,10 @@
 
 typedef struct {
 	vrect_t	rect;
-	int		width;
-	int		height;
+	int32_t		width;
+	int32_t		height;
 	byte	*ptexbytes;
-	int		rowbytes;
+	int32_t		rowbytes;
 } rectdesc_t;
 
 static rectdesc_t	r_rectdesc;
@@ -29,7 +29,7 @@ typedef struct cachepic_s
 
 #define	MAX_CACHED_PICS		128
 cachepic_t	menu_cachepics[MAX_CACHED_PICS];
-int			menu_numcachepics;
+int32_t			menu_numcachepics;
 
 
 qpic_t	*Draw_PicFromWad (char *name)
@@ -45,7 +45,7 @@ Draw_CachePic
 qpic_t	*Draw_CachePic (char *path)
 {
 	cachepic_t	*pic;
-	int			i;
+	int32_t			i;
 	qpic_t		*dat;
 	
 	for (pic=menu_cachepics, i=0 ; i<menu_numcachepics ; pic++, i++)
@@ -90,7 +90,7 @@ Draw_Init
 */
 void Draw_Init (void)
 {
-	int		i;
+	int32_t		i;
 
 	draw_chars = W_GetLumpName ("conchars");
 	draw_disc = W_GetLumpName ("disc");
@@ -113,13 +113,13 @@ It can be clipped to the top of the screen to allow the console to be
 smoothly scrolled off.
 ================
 */
-void Draw_Character (int x, int y, int num)
+void Draw_Character (int32_t x, int32_t y, int32_t num)
 {
 	byte			*dest;
 	byte			*source;
 	unsigned short	*pusdest;
-	int				drawline;	
-	int				row, col;
+	int32_t				drawline;	
+	int32_t				row, col;
 
 	num &= 255;
 	
@@ -202,7 +202,7 @@ void Draw_Character (int x, int y, int num)
 Draw_String
 ================
 */
-void Draw_String (int x, int y, char *str)
+void Draw_String (int32_t x, int32_t y, char *str)
 {
 	while (*str)
 	{
@@ -225,9 +225,9 @@ void Draw_DebugChar (char num)
 {
 	byte			*dest;
 	byte			*source;
-	int				drawline;	
+	int32_t				drawline;	
 	extern byte		*draw_chars;
-	int				row, col;
+	int32_t				row, col;
 
 	if (!vid.direct)
 		return;		// don't have direct FB access, so no debugchars...
@@ -260,11 +260,11 @@ void Draw_DebugChar (char num)
 Draw_Pic
 =============
 */
-void Draw_Pic (int x, int y, qpic_t *pic)
+void Draw_Pic (int32_t x, int32_t y, qpic_t *pic)
 {
 	byte			*dest, *source;
 	unsigned short	*pusdest;
-	int				v, u;
+	int32_t				v, u;
 
 	if ((x < 0) ||
 		(x + pic->width > vid.width) ||
@@ -311,11 +311,11 @@ void Draw_Pic (int x, int y, qpic_t *pic)
 Draw_TransPic
 =============
 */
-void Draw_TransPic (int x, int y, qpic_t *pic)
+void Draw_TransPic (int32_t x, int32_t y, qpic_t *pic)
 {
 	byte	*dest, *source, tbyte;
 	unsigned short	*pusdest;
-	int				v, u;
+	int32_t				v, u;
 
 	if (x < 0 || (unsigned)(x + pic->width) > vid.width || y < 0 ||
 		 (unsigned)(y + pic->height) > vid.height)
@@ -398,11 +398,11 @@ void Draw_TransPic (int x, int y, qpic_t *pic)
 Draw_TransPicTranslate
 =============
 */
-void Draw_TransPicTranslate (int x, int y, qpic_t *pic, byte *translation)
+void Draw_TransPicTranslate (int32_t x, int32_t y, qpic_t *pic, byte *translation)
 {
 	byte	*dest, *source, tbyte;
 	unsigned short	*pusdest;
-	int				v, u;
+	int32_t				v, u;
 
 	if (x < 0 || (unsigned)(x + pic->width) > vid.width || y < 0 ||
 		 (unsigned)(y + pic->height) > vid.height)
@@ -480,12 +480,12 @@ void Draw_TransPicTranslate (int x, int y, qpic_t *pic, byte *translation)
 }
 
 
-void Draw_CharToConback (int num, byte *dest)
+void Draw_CharToConback (int32_t num, byte *dest)
 {
-	int		row, col;
+	int32_t		row, col;
 	byte	*source;
-	int		drawline;
-	int		x;
+	int32_t		drawline;
+	int32_t		x;
 
 	row = num>>4;
 	col = num&15;
@@ -510,12 +510,12 @@ Draw_ConsoleBackground
 
 ================
 */
-void Draw_ConsoleBackground (int lines)
+void Draw_ConsoleBackground (int32_t lines)
 {
-	int				x, y, v;
+	int32_t				x, y, v;
 	byte			*src, *dest;
 	unsigned short	*pusdest;
-	int				f, fstep;
+	int32_t				f, fstep;
 	qpic_t			*conback;
 	char			ver[100];
 
@@ -601,11 +601,11 @@ void Draw_ConsoleBackground (int lines)
 R_DrawRect8
 ==============
 */
-void R_DrawRect8 (vrect_t *prect, int rowbytes, byte *psrc,
-	int transparent)
+void R_DrawRect8 (vrect_t *prect, int32_t rowbytes, byte *psrc,
+	int32_t transparent)
 {
 	byte	t;
-	int		i, j, srcdelta, destdelta;
+	int32_t		i, j, srcdelta, destdelta;
 	byte	*pdest;
 
 	pdest = vid.buffer + (prect->y * vid.rowbytes) + prect->x;
@@ -650,11 +650,11 @@ void R_DrawRect8 (vrect_t *prect, int rowbytes, byte *psrc,
 R_DrawRect16
 ==============
 */
-void R_DrawRect16 (vrect_t *prect, int rowbytes, byte *psrc,
-	int transparent)
+void R_DrawRect16 (vrect_t *prect, int32_t rowbytes, byte *psrc,
+	int32_t transparent)
 {
 	byte			t;
-	int				i, j, srcdelta, destdelta;
+	int32_t				i, j, srcdelta, destdelta;
 	unsigned short	*pdest;
 
 // FIXME: would it be better to pre-expand native-format versions?
@@ -711,9 +711,9 @@ This repeats a 64*64 tile graphic to fill the screen around a sized down
 refresh window.
 =============
 */
-void Draw_TileClear (int x, int y, int w, int h)
+void Draw_TileClear (int32_t x, int32_t y, int32_t w, int32_t h)
 {
-	int				width, height, tileoffsetx, tileoffsety;
+	int32_t				width, height, tileoffsetx, tileoffsety;
 	byte			*psrc;
 	vrect_t			vr;
 
@@ -783,12 +783,12 @@ Draw_Fill
 Fills a box of pixels with a single color
 =============
 */
-void Draw_Fill (int x, int y, int w, int h, int c)
+void Draw_Fill (int32_t x, int32_t y, int32_t w, int32_t h, int32_t c)
 {
 	byte			*dest;
 	unsigned short	*pusdest;
 	unsigned		uc;
-	int				u, v;
+	int32_t				u, v;
 
 	if (r_pixbytes == 1)
 	{
@@ -817,7 +817,7 @@ Draw_FadeScreen
 */
 void Draw_FadeScreen (void)
 {
-	int			x,y;
+	int32_t			x,y;
 	byte		*pbuf;
 
 	VID_UnlockBuffer ();
@@ -826,7 +826,7 @@ void Draw_FadeScreen (void)
 
 	for (y=0 ; y<vid.height ; y++)
 	{
-		int	t;
+		int32_t	t;
 
 		pbuf = (byte *)(vid.buffer + vid.rowbytes*y);
 		t = (y & 1) << 1;

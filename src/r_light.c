@@ -3,7 +3,7 @@
 #include "quakedef.h"
 #include "r_local.h"
 
-int	r_dlightframecount;
+int32_t	r_dlightframecount;
 
 
 /*
@@ -13,12 +13,12 @@ R_AnimateLight
 */
 void R_AnimateLight (void)
 {
-	int			i,j,k;
+	int32_t			i,j,k;
 	
 //
 // light animations
 // 'm' is normal light, 'a' is no light, 'z' is double bright
-	i = (int)(cl.time*10);
+	i = (int32_t)(cl.time*10);
 	for (j=0 ; j<MAX_LIGHTSTYLES ; j++)
 	{
 		if (!cl_lightstyle[j].length)
@@ -47,12 +47,12 @@ DYNAMIC LIGHTS
 R_MarkLights
 =============
 */
-void R_MarkLights (dlight_t *light, int bit, mnode_t *node)
+void R_MarkLights (dlight_t *light, int32_t bit, mnode_t *node)
 {
 	mplane_t	*splitplane;
 	float		dist;
 	msurface_t	*surf;
-	int			i;
+	int32_t			i;
 	
 	if (node->contents < 0)
 		return;
@@ -95,7 +95,7 @@ R_PushDlights
 */
 void R_PushDlights (void)
 {
-	int		i;
+	int32_t		i;
 	dlight_t	*l;
 
 	r_dlightframecount = r_framecount + 1;	// because the count hasn't
@@ -119,20 +119,20 @@ LIGHT SAMPLING
 =============================================================================
 */
 
-int RecursiveLightPoint (mnode_t *node, vec3_t start, vec3_t end)
+int32_t RecursiveLightPoint (mnode_t *node, vec3_t start, vec3_t end)
 {
-	int			r;
+	int32_t			r;
 	float		front, back, frac;
-	int			side;
+	int32_t			side;
 	mplane_t	*plane;
 	vec3_t		mid;
 	msurface_t	*surf;
-	int			s, t, ds, dt;
-	int			i;
+	int32_t			s, t, ds, dt;
+	int32_t			i;
 	mtexinfo_t	*tex;
 	byte		*lightmap;
 	unsigned	scale;
-	int			maps;
+	int32_t			maps;
 
 	if (node->contents < 0)
 		return -1;		// didn't hit anything
@@ -216,10 +216,10 @@ int RecursiveLightPoint (mnode_t *node, vec3_t start, vec3_t end)
 	return RecursiveLightPoint (node->children[!side], mid, end);
 }
 
-int R_LightPoint (vec3_t p)
+int32_t R_LightPoint (vec3_t p)
 {
 	vec3_t		end;
-	int			r;
+	int32_t			r;
 	
 	if (!cl.worldmodel->lightdata)
 		return 255;

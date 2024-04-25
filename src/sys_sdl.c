@@ -34,7 +34,7 @@ cvar_t sys_nostdout = {"sys_nostdout", "0"};
 // General routines
 // =======================================================================
 
-void Sys_DebugNumber(int y, int val)
+void Sys_DebugNumber(int32_t y, int32_t val)
 {
 }
 
@@ -117,9 +117,9 @@ FILE IO
 #define MAX_HANDLES 10
 FILE *sys_handles[MAX_HANDLES];
 
-int findhandle(void)
+int32_t findhandle(void)
 {
-    int i;
+    int32_t i;
 
     for (i = 1; i < MAX_HANDLES; i++)
         if (!sys_handles[i])
@@ -133,10 +133,10 @@ int findhandle(void)
 Qfilelength
 ================
 */
-static int Qfilelength(FILE *f)
+static int32_t Qfilelength(FILE *f)
 {
-    int pos;
-    int end;
+    int32_t pos;
+    int32_t end;
 
     pos = ftell(f);
     fseek(f, 0, SEEK_END);
@@ -146,10 +146,10 @@ static int Qfilelength(FILE *f)
     return end;
 }
 
-int Sys_FileOpenRead(char *path, int *hndl)
+int32_t Sys_FileOpenRead(char *path, int32_t *hndl)
 {
     FILE *f;
-    int i;
+    int32_t i;
 
     i = findhandle();
 
@@ -165,10 +165,10 @@ int Sys_FileOpenRead(char *path, int *hndl)
     return Qfilelength(f);
 }
 
-int Sys_FileOpenWrite(char *path)
+int32_t Sys_FileOpenWrite(char *path)
 {
     FILE *f;
-    int i;
+    int32_t i;
 
     i = findhandle();
 
@@ -180,7 +180,7 @@ int Sys_FileOpenWrite(char *path)
     return i;
 }
 
-void Sys_FileClose(int handle)
+void Sys_FileClose(int32_t handle)
 {
     if (handle >= 0)
     {
@@ -189,7 +189,7 @@ void Sys_FileClose(int handle)
     }
 }
 
-void Sys_FileSeek(int handle, int position)
+void Sys_FileSeek(int32_t handle, int32_t position)
 {
     if (handle >= 0)
     {
@@ -197,10 +197,10 @@ void Sys_FileSeek(int handle, int position)
     }
 }
 
-int Sys_FileRead(int handle, void *dst, int count)
+int32_t Sys_FileRead(int32_t handle, void *dst, int32_t count)
 {
     char *data;
-    int size, done;
+    int32_t size, done;
 
     size = 0;
     if (handle >= 0)
@@ -221,10 +221,10 @@ int Sys_FileRead(int handle, void *dst, int count)
     return size;
 }
 
-int Sys_FileWrite(int handle, void *src, int count)
+int32_t Sys_FileWrite(int32_t handle, void *src, int32_t count)
 {
     char *data;
-    int size, done;
+    int32_t size, done;
 
     size = 0;
     if (handle >= 0)
@@ -245,7 +245,7 @@ int Sys_FileWrite(int handle, void *src, int count)
     return size;
 }
 
-int Sys_FileTime(char *path)
+int32_t Sys_FileTime(char *path)
 {
     FILE *f;
 
@@ -286,7 +286,7 @@ double Sys_FloatTime(void)
 {
 #ifdef _WIN32
 
-    static int starttime = 0;
+    static int32_t starttime = 0;
 
     if (!starttime)
         starttime = clock();
@@ -297,7 +297,7 @@ double Sys_FloatTime(void)
 
     struct timeval tp;
     struct timezone tzp;
-    static int secbase;
+    static int32_t secbase;
 
     gettimeofday(&tp, &tzp);
 
@@ -316,14 +316,14 @@ double Sys_FloatTime(void)
 // Sleeps for microseconds
 // =======================================================================
 
-static volatile int oktogo;
+static volatile int32_t oktogo;
 
-void alarm_handler(int x)
+void alarm_handler(int32_t x)
 {
     oktogo = 1;
 }
 
-byte *Sys_ZoneBase(int *size)
+byte *Sys_ZoneBase(int32_t *size)
 {
 
     char *QUAKEOPT = getenv("QUAKEOPT");
@@ -350,24 +350,24 @@ void Sys_Sleep(void)
     SDL_Delay(1);
 }
 
-void floating_point_exception_handler(int whatever)
+void floating_point_exception_handler(int32_t whatever)
 {
     //	Sys_Warn("floating point exception\n");
     signal(SIGFPE, floating_point_exception_handler);
 }
 
-void moncontrol(int x)
+void moncontrol(int32_t x)
 {
 }
 
-int main(int argc, char *argv[])
+int32_t main(int32_t argc, char *argv[])
 {
 
     double time, oldtime, newtime;
     quakeparms_t parms;
-    extern int vcrFile;
-    extern int recording;
-    static int frame;
+    extern int32_t vcrFile;
+    extern int32_t recording;
+    static int32_t frame;
 
     moncontrol(0);
 
@@ -434,9 +434,9 @@ Sys_MakeCodeWriteable
 void Sys_MakeCodeWriteable(uint32_t startaddr, uint32_t length)
 {
     /*
-    int r;
+    int32_t r;
     unsigned int32_t addr;
-    int psize = getpagesize();
+    int32_t psize = getpagesize();
 
     fprintf(stderr, "writable code %lx-%lx\n", startaddr, startaddr + length);
 

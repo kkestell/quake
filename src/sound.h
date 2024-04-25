@@ -9,8 +9,8 @@
 // !!! if this is changed, it much be changed in asm_i386.h too !!!
 typedef struct
 {
-	int left;
-	int right;
+	int32_t left;
+	int32_t right;
 } portable_samplepair_t;
 
 typedef struct sfx_s
@@ -22,11 +22,11 @@ typedef struct sfx_s
 // !!! if this is changed, it much be changed in asm_i386.h too !!!
 typedef struct
 {
-	int 	length;
-	int 	loopstart;
-	int 	speed;
-	int 	width;
-	int 	stereo;
+	int32_t 	length;
+	int32_t 	loopstart;
+	int32_t 	speed;
+	int32_t 	width;
+	int32_t 	stereo;
 	byte	data[1];		// variable sized
 } sfxcache_t;
 
@@ -35,12 +35,12 @@ typedef struct
 	qboolean		gamealive;
 	qboolean		soundalive;
 	qboolean		splitbuffer;
-	int				channels;
-	int				samples;				// mono samples in buffer
-	int				submission_chunk;		// don't mix less than this #
-	int				samplepos;				// in mono samples
-	int				samplebits;
-	int				speed;
+	int32_t				channels;
+	int32_t				samples;				// mono samples in buffer
+	int32_t				submission_chunk;		// don't mix less than this #
+	int32_t				samplepos;				// in mono samples
+	int32_t				samplebits;
+	int32_t				speed;
 	unsigned char	*buffer;
 } dma_t;
 
@@ -48,34 +48,34 @@ typedef struct
 typedef struct
 {
 	sfx_t	*sfx;			// sfx number
-	int		leftvol;		// 0-255 volume
-	int		rightvol;		// 0-255 volume
-	int		end;			// end time in global paintsamples
-	int 	pos;			// sample position in sfx
-	int		looping;		// where to loop, -1 = no looping
-	int		entnum;			// to allow overriding a specific sound
-	int		entchannel;		//
+	int32_t		leftvol;		// 0-255 volume
+	int32_t		rightvol;		// 0-255 volume
+	int32_t		end;			// end time in global paintsamples
+	int32_t 	pos;			// sample position in sfx
+	int32_t		looping;		// where to loop, -1 = no looping
+	int32_t		entnum;			// to allow overriding a specific sound
+	int32_t		entchannel;		//
 	vec3_t	origin;			// origin of sound effect
 	vec_t	dist_mult;		// distance multiplier (attenuation/clipK)
-	int		master_vol;		// 0-255 master volume
+	int32_t		master_vol;		// 0-255 master volume
 } channel_t;
 
 typedef struct
 {
-	int		rate;
-	int		width;
-	int		channels;
-	int		loopstart;
-	int		samples;
-	int		dataofs;		// chunk starts this many bytes from file start
+	int32_t		rate;
+	int32_t		width;
+	int32_t		channels;
+	int32_t		loopstart;
+	int32_t		samples;
+	int32_t		dataofs;		// chunk starts this many bytes from file start
 } wavinfo_t;
 
 void S_Init (void);
 void S_Startup (void);
 void S_Shutdown (void);
-void S_StartSound (int entnum, int entchannel, sfx_t *sfx, vec3_t origin, float fvol,  float attenuation);
+void S_StartSound (int32_t entnum, int32_t entchannel, sfx_t *sfx, vec3_t origin, float fvol,  float attenuation);
 void S_StaticSound (sfx_t *sfx, vec3_t origin, float vol, float attenuation);
-void S_StopSound (int entnum, int entchannel);
+void S_StopSound (int32_t entnum, int32_t entchannel);
 void S_StopAllSounds(qboolean clear);
 void S_ClearBuffer (void);
 void S_Update (vec3_t origin, vec3_t v_forward, vec3_t v_right, vec3_t v_up);
@@ -86,11 +86,11 @@ void S_TouchSound (char *sample);
 void S_ClearPrecache (void);
 void S_BeginPrecaching (void);
 void S_EndPrecaching (void);
-void S_PaintChannels(int endtime);
+void S_PaintChannels(int32_t endtime);
 void S_InitPaintChannels (void);
 
 // picks a channel based on priorities, empty slots, number of channels
-channel_t *SND_PickChannel(int entnum, int entchannel);
+channel_t *SND_PickChannel(int32_t entnum, int32_t entchannel);
 
 // spatializes a channel
 void SND_Spatialize(channel_t *ch);
@@ -99,7 +99,7 @@ void SND_Spatialize(channel_t *ch);
 qboolean SNDDMA_Init(void);
 
 // gets the current DMA position
-int SNDDMA_GetDMAPos(void);
+int32_t SNDDMA_GetDMAPos(void);
 
 // shutdown the DMA xfer.
 void SNDDMA_Shutdown(void);
@@ -117,7 +117,7 @@ extern	channel_t   channels[MAX_CHANNELS];
 // MAX_DYNAMIC_CHANNELS to MAX_DYNAMIC_CHANNELS + NUM_AMBIENTS -1 = water, etc
 // MAX_DYNAMIC_CHANNELS + NUM_AMBIENTS to total_channels = static sounds
 
-extern	int			total_channels;
+extern	int32_t			total_channels;
 
 //
 // Fake dma is a synchronous faking of the DMA progress used for
@@ -126,8 +126,8 @@ extern	int			total_channels;
 //
 
 extern qboolean 		fakedma;
-extern int 			fakedma_updates;
-extern int		paintedtime;
+extern int32_t 			fakedma_updates;
+extern int32_t		paintedtime;
 extern vec3_t listener_origin;
 extern vec3_t listener_forward;
 extern vec3_t listener_right;
@@ -142,12 +142,12 @@ extern	cvar_t volume;
 
 extern qboolean	snd_initialized;
 
-extern int		snd_blocked;
+extern int32_t		snd_blocked;
 
 void S_LocalSound (char *s);
 sfxcache_t *S_LoadSound (sfx_t *s);
 
-wavinfo_t GetWavinfo (char *name, byte *wav, int wavlength);
+wavinfo_t GetWavinfo (char *name, byte *wav, int32_t wavlength);
 
 void SND_InitScaletable (void);
 void SNDDMA_Submit(void);

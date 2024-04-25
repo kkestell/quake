@@ -3,7 +3,7 @@
 
 extern cvar_t	pausable;
 
-int	current_skill;
+int32_t	current_skill;
 
 void Mod_Print (void);
 
@@ -37,10 +37,10 @@ Host_Status_f
 void Host_Status_f (void)
 {
 	client_t	*client;
-	int			seconds;
-	int			minutes;
-	int			hours = 0;
-	int			j;
+	int32_t			seconds;
+	int32_t			minutes;
+	int32_t			hours = 0;
+	int32_t			j;
 	void		(*print) (char *fmt, ...);
 	
 	if (cmd_source == src_command)
@@ -67,7 +67,7 @@ void Host_Status_f (void)
 	{
 		if (!client->active)
 			continue;
-		seconds = (int)(net_time - client->netconnection->connecttime);
+		seconds = (int32_t)(net_time - client->netconnection->connecttime);
 		minutes = seconds / 60;
 		if (minutes)
 		{
@@ -78,7 +78,7 @@ void Host_Status_f (void)
 		}
 		else
 			hours = 0;
-		print ("#%-2u %-16.16s  %3i  %2i:%02i:%02i\n", j+1, client->name, (int)client->edict->v.frags, hours, minutes, seconds);
+		print ("#%-2u %-16.16s  %3i  %2i:%02i:%02i\n", j+1, client->name, (int32_t)client->edict->v.frags, hours, minutes, seconds);
 		print ("   %s\n", client->netconnection->address);
 	}
 }
@@ -102,8 +102,8 @@ void Host_God_f (void)
 	if (pr_global_struct->deathmatch && !host_client->privileged)
 		return;
 
-	sv_player->v.flags = (int)sv_player->v.flags ^ FL_GODMODE;
-	if (!((int)sv_player->v.flags & FL_GODMODE) )
+	sv_player->v.flags = (int32_t)sv_player->v.flags ^ FL_GODMODE;
+	if (!((int32_t)sv_player->v.flags & FL_GODMODE) )
 		SV_ClientPrintf ("godmode OFF\n");
 	else
 		SV_ClientPrintf ("godmode ON\n");
@@ -120,8 +120,8 @@ void Host_Notarget_f (void)
 	if (pr_global_struct->deathmatch && !host_client->privileged)
 		return;
 
-	sv_player->v.flags = (int)sv_player->v.flags ^ FL_NOTARGET;
-	if (!((int)sv_player->v.flags & FL_NOTARGET) )
+	sv_player->v.flags = (int32_t)sv_player->v.flags ^ FL_NOTARGET;
+	if (!((int32_t)sv_player->v.flags & FL_NOTARGET) )
 		SV_ClientPrintf ("notarget OFF\n");
 	else
 		SV_ClientPrintf ("notarget ON\n");
@@ -193,7 +193,7 @@ Host_Ping_f
 */
 void Host_Ping_f (void)
 {
-	int		i, j;
+	int32_t		i, j;
 	float	total;
 	client_t	*client;
 	
@@ -212,7 +212,7 @@ void Host_Ping_f (void)
 		for (j=0 ; j<NUM_PING_TIMES ; j++)
 			total+=client->ping_times[j];
 		total /= NUM_PING_TIMES;
-		SV_ClientPrintf ("%4i %s\n", (int)(total*1000), client->name);
+		SV_ClientPrintf ("%4i %s\n", (int32_t)(total*1000), client->name);
 	}
 }
 
@@ -236,7 +236,7 @@ command from the console.  Active clients are kicked off.
 */
 void Host_Map_f (void)
 {
-	int		i;
+	int32_t		i;
 	char	name[MAX_QPATH];
 
 	if (cmd_source != src_command)
@@ -381,7 +381,7 @@ Writes a SAVEGAME_COMMENT_LENGTH character comment describing the current
 */
 void Host_SavegameComment (char *text)
 {
-	int		i;
+	int32_t		i;
 	char	kills[20];
 
 	for (i=0 ; i<SAVEGAME_COMMENT_LENGTH ; i++)
@@ -406,7 +406,7 @@ void Host_Savegame_f (void)
 {
 	char	name[256];
 	FILE	*f;
-	int		i;
+	int32_t		i;
 	char	comment[SAVEGAME_COMMENT_LENGTH+1];
 
 	if (cmd_source != src_command)
@@ -505,10 +505,10 @@ void Host_Loadgame_f (void)
 	char	mapname[MAX_QPATH];
 	float	time, tfloat;
 	char	str[32768], *start;
-	int		i, r;
+	int32_t		i, r;
 	edict_t	*ent;
-	int		entnum;
-	int		version;
+	int32_t		entnum;
+	int32_t		version;
 	float			spawn_parms[NUM_SPAWN_PARMS];
 
 	if (cmd_source != src_command)
@@ -549,7 +549,7 @@ void Host_Loadgame_f (void)
 		fscanf (f, "%f\n", &spawn_parms[i]);
 // this silliness is so we can load 1.06 save files, which have float skill values
 	fscanf (f, "%f\n", &tfloat);
-	current_skill = (int)(tfloat + 0.1);
+	current_skill = (int32_t)(tfloat + 0.1);
 	Cvar_SetValue ("skill", (float)current_skill);
 
 	fscanf (f, "%s\n",mapname);
@@ -693,7 +693,7 @@ void Host_Version_f (void)
 void Host_Please_f (void)
 {
 	client_t *cl;
-	int			j;
+	int32_t			j;
 	
 	if (cmd_source != src_command)
 		return;
@@ -709,7 +709,7 @@ void Host_Please_f (void)
 		if (cl->privileged)
 		{
 			cl->privileged = false;
-			cl->edict->v.flags = (int)cl->edict->v.flags & ~(FL_GODMODE|FL_NOTARGET);
+			cl->edict->v.flags = (int32_t)cl->edict->v.flags & ~(FL_GODMODE|FL_NOTARGET);
 			cl->edict->v.movetype = MOVETYPE_WALK;
 			noclip_anglehack = false;
 		}
@@ -729,7 +729,7 @@ void Host_Please_f (void)
 			if (cl->privileged)
 			{
 				cl->privileged = false;
-				cl->edict->v.flags = (int)cl->edict->v.flags & ~(FL_GODMODE|FL_NOTARGET);
+				cl->edict->v.flags = (int32_t)cl->edict->v.flags & ~(FL_GODMODE|FL_NOTARGET);
 				cl->edict->v.movetype = MOVETYPE_WALK;
 				noclip_anglehack = false;
 			}
@@ -746,7 +746,7 @@ void Host_Say(qboolean teamonly)
 {
 	client_t *client;
 	client_t *save;
-	int		j;
+	int32_t		j;
 	char	*p;
 	unsigned char	text[64];
 	qboolean	fromServer = false;
@@ -822,7 +822,7 @@ void Host_Tell_f(void)
 {
 	client_t *client;
 	client_t *save;
-	int		j;
+	int32_t		j;
 	char	*p;
 	char	text[64];
 
@@ -877,12 +877,12 @@ Host_Color_f
 */
 void Host_Color_f(void)
 {
-	int		top, bottom;
-	int		playercolor;
+	int32_t		top, bottom;
+	int32_t		playercolor;
 	
 	if (Cmd_Argc() == 1)
 	{
-		Con_Printf ("\"color\" is \"%i %i\"\n", ((int)cl_color.value) >> 4, ((int)cl_color.value) & 0x0f);
+		Con_Printf ("\"color\" is \"%i %i\"\n", ((int32_t)cl_color.value) >> 4, ((int32_t)cl_color.value) & 0x0f);
 		Con_Printf ("color <0-13> [0-13]\n");
 		return;
 	}
@@ -1015,7 +1015,7 @@ Host_Spawn_f
 */
 void Host_Spawn_f (void)
 {
-	int		i;
+	int32_t		i;
 	client_t	*client;
 	edict_t	*ent;
 
@@ -1163,7 +1163,7 @@ void Host_Kick_f (void)
 	char		*who;
 	char		*message = NULL;
 	client_t	*save;
-	int			i;
+	int32_t			i;
 	qboolean	byNumber = false;
 
 	if (cmd_source == src_command)
@@ -1253,7 +1253,7 @@ Host_Give_f
 void Host_Give_f (void)
 {
 	char	*t;
-	int		v, w;
+	int32_t		v, w;
 	eval_t	*val;
 
 	if (cmd_source == src_command)
@@ -1286,21 +1286,21 @@ void Host_Give_f (void)
          if (t[0] == '6')
          {
             if (t[1] == 'a')
-               sv_player->v.items = (int)sv_player->v.items | HIT_PROXIMITY_GUN;
+               sv_player->v.items = (int32_t)sv_player->v.items | HIT_PROXIMITY_GUN;
             else
-               sv_player->v.items = (int)sv_player->v.items | IT_GRENADE_LAUNCHER;
+               sv_player->v.items = (int32_t)sv_player->v.items | IT_GRENADE_LAUNCHER;
          }
          else if (t[0] == '9')
-            sv_player->v.items = (int)sv_player->v.items | HIT_LASER_CANNON;
+            sv_player->v.items = (int32_t)sv_player->v.items | HIT_LASER_CANNON;
          else if (t[0] == '0')
-            sv_player->v.items = (int)sv_player->v.items | HIT_MJOLNIR;
+            sv_player->v.items = (int32_t)sv_player->v.items | HIT_MJOLNIR;
          else if (t[0] >= '2')
-            sv_player->v.items = (int)sv_player->v.items | (IT_SHOTGUN << (t[0] - '2'));
+            sv_player->v.items = (int32_t)sv_player->v.items | (IT_SHOTGUN << (t[0] - '2'));
       }
       else
       {
          if (t[0] >= '2')
-            sv_player->v.items = (int)sv_player->v.items | (IT_SHOTGUN << (t[0] - '2'));
+            sv_player->v.items = (int32_t)sv_player->v.items | (IT_SHOTGUN << (t[0] - '2'));
       }
 		break;
 	
@@ -1406,7 +1406,7 @@ void Host_Give_f (void)
 
 edict_t	*FindViewthing (void)
 {
-	int		i;
+	int32_t		i;
 	edict_t	*e;
 	
 	for (i=0 ; i<sv.num_edicts ; i++)
@@ -1441,7 +1441,7 @@ void Host_Viewmodel_f (void)
 	}
 	
 	e->v.frame = 0;
-	cl.model_precache[(int)e->v.modelindex] = m;
+	cl.model_precache[(int32_t)e->v.modelindex] = m;
 }
 
 /*
@@ -1452,13 +1452,13 @@ Host_Viewframe_f
 void Host_Viewframe_f (void)
 {
 	edict_t	*e;
-	int		f;
+	int32_t		f;
 	model_t	*m;
 
 	e = FindViewthing ();
 	if (!e)
 		return;
-	m = cl.model_precache[(int)e->v.modelindex];
+	m = cl.model_precache[(int32_t)e->v.modelindex];
 
 	f = atoi(Cmd_Argv(1));
 	if (f >= m->numframes)
@@ -1468,7 +1468,7 @@ void Host_Viewframe_f (void)
 }
 
 
-void PrintFrameName (model_t *m, int frame)
+void PrintFrameName (model_t *m, int32_t frame)
 {
 	aliashdr_t 			*hdr;
 	maliasframedesc_t	*pframedesc;
@@ -1494,7 +1494,7 @@ void Host_Viewnext_f (void)
 	e = FindViewthing ();
 	if (!e)
 		return;
-	m = cl.model_precache[(int)e->v.modelindex];
+	m = cl.model_precache[(int32_t)e->v.modelindex];
 
 	e->v.frame = e->v.frame + 1;
 	if (e->v.frame >= m->numframes)
@@ -1517,7 +1517,7 @@ void Host_Viewprev_f (void)
 	if (!e)
 		return;
 
-	m = cl.model_precache[(int)e->v.modelindex];
+	m = cl.model_precache[(int32_t)e->v.modelindex];
 
 	e->v.frame = e->v.frame - 1;
 	if (e->v.frame < 0)
@@ -1542,7 +1542,7 @@ Host_Startdemos_f
 */
 void Host_Startdemos_f (void)
 {
-	int		i, c;
+	int32_t		i, c;
 
 	if (cls.state == ca_dedicated)
 	{

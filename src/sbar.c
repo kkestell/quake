@@ -3,7 +3,7 @@
 #include "quakedef.h"
 
 
-int			sb_updates;		// if >= vid.numpages, no update needed
+int32_t			sb_updates;		// if >= vid.numpages, no update needed
 
 #define STAT_MINUS		10	// num frame for '-' stats digit
 qpic_t		*sb_nums[2][11];
@@ -27,7 +27,7 @@ qpic_t	*sb_face_invis_invuln;
 
 qboolean	sb_showscores;
 
-int			sb_lines;			// scan lines to draw
+int32_t			sb_lines;			// scan lines to draw
 
 qpic_t      *rsb_invbar[2];
 qpic_t      *rsb_weapons[5];
@@ -38,13 +38,13 @@ qpic_t      *rsb_teambord;		// PGM 01/19/97 - team color border
 //MED 01/04/97 added two more weapons + 3 alternates for grenade launcher
 qpic_t      *hsb_weapons[7][5];   // 0 is active, 1 is owned, 2-5 are flashes
 //MED 01/04/97 added array to simplify weapon parsing
-int         hipweapons[4] = {HIT_LASER_CANNON_BIT,HIT_MJOLNIR_BIT,4,HIT_PROXIMITY_GUN_BIT};
+int32_t         hipweapons[4] = {HIT_LASER_CANNON_BIT,HIT_MJOLNIR_BIT,4,HIT_PROXIMITY_GUN_BIT};
 //MED 01/04/97 added hipnotic items array
 qpic_t      *hsb_items[2];
 
 void Sbar_MiniDeathmatchOverlay (void);
 void Sbar_DeathmatchOverlay (void);
-void M_DrawPic (int x, int y, qpic_t *pic);
+void M_DrawPic (int32_t x, int32_t y, qpic_t *pic);
 
 /*
 ===============
@@ -91,7 +91,7 @@ Sbar_Init
 */
 void Sbar_Init (void)
 {
-	int		i;
+	int32_t		i;
 
 	for (i=0 ; i<10 ; i++)
 	{
@@ -238,7 +238,7 @@ void Sbar_Init (void)
 Sbar_DrawPic
 =============
 */
-void Sbar_DrawPic (int x, int y, qpic_t *pic)
+void Sbar_DrawPic (int32_t x, int32_t y, qpic_t *pic)
 {
 	if (cl.gametype == GAME_DEATHMATCH)
 		Draw_Pic (x /* + ((vid.width - 320)>>1)*/, y + (vid.height-SBAR_HEIGHT), pic);
@@ -251,7 +251,7 @@ void Sbar_DrawPic (int x, int y, qpic_t *pic)
 Sbar_DrawTransPic
 =============
 */
-void Sbar_DrawTransPic (int x, int y, qpic_t *pic)
+void Sbar_DrawTransPic (int32_t x, int32_t y, qpic_t *pic)
 {
 	if (cl.gametype == GAME_DEATHMATCH)
 		Draw_TransPic (x /*+ ((vid.width - 320)>>1)*/, y + (vid.height-SBAR_HEIGHT), pic);
@@ -266,7 +266,7 @@ Sbar_DrawCharacter
 Draws one solid graphics character
 ================
 */
-void Sbar_DrawCharacter (int x, int y, int num)
+void Sbar_DrawCharacter (int32_t x, int32_t y, int32_t num)
 {
 	if (cl.gametype == GAME_DEATHMATCH)
 		Draw_Character ( x /*+ ((vid.width - 320)>>1) */ + 4 , y + vid.height-SBAR_HEIGHT, num);
@@ -279,7 +279,7 @@ void Sbar_DrawCharacter (int x, int y, int num)
 Sbar_DrawString
 ================
 */
-void Sbar_DrawString (int x, int y, char *str)
+void Sbar_DrawString (int32_t x, int32_t y, char *str)
 {
 	if (cl.gametype == GAME_DEATHMATCH)
 		Draw_String (x /*+ ((vid.width - 320)>>1)*/, y+ vid.height-SBAR_HEIGHT, str);
@@ -292,11 +292,11 @@ void Sbar_DrawString (int x, int y, char *str)
 Sbar_itoa
 =============
 */
-int Sbar_itoa (int num, char *buf)
+int32_t Sbar_itoa (int32_t num, char *buf)
 {
 	char	*str;
-	int		pow10;
-	int		dig;
+	int32_t		pow10;
+	int32_t		dig;
 
 	str = buf;
 
@@ -328,11 +328,11 @@ int Sbar_itoa (int num, char *buf)
 Sbar_DrawNum
 =============
 */
-void Sbar_DrawNum (int x, int y, int num, int digits, int color)
+void Sbar_DrawNum (int32_t x, int32_t y, int32_t num, int32_t digits, int32_t color)
 {
 	char			str[12];
 	char			*ptr;
-	int				l, frame;
+	int32_t				l, frame;
 
 	l = Sbar_itoa (num, str);
 	ptr = str;
@@ -356,13 +356,13 @@ void Sbar_DrawNum (int x, int y, int num, int digits, int color)
 
 //=============================================================================
 
-int		fragsort[MAX_SCOREBOARD];
+int32_t		fragsort[MAX_SCOREBOARD];
 
 char	scoreboardtext[MAX_SCOREBOARD][20];
-int		scoreboardtop[MAX_SCOREBOARD];
-int		scoreboardbottom[MAX_SCOREBOARD];
-int		scoreboardcount[MAX_SCOREBOARD];
-int		scoreboardlines;
+int32_t		scoreboardtop[MAX_SCOREBOARD];
+int32_t		scoreboardbottom[MAX_SCOREBOARD];
+int32_t		scoreboardcount[MAX_SCOREBOARD];
+int32_t		scoreboardlines;
 
 /*
 ===============
@@ -371,7 +371,7 @@ Sbar_SortFrags
 */
 void Sbar_SortFrags (void)
 {
-	int		i, j, k;
+	int32_t		i, j, k;
 
 // sort by frags
 	scoreboardlines = 0;
@@ -394,7 +394,7 @@ void Sbar_SortFrags (void)
 			}
 }
 
-int	Sbar_ColorForMap (int m)
+int32_t	Sbar_ColorForMap (int32_t m)
 {
 	return m < 128 ? m + 8 : m + 8;
 }
@@ -406,8 +406,8 @@ Sbar_UpdateScoreboard
 */
 void Sbar_UpdateScoreboard (void)
 {
-	int		i, k;
-	int		top, bottom;
+	int32_t		i, k;
+	int32_t		top, bottom;
 	scoreboard_t	*s;
 
 	Sbar_SortFrags ();
@@ -438,8 +438,8 @@ Sbar_SoloScoreboard
 void Sbar_SoloScoreboard (void)
 {
 	char	str[80];
-	int		minutes, seconds, tens, units;
-	int		l;
+	int32_t		minutes, seconds, tens, units;
+	int32_t		l;
 
 	sprintf (str,"Monsters:%3i /%3i", cl.stats[STAT_MONSTERS], cl.stats[STAT_TOTALMONSTERS]);
 	Sbar_DrawString (8, 4, str);
@@ -471,10 +471,10 @@ void Sbar_DrawScoreboard (void)
 	if (cl.gametype == GAME_DEATHMATCH)
 		Sbar_DeathmatchOverlay ();
 #if 0
-	int		i, j, c;
-	int		x, y;
-	int		l;
-	int		top, bottom;
+	int32_t		i, j, c;
+	int32_t		x, y;
+	int32_t		l;
+	int32_t		top, bottom;
 	scoreboard_t	*s;
 
 	if (cl.gametype != GAME_DEATHMATCH)
@@ -526,10 +526,10 @@ Sbar_DrawInventory
 */
 void Sbar_DrawInventory (void)
 {
-	int		i;
+	int32_t		i;
 	char	num[6];
 	float	time;
-	int		flashon;
+	int32_t		flashon;
 
 	if (rogue)
 	{
@@ -549,7 +549,7 @@ void Sbar_DrawInventory (void)
 		if (cl.items & (IT_SHOTGUN<<i) )
 		{
 			time = cl.item_gettime[i];
-			flashon = (int)((cl.time - time)*10);
+			flashon = (int32_t)((cl.time - time)*10);
 			if (flashon >= 10)
 			{
 				if ( cl.stats[STAT_ACTIVEWEAPON] == (IT_SHOTGUN<<i)  )
@@ -571,13 +571,13 @@ void Sbar_DrawInventory (void)
 // hipnotic weapons
     if (hipnotic)
     {
-      int grenadeflashing=0;
+      int32_t grenadeflashing=0;
       for (i=0 ; i<4 ; i++)
       {
          if (cl.items & (1<<hipweapons[i]) )
          {
             time = cl.item_gettime[hipweapons[i]];
-            flashon = (int)((cl.time - time)*10);
+            flashon = (int32_t)((cl.time - time)*10);
             if (flashon >= 10)
             {
                if ( cl.stats[STAT_ACTIVEWEAPON] == (1<<hipweapons[i])  )
@@ -746,10 +746,10 @@ Sbar_DrawFrags
 */
 void Sbar_DrawFrags (void)
 {
-	int				i, k, l;
-	int				top, bottom;
-	int				x, y, f;
-	int				xofs;
+	int32_t				i, k, l;
+	int32_t				top, bottom;
+	int32_t				x, y, f;
+	int32_t				xofs;
 	char			num[12];
 	scoreboard_t	*s;
 
@@ -808,7 +808,7 @@ Sbar_DrawFace
 */
 void Sbar_DrawFace (void)
 {
-	int		f, anim;
+	int32_t		f, anim;
 
 // PGM 01/19/97 - team color drawing
 // PGM 03/02/97 - fixed so color swatch only appears in CTF modes
@@ -817,8 +817,8 @@ void Sbar_DrawFace (void)
         (teamplay.value>3) &&
         (teamplay.value<7))
 	{
-		int				top, bottom;
-		int				xofs;
+		int32_t				top, bottom;
+		int32_t				xofs;
 		char			num[12];
 		scoreboard_t	*s;
 		
@@ -1032,11 +1032,11 @@ Sbar_IntermissionNumber
 
 ==================
 */
-void Sbar_IntermissionNumber (int x, int y, int num, int digits, int color)
+void Sbar_IntermissionNumber (int32_t x, int32_t y, int32_t num, int32_t digits, int32_t color)
 {
 	char			str[12];
 	char			*ptr;
-	int				l, frame;
+	int32_t				l, frame;
 
 	l = Sbar_itoa (num, str);
 	ptr = str;
@@ -1067,9 +1067,9 @@ Sbar_DeathmatchOverlay
 void Sbar_DeathmatchOverlay (void)
 {
 	qpic_t			*pic;
-	int				i, k, l;
-	int				top, bottom;
-	int				x, y, f;
+	int32_t				i, k, l;
+	int32_t				top, bottom;
+	int32_t				x, y, f;
 	char			num[12];
 	scoreboard_t	*s;
 
@@ -1116,12 +1116,12 @@ void Sbar_DeathmatchOverlay (void)
 
 #if 0
 {
-	int				total;
-	int				n, minutes, tens, units;
+	int32_t				total;
+	int32_t				n, minutes, tens, units;
 
 	// draw time
 		total = cl.completed_time - s->entertime;
-		minutes = (int)total/60;
+		minutes = (int32_t)total/60;
 		n = total - minutes*60;
 		tens = n/10;
 		units = n%10;
@@ -1148,12 +1148,12 @@ Sbar_DeathmatchOverlay
 void Sbar_MiniDeathmatchOverlay (void)
 {
 	qpic_t			*pic;
-	int				i, k, l;
-	int				top, bottom;
-	int				x, y, f;
+	int32_t				i, k, l;
+	int32_t				top, bottom;
+	int32_t				x, y, f;
 	char			num[12];
 	scoreboard_t	*s;
-	int				numlines;
+	int32_t				numlines;
 
 	if (vid.width < 512 || !sb_lines)
 		return;
@@ -1218,12 +1218,12 @@ void Sbar_MiniDeathmatchOverlay (void)
 
 #if 0
 {
-	int				total;
-	int				n, minutes, tens, units;
+	int32_t				total;
+	int32_t				n, minutes, tens, units;
 
 	// draw time
 		total = cl.completed_time - s->entertime;
-		minutes = (int)total/60;
+		minutes = (int32_t)total/60;
 		n = total - minutes*60;
 		tens = n/10;
 		units = n%10;
@@ -1250,8 +1250,8 @@ Sbar_IntermissionOverlay
 void Sbar_IntermissionOverlay (void)
 {
 	qpic_t	*pic;
-	int		dig;
-	int		num;
+	int32_t		dig;
+	int32_t		num;
 
 	scr_copyeverything = 1;
 	scr_fullupdate = 0;

@@ -7,15 +7,15 @@
 float           surfscale;
 qboolean        r_cache_thrash;         // set if surface cache is thrashing
 
-int                                     sc_size;
+int32_t                                     sc_size;
 surfcache_t                     *sc_rover, *sc_base;
 
 #define GUARDSIZE       4
 
 
-int     D_SurfaceCacheForRes (int width, int height)
+int32_t     D_SurfaceCacheForRes (int32_t width, int32_t height)
 {
-	int             size, pix;
+	int32_t             size, pix;
 
 	if (COM_CheckParm ("-surfcachesize"))
 	{
@@ -36,7 +36,7 @@ int     D_SurfaceCacheForRes (int width, int height)
 void D_CheckCacheGuard (void)
 {
 	byte    *s;
-	int             i;
+	int32_t             i;
 
 	s = (byte *)sc_base + sc_size;
 	for (i=0 ; i<GUARDSIZE ; i++)
@@ -47,7 +47,7 @@ void D_CheckCacheGuard (void)
 void D_ClearCacheGuard (void)
 {
 	byte    *s;
-	int             i;
+	int32_t             i;
 	
 	s = (byte *)sc_base + sc_size;
 	for (i=0 ; i<GUARDSIZE ; i++)
@@ -61,7 +61,7 @@ D_InitCaches
 
 ================
 */
-void D_InitCaches (void *buffer, int size)
+void D_InitCaches (void *buffer, int32_t size)
 {
 
 	if (!msg_suppress_1)
@@ -108,7 +108,7 @@ void D_FlushCaches (void)
 D_SCAlloc
 =================
 */
-surfcache_t     *D_SCAlloc (int width, int size)
+surfcache_t     *D_SCAlloc (int32_t width, int32_t size)
 {
 	surfcache_t             *new;
 	qboolean                wrapped_this_time;
@@ -119,7 +119,7 @@ surfcache_t     *D_SCAlloc (int width, int size)
 	if ((size <= 0) || (size > 0x10000))
 		Sys_Error ("D_SCAlloc: bad cache size %d\n", size);
 	
-	size = (int)&((surfcache_t *)0)->data[size];
+	size = (int32_t)&((surfcache_t *)0)->data[size];
 	size = (size + 3) & ~3;
 	if (size > sc_size)
 		Sys_Error ("D_SCAlloc: %i > cache size",size);
@@ -211,7 +211,7 @@ void D_SCDump (void)
 
 // if the num is not a power of 2, assume it will not repeat
 
-int     MaskForNum (int num)
+int32_t     MaskForNum (int32_t num)
 {
 	if (num==128)
 		return 127;
@@ -224,9 +224,9 @@ int     MaskForNum (int num)
 	return 255;
 }
 
-int D_log2 (int num)
+int32_t D_log2 (int32_t num)
 {
-	int     c;
+	int32_t     c;
 	
 	c = 0;
 	
@@ -242,7 +242,7 @@ int D_log2 (int num)
 D_CacheSurface
 ================
 */
-surfcache_t *D_CacheSurface (msurface_t *surface, int miplevel)
+surfcache_t *D_CacheSurface (msurface_t *surface, int32_t miplevel)
 {
 	surfcache_t     *cache;
 

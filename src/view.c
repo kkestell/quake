@@ -47,7 +47,7 @@ cvar_t	gl_cshiftpercent = {"gl_cshiftpercent", "100", false};
 
 float	v_dmg_time, v_dmg_roll, v_dmg_pitch;
 
-extern	int			in_forward, in_forward2, in_back;
+extern	int32_t			in_forward, in_forward2, in_back;
 
 
 /*
@@ -95,7 +95,7 @@ float V_CalcBob (void)
 	float	bob;
 	float	cycle;
 	
-	cycle = cl.time - (int)(cl.time/cl_bobcycle.value)*cl_bobcycle.value;
+	cycle = cl.time - (int32_t)(cl.time/cl_bobcycle.value)*cl_bobcycle.value;
 	cycle /= cl_bobcycle.value;
 	if (cycle < cl_bobup.value)
 		cycle = M_PI * cycle / cl_bobup.value;
@@ -243,7 +243,7 @@ byte		gammatable[256];	// palette is sent through this
 
 void BuildGammaTable (float g)
 {
-	int		i, inf;
+	int32_t		i, inf;
 	
 	if (g == 1.0)
 	{
@@ -291,9 +291,9 @@ V_ParseDamage
 */
 void V_ParseDamage (void)
 {
-	int		armor, blood;
+	int32_t		armor, blood;
 	vec3_t	from;
-	int		i;
+	int32_t		i;
 	vec3_t	forward, right, up;
 	entity_t	*ent;
 	float	side;
@@ -391,7 +391,7 @@ V_SetContentsColor
 Underwater, lava, etc each has a color shift
 =============
 */
-void V_SetContentsColor (int contents)
+void V_SetContentsColor (int32_t contents)
 {
 	switch (contents)
 	{
@@ -451,11 +451,11 @@ void V_CalcPowerupCshift (void)
 
 void V_UpdatePalette (void)
 {
-	int		i, j;
+	int32_t		i, j;
 	qboolean	new;
 	byte	*basepal, *newpal;
 	byte	pal[768];
-	int		r,g,b;
+	int32_t		r,g,b;
 	qboolean force;
 
 	V_CalcPowerupCshift ();
@@ -700,7 +700,7 @@ V_CalcRefdef
 void V_CalcRefdef (void)
 {
 	entity_t	*ent, *view;
-	int			i;
+	int32_t			i;
 	vec3_t		forward, right, up;
 	vec3_t		angles;
 	float		bob;
@@ -858,7 +858,7 @@ void V_RenderView (void)
 		//
 		// render two interleaved views
 		//
-		int		i;
+		int32_t		i;
 
 		vid.rowbytes <<= 1;
 		vid.aspect *= 0.5;

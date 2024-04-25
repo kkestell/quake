@@ -4,8 +4,8 @@
 #include "quakedef.h"
 #include "d_local.h"
 
-static int		sprite_height;
-static int		minindex, maxindex;
+static int32_t		sprite_height;
+static int32_t		minindex, maxindex;
 static sspan_t	*sprite_spans;
 
 /*
@@ -15,8 +15,8 @@ D_SpriteDrawSpans
 */
 void D_SpriteDrawSpans (sspan_t *pspan)
 {
-	int			count, spancount, izistep;
-	int			izi;
+	int32_t			count, spancount, izistep;
+	int32_t			izi;
 	byte		*pbase, *pdest;
 	fixed16_t	s, t, snext, tnext, sstep, tstep;
 	float		sdivz, tdivz, zi, z, du, dv, spancountminus1;
@@ -34,7 +34,7 @@ void D_SpriteDrawSpans (sspan_t *pspan)
 	zi8stepu = d_zistepu * 8;
 
 // we count on FP exceptions being turned off to avoid range problems
-	izistep = (int)(d_zistepu * 0x8000 * 0x10000);
+	izistep = (int32_t)(d_zistepu * 0x8000 * 0x10000);
 
 	do
 	{
@@ -55,15 +55,15 @@ void D_SpriteDrawSpans (sspan_t *pspan)
 		zi = d_ziorigin + dv*d_zistepv + du*d_zistepu;
 		z = (float)0x10000 / zi;	// prescale to 16.16 fixed-point
 	// we count on FP exceptions being turned off to avoid range problems
-		izi = (int)(zi * 0x8000 * 0x10000);
+		izi = (int32_t)(zi * 0x8000 * 0x10000);
 
-		s = (int)(sdivz * z) + sadjust;
+		s = (int32_t)(sdivz * z) + sadjust;
 		if (s > bbextents)
 			s = bbextents;
 		else if (s < 0)
 			s = 0;
 
-		t = (int)(tdivz * z) + tadjust;
+		t = (int32_t)(tdivz * z) + tadjust;
 		if (t > bbextentt)
 			t = bbextentt;
 		else if (t < 0)
@@ -88,7 +88,7 @@ void D_SpriteDrawSpans (sspan_t *pspan)
 				zi += zi8stepu;
 				z = (float)0x10000 / zi;	// prescale to 16.16 fixed-point
 
-				snext = (int)(sdivz * z) + sadjust;
+				snext = (int32_t)(sdivz * z) + sadjust;
 				if (snext > bbextents)
 					snext = bbextents;
 				else if (snext < 8)
@@ -96,7 +96,7 @@ void D_SpriteDrawSpans (sspan_t *pspan)
 								//  from causing overstepping & running off the
 								//  edge of the texture
 
-				tnext = (int)(tdivz * z) + tadjust;
+				tnext = (int32_t)(tdivz * z) + tadjust;
 				if (tnext > bbextentt)
 					tnext = bbextentt;
 				else if (tnext < 8)
@@ -116,7 +116,7 @@ void D_SpriteDrawSpans (sspan_t *pspan)
 				tdivz += d_tdivzstepu * spancountminus1;
 				zi += d_zistepu * spancountminus1;
 				z = (float)0x10000 / zi;	// prescale to 16.16 fixed-point
-				snext = (int)(sdivz * z) + sadjust;
+				snext = (int32_t)(sdivz * z) + sadjust;
 				if (snext > bbextents)
 					snext = bbextents;
 				else if (snext < 8)
@@ -124,7 +124,7 @@ void D_SpriteDrawSpans (sspan_t *pspan)
 								//  from causing overstepping & running off the
 								//  edge of the texture
 
-				tnext = (int)(tdivz * z) + tadjust;
+				tnext = (int32_t)(tdivz * z) + tadjust;
 				if (tnext > bbextentt)
 					tnext = bbextentt;
 				else if (tnext < 8)
@@ -174,7 +174,7 @@ D_SpriteScanLeftEdge
 */
 void D_SpriteScanLeftEdge (void)
 {
-	int			i, v, itop, ibottom, lmaxindex;
+	int32_t			i, v, itop, ibottom, lmaxindex;
 	emitpoint_t	*pvert, *pnext;
 	sspan_t		*pspan;
 	float		du, dv, vtop, vbottom, slope;
@@ -203,12 +203,12 @@ void D_SpriteScanLeftEdge (void)
 			du = pnext->u - pvert->u;
 			dv = pnext->v - pvert->v;
 			slope = du / dv;
-			u_step = (int)(slope * 0x10000);
+			u_step = (int32_t)(slope * 0x10000);
 		// adjust u to ceil the integer portion
-			u = (int)((pvert->u + (slope * (vtop - pvert->v))) * 0x10000) +
+			u = (int32_t)((pvert->u + (slope * (vtop - pvert->v))) * 0x10000) +
 					(0x10000 - 1);
-			itop = (int)vtop;
-			ibottom = (int)vbottom;
+			itop = (int32_t)vtop;
+			ibottom = (int32_t)vbottom;
 
 			for (v=itop ; v<ibottom ; v++)
 			{
@@ -236,7 +236,7 @@ D_SpriteScanRightEdge
 */
 void D_SpriteScanRightEdge (void)
 {
-	int			i, v, itop, ibottom;
+	int32_t			i, v, itop, ibottom;
 	emitpoint_t	*pvert, *pnext;
 	sspan_t		*pspan;
 	float		du, dv, vtop, vbottom, slope, uvert, unext, vvert, vnext;
@@ -283,12 +283,12 @@ void D_SpriteScanRightEdge (void)
 			du = unext - uvert;
 			dv = vnext - vvert;
 			slope = du / dv;
-			u_step = (int)(slope * 0x10000);
+			u_step = (int32_t)(slope * 0x10000);
 		// adjust u to ceil the integer portion
-			u = (int)((uvert + (slope * (vtop - vvert))) * 0x10000) +
+			u = (int32_t)((uvert + (slope * (vtop - vvert))) * 0x10000) +
 					(0x10000 - 1);
-			itop = (int)vtop;
-			ibottom = (int)vbottom;
+			itop = (int32_t)vtop;
+			ibottom = (int32_t)vbottom;
 
 			for (v=itop ; v<ibottom ; v++)
 			{
@@ -364,7 +364,7 @@ D_DrawSprite
 */
 void D_DrawSprite (void)
 {
-	int			i, nump;
+	int32_t			i, nump;
 	float		ymin, ymax;
 	emitpoint_t	*pverts;
 	sspan_t		spans[MAXHEIGHT+1];

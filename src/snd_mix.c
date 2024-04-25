@@ -10,16 +10,16 @@
 
 #define	PAINTBUFFER_SIZE	512
 portable_samplepair_t paintbuffer[PAINTBUFFER_SIZE];
-int		snd_scaletable[32][256];
-int 	*snd_p, snd_linear_count, snd_vol;
+int32_t		snd_scaletable[32][256];
+int32_t 	*snd_p, snd_linear_count, snd_vol;
 short	*snd_out;
 
 void Snd_WriteLinearBlastStereo16 (void);
 
 void Snd_WriteLinearBlastStereo16 (void)
 {
-	int		i;
-	int		val;
+	int32_t		i;
+	int32_t		val;
 
 	// for (i=0 ; i<snd_linear_count ; i+=2)
 	// {
@@ -41,15 +41,15 @@ void Snd_WriteLinearBlastStereo16 (void)
 	// }
 }
 
-void S_TransferStereo16 (int endtime)
+void S_TransferStereo16 (int32_t endtime)
 {
-	int		lpos;
-	int		lpaintedtime;
+	int32_t		lpos;
+	int32_t		lpaintedtime;
 	DWORD	*pbuf;
 
 /*
 #ifdef _WIN32
-	int		reps;
+	int32_t		reps;
 	DWORD	dwSize,dwSize2;
 	DWORD	*pbuf2;
 	HRESULT	hresult;
@@ -58,7 +58,7 @@ void S_TransferStereo16 (int endtime)
 
 	snd_vol = volume.value*256;
 
-	snd_p = (int *) paintbuffer;
+	snd_p = (int32_t *) paintbuffer;
 	lpaintedtime = paintedtime;
 
 /*
@@ -123,20 +123,20 @@ void S_TransferStereo16 (int endtime)
 */
 }
 
-void S_TransferPaintBuffer(int endtime)
+void S_TransferPaintBuffer(int32_t endtime)
 {
-	int 	out_idx;
-	int 	count;
-	int 	out_mask;
-	int 	*p;
-	int 	step;
-	int		val;
-	int		snd_vol;
+	int32_t 	out_idx;
+	int32_t 	count;
+	int32_t 	out_mask;
+	int32_t 	*p;
+	int32_t 	step;
+	int32_t		val;
+	int32_t		snd_vol;
 	DWORD	*pbuf;
 
 /*
 #ifdef _WIN32
-	int		reps;
+	int32_t		reps;
 	DWORD	dwSize,dwSize2;
 	DWORD	*pbuf2;
 	HRESULT	hresult;
@@ -149,7 +149,7 @@ void S_TransferPaintBuffer(int endtime)
 		return;
 	}
 	
-	p = (int *) paintbuffer;
+	p = (int32_t *) paintbuffer;
 	count = (endtime - paintedtime) * shm->channels;
 	out_mask = shm->samples - 1; 
 	out_idx = paintedtime * shm->channels & out_mask;
@@ -225,8 +225,8 @@ void S_TransferPaintBuffer(int endtime)
 #ifdef _WIN32
 	if (pDSBuf) {
 		DWORD dwNewpos, dwWrite;
-		int il = paintedtime;
-		int ir = endtime - paintedtime;
+		int32_t il = paintedtime;
+		int32_t ir = endtime - paintedtime;
 		
 		ir += il;
 
@@ -250,16 +250,16 @@ CHANNEL MIXING
 ===============================================================================
 */
 
-void SND_PaintChannelFrom8 (channel_t *ch, sfxcache_t *sc, int endtime);
-void SND_PaintChannelFrom16 (channel_t *ch, sfxcache_t *sc, int endtime);
+void SND_PaintChannelFrom8 (channel_t *ch, sfxcache_t *sc, int32_t endtime);
+void SND_PaintChannelFrom16 (channel_t *ch, sfxcache_t *sc, int32_t endtime);
 
-void S_PaintChannels(int endtime)
+void S_PaintChannels(int32_t endtime)
 {
-	int 	i;
-	int 	end;
+	int32_t 	i;
+	int32_t 	end;
 	channel_t *ch;
 	sfxcache_t	*sc;
-	int		ltime, count;
+	int32_t		ltime, count;
 
 	while (paintedtime < endtime)
 	{
@@ -328,19 +328,19 @@ void S_PaintChannels(int endtime)
 
 void SND_InitScaletable (void)
 {
-	int		i, j;
+	int32_t		i, j;
 	
 	for (i=0 ; i<32 ; i++)
 		for (j=0 ; j<256 ; j++)
 			snd_scaletable[i][j] = ((signed char)j) * i * 8;
 }
 
-void SND_PaintChannelFrom8 (channel_t *ch, sfxcache_t *sc, int count)
+void SND_PaintChannelFrom8 (channel_t *ch, sfxcache_t *sc, int32_t count)
 {
-	int 	data;
-	int		*lscale, *rscale;
+	int32_t 	data;
+	int32_t		*lscale, *rscale;
 	unsigned char *sfx;
-	int		i;
+	int32_t		i;
 
 	if (ch->leftvol > 255)
 		ch->leftvol = 255;
@@ -361,13 +361,13 @@ void SND_PaintChannelFrom8 (channel_t *ch, sfxcache_t *sc, int count)
 	ch->pos += count;
 }
 
-void SND_PaintChannelFrom16 (channel_t *ch, sfxcache_t *sc, int count)
+void SND_PaintChannelFrom16 (channel_t *ch, sfxcache_t *sc, int32_t count)
 {
-	int data;
-	int left, right;
-	int leftvol, rightvol;
+	int32_t data;
+	int32_t left, right;
+	int32_t leftvol, rightvol;
 	signed short *sfx;
-	int	i;
+	int32_t	i;
 
 	leftvol = ch->leftvol;
 	rightvol = ch->rightvol;

@@ -6,7 +6,7 @@
 void Sys_Error (char *error, ...);
 
 vec3_t vec3_origin = {0,0,0};
-int nanmask = 255<<23;
+int32_t nanmask = 255<<23;
 
 /*-----------------------------------------------------------------*/
 
@@ -36,8 +36,8 @@ void ProjectPointOnPlane( vec3_t dst, const vec3_t p, const vec3_t normal )
 */
 void PerpendicularVector( vec3_t dst, const vec3_t src )
 {
-	int	pos;
-	int i;
+	int32_t	pos;
+	int32_t i;
 	float minelem = 1.0F;
 	vec3_t tempvec;
 
@@ -78,7 +78,7 @@ void RotatePointAroundVector( vec3_t dst, const vec3_t dir, const vec3_t point, 
 	float	zrot[3][3];
 	float	tmpmat[3][3];
 	float	rot[3][3];
-	int	i;
+	int32_t	i;
 	vec3_t vr, vup, vf;
 
 	vf[0] = dir[0];
@@ -137,11 +137,11 @@ float	anglemod(float a)
 {
 #if 0
 	if (a >= 0)
-		a -= 360*(int)(a/360);
+		a -= 360*(int32_t)(a/360);
 	else
-		a += 360*( 1 + (int)(-a/360) );
+		a += 360*( 1 + (int32_t)(-a/360) );
 #endif
-	a = (360.0/65536) * ((int)(a*(65536/360.0)) & 65535);
+	a = (360.0/65536) * ((int32_t)(a*(65536/360.0)) & 65535);
 	return a;
 }
 
@@ -164,10 +164,10 @@ BoxOnPlaneSide
 Returns 1, 2, or 1 + 2
 ==================
 */
-int BoxOnPlaneSide (vec3_t emins, vec3_t emaxs, mplane_t *p)
+int32_t BoxOnPlaneSide (vec3_t emins, vec3_t emaxs, mplane_t *p)
 {
 	float	dist1, dist2;
-	int		sides;
+	int32_t		sides;
 	
 // general case
 	switch (p->signbits)
@@ -245,9 +245,9 @@ void AngleVectors (vec3_t angles, vec3_t forward, vec3_t right, vec3_t up)
 	up[2] = cr*cp;
 }
 
-int VectorCompare (vec3_t v1, vec3_t v2)
+int32_t VectorCompare (vec3_t v1, vec3_t v2)
 {
-	int		i;
+	int32_t		i;
 	
 	for (i=0 ; i<3 ; i++)
 		if (v1[i] != v2[i])
@@ -301,7 +301,7 @@ double sqrt(double x);
 
 vec_t Length(vec3_t v)
 {
-	int		i;
+	int32_t		i;
 	float	length;
 	
 	length = 0;
@@ -346,9 +346,9 @@ void VectorScale (vec3_t in, vec_t scale, vec3_t out)
 }
 
 
-int Q_log2(int val)
+int32_t Q_log2(int32_t val)
 {
-	int answer=0;
+	int32_t answer=0;
 	while (val>>=1)
 		answer++;
 	return answer;
@@ -427,10 +427,10 @@ quotient must fit in 32 bits.
 ====================
 */
 
-void FloorDivMod (double numer, double denom, int *quotient,
-		int *rem)
+void FloorDivMod (double numer, double denom, int32_t *quotient,
+		int32_t *rem)
 {
-	int		q, r;
+	int32_t		q, r;
 	double	x;
 
 	if (denom <= 0.0)
@@ -439,8 +439,8 @@ void FloorDivMod (double numer, double denom, int *quotient,
 	if (numer >= 0.0)
 	{
 		x = floor(numer / denom);
-		q = (int)x;
-		r = (int)floor(numer - (x * denom));
+		q = (int32_t)x;
+		r = (int32_t)floor(numer - (x * denom));
 	}
 	else
 	{
@@ -448,12 +448,12 @@ void FloorDivMod (double numer, double denom, int *quotient,
 	// perform operations with positive values, and fix mod to make floor-based
 	//
 		x = floor(-numer / denom);
-		q = -(int)x;
-		r = (int)floor(-numer - (x * denom));
+		q = -(int32_t)x;
+		r = (int32_t)floor(-numer - (x * denom));
 		if (r != 0)
 		{
 			q--;
-			r = (int)denom - r;
+			r = (int32_t)denom - r;
 		}
 	}
 
@@ -467,7 +467,7 @@ void FloorDivMod (double numer, double denom, int *quotient,
 GreatestCommonDivisor
 ====================
 */
-int GreatestCommonDivisor (int i1, int i2)
+int32_t GreatestCommonDivisor (int32_t i1, int32_t i2)
 {
 	if (i1 > i2)
 	{

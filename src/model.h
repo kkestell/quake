@@ -50,8 +50,8 @@ typedef struct texture_s
 {
 	char		name[16];
 	unsigned	width, height;
-	int			anim_total;				// total tenths in sequence ( 0 = no)
-	int			anim_min, anim_max;		// time for this frame min <=time< max
+	int32_t			anim_total;				// total tenths in sequence ( 0 = no)
+	int32_t			anim_min, anim_max;		// time for this frame min <=time< max
 	struct texture_s *anim_next;		// in the animation sequence
 	struct texture_s *alternate_anims;	// bmodels in frmae 1 use these
 	unsigned	offsets[MIPLEVELS];		// four mip maps stored
@@ -77,21 +77,21 @@ typedef struct
 	float		vecs[2][4];
 	float		mipadjust;
 	texture_t	*texture;
-	int			flags;
+	int32_t			flags;
 } mtexinfo_t;
 
 typedef struct msurface_s
 {
-	int			visframe;		// should be drawn when node is crossed
+	int32_t			visframe;		// should be drawn when node is crossed
 
-	int			dlightframe;
-	int			dlightbits;
+	int32_t			dlightframe;
+	int32_t			dlightbits;
 
 	mplane_t	*plane;
-	int			flags;
+	int32_t			flags;
 
-	int			firstedge;	// look up in model->surfedges[], negative numbers
-	int			numedges;	// are backwards edges
+	int32_t			firstedge;	// look up in model->surfedges[], negative numbers
+	int32_t			numedges;	// are backwards edges
 	
 // surface generation data
 	struct surfcache_s	*cachespots[MIPLEVELS];
@@ -109,8 +109,8 @@ typedef struct msurface_s
 typedef struct mnode_s
 {
 // common with leaf
-	int			contents;		// 0, to differentiate from leafs
-	int			visframe;		// node needs to be traversed if current
+	int32_t			contents;		// 0, to differentiate from leafs
+	int32_t			visframe;		// node needs to be traversed if current
 	
 	short		minmaxs[6];		// for bounding box culling
 
@@ -129,8 +129,8 @@ typedef struct mnode_s
 typedef struct mleaf_s
 {
 // common with node
-	int			contents;		// wil be a negative contents number
-	int			visframe;		// node needs to be traversed if current
+	int32_t			contents;		// wil be a negative contents number
+	int32_t			visframe;		// node needs to be traversed if current
 
 	short		minmaxs[6];		// for bounding box culling
 
@@ -141,8 +141,8 @@ typedef struct mleaf_s
 	efrag_t		*efrags;
 
 	msurface_t	**firstmarksurface;
-	int			nummarksurfaces;
-	int			key;			// BSP sequence number for leaf's contents
+	int32_t			nummarksurfaces;
+	int32_t			key;			// BSP sequence number for leaf's contents
 	byte		ambient_sound_level[NUM_AMBIENTS];
 } mleaf_t;
 
@@ -151,8 +151,8 @@ typedef struct
 {
 	dclipnode_t	*clipnodes;
 	mplane_t	*planes;
-	int			firstclipnode;
-	int			lastclipnode;
+	int32_t			firstclipnode;
+	int32_t			lastclipnode;
 	vec3_t		clip_mins;
 	vec3_t		clip_maxs;
 } hull_t;
@@ -169,8 +169,8 @@ SPRITE MODELS
 // FIXME: shorten these?
 typedef struct mspriteframe_s
 {
-	int		width;
-	int		height;
+	int32_t		width;
+	int32_t		height;
 	void	*pcachespot;			// remove?
 	float	up, down, left, right;
 	byte	pixels[4];
@@ -178,7 +178,7 @@ typedef struct mspriteframe_s
 
 typedef struct
 {
-	int				numframes;
+	int32_t				numframes;
 	float			*intervals;
 	mspriteframe_t	*frames[1];
 } mspritegroup_t;
@@ -191,10 +191,10 @@ typedef struct
 
 typedef struct
 {
-	int					type;
-	int					maxwidth;
-	int					maxheight;
-	int					numframes;
+	int32_t					type;
+	int32_t					maxwidth;
+	int32_t					maxheight;
+	int32_t					numframes;
 	float				beamlength;		// remove?
 	void				*cachespot;		// remove?
 	mspriteframedesc_t	frames[1];
@@ -215,7 +215,7 @@ typedef struct
 	aliasframetype_t	type;
 	trivertx_t			bboxmin;
 	trivertx_t			bboxmax;
-	int					frame;
+	int32_t					frame;
 	char				name[16];
 } maliasframedesc_t;
 
@@ -223,41 +223,41 @@ typedef struct
 {
 	aliasskintype_t		type;
 	void				*pcachespot;
-	int					skin;
+	int32_t					skin;
 } maliasskindesc_t;
 
 typedef struct
 {
 	trivertx_t			bboxmin;
 	trivertx_t			bboxmax;
-	int					frame;
+	int32_t					frame;
 } maliasgroupframedesc_t;
 
 typedef struct
 {
-	int						numframes;
-	int						intervals;
+	int32_t						numframes;
+	int32_t						intervals;
 	maliasgroupframedesc_t	frames[1];
 } maliasgroup_t;
 
 typedef struct
 {
-	int					numskins;
-	int					intervals;
+	int32_t					numskins;
+	int32_t					intervals;
 	maliasskindesc_t	skindescs[1];
 } maliasskingroup_t;
 
 // !!! if this is changed, it must be changed in asm_draw.h too !!!
 typedef struct mtriangle_s {
-	int					facesfront;
-	int					vertindex[3];
+	int32_t					facesfront;
+	int32_t					vertindex[3];
 } mtriangle_t;
 
 typedef struct {
-	int					model;
-	int					stverts;
-	int					skindesc;
-	int					triangles;
+	int32_t					model;
+	int32_t					stverts;
+	int32_t					skindesc;
+	int32_t					triangles;
 	maliasframedesc_t	frames[1];
 } aliashdr_t;
 
@@ -284,10 +284,10 @@ typedef struct model_s
 	qboolean	needload;		// bmodels and sprites don't cache normally
 
 	modtype_t	type;
-	int			numframes;
+	int32_t			numframes;
 	synctype_t	synctype;
 	
-	int			flags;
+	int32_t			flags;
 
 //
 // volume occupied by the model
@@ -298,44 +298,44 @@ typedef struct model_s
 //
 // brush model
 //
-	int			firstmodelsurface, nummodelsurfaces;
+	int32_t			firstmodelsurface, nummodelsurfaces;
 
-	int			numsubmodels;
+	int32_t			numsubmodels;
 	dmodel_t	*submodels;
 
-	int			numplanes;
+	int32_t			numplanes;
 	mplane_t	*planes;
 
-	int			numleafs;		// number of visible leafs, not counting 0
+	int32_t			numleafs;		// number of visible leafs, not counting 0
 	mleaf_t		*leafs;
 
-	int			numvertexes;
+	int32_t			numvertexes;
 	mvertex_t	*vertexes;
 
-	int			numedges;
+	int32_t			numedges;
 	medge_t		*edges;
 
-	int			numnodes;
+	int32_t			numnodes;
 	mnode_t		*nodes;
 
-	int			numtexinfo;
+	int32_t			numtexinfo;
 	mtexinfo_t	*texinfo;
 
-	int			numsurfaces;
+	int32_t			numsurfaces;
 	msurface_t	*surfaces;
 
-	int			numsurfedges;
-	int			*surfedges;
+	int32_t			numsurfedges;
+	int32_t			*surfedges;
 
-	int			numclipnodes;
+	int32_t			numclipnodes;
 	dclipnode_t	*clipnodes;
 
-	int			nummarksurfaces;
+	int32_t			nummarksurfaces;
 	msurface_t	**marksurfaces;
 
 	hull_t		hulls[MAX_MAP_HULLS];
 
-	int			numtextures;
+	int32_t			numtextures;
 	texture_t	**textures;
 
 	byte		*visdata;

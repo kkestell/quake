@@ -12,7 +12,7 @@ typedef struct
 
 typedef struct
 {
-	int		length;
+	int32_t		length;
 	char	map[MAX_STYLESTRING];
 } lightstyle_t;
 
@@ -20,15 +20,15 @@ typedef struct
 {
 	char	name[MAX_SCOREBOARDNAME];
 	float	entertime;
-	int		frags;
-	int		colors;			// two 4 bit fields
+	int32_t		frags;
+	int32_t		colors;			// two 4 bit fields
 	byte	translations[VID_GRADES*256];
 } scoreboard_t;
 
 typedef struct
 {
-	int		destcolor[3];
-	int		percent;		// 0-256
+	int32_t		destcolor[3];
+	int32_t		percent;		// 0-256
 } cshift_t;
 
 #define	CSHIFT_CONTENTS	0
@@ -54,14 +54,14 @@ typedef struct
 	float	die;				// stop lighting after this time
 	float	decay;				// drop this each second
 	float	minlight;			// don't add when contributing less
-	int		key;
+	int32_t		key;
 } dlight_t;
 
 
 #define	MAX_BEAMS	24
 typedef struct
 {
-	int		entity;
+	int32_t		entity;
 	struct model_s	*model;
 	float	endtime;
 	vec3_t	start, end;
@@ -92,7 +92,7 @@ typedef struct
 	char		spawnparms[MAX_MAPSTRING];	// to restart a level
 
 // demo loop control
-	int			demonum;		// -1 = don't play demos
+	int32_t			demonum;		// -1 = don't play demos
 	char		demos[MAX_DEMOS][MAX_DEMONAME];		// when not playing
 
 // demo recording info must be here, because record is started before
@@ -100,15 +100,15 @@ typedef struct
 	qboolean	demorecording;
 	qboolean	demoplayback;
 	qboolean	timedemo;
-	int			forcetrack;			// -1 = use normal cd track
+	int32_t			forcetrack;			// -1 = use normal cd track
 	FILE		*demofile;
-	int			td_lastframe;		// to meter out one message a frame
-	int			td_startframe;		// host_framecount at start
+	int32_t			td_lastframe;		// to meter out one message a frame
+	int32_t			td_startframe;		// host_framecount at start
 	float		td_starttime;		// realtime at second frame of timedemo
 
 
 // connection information
-	int			signon;			// 0 to SIGNONS
+	int32_t			signon;			// 0 to SIGNONS
 	struct qsocket_s	*netcon;
 	sizebuf_t	message;		// writing buffer to send to server
 	
@@ -122,15 +122,15 @@ extern client_static_t	cls;
 //
 typedef struct
 {
-	int			movemessages;	// since connecting to this server
+	int32_t			movemessages;	// since connecting to this server
 								// throw out the first couple, so the player
 								// doesn't accidentally do something the 
 								// first frame
 	usercmd_t	cmd;			// last command sent to the server
 
 // information for local display
-	int			stats[MAX_CL_STATS];	// health, etc
-	int			items;			// inventory bit flags
+	int32_t			stats[MAX_CL_STATS];	// health, etc
+	int32_t			items;			// inventory bit flags
 	float	item_gettime[32];	// cl.time of aquiring item, for blinking
 	float		faceanimtime;	// use anim frame if cl.time < this
 
@@ -165,8 +165,8 @@ typedef struct
 	qboolean	onground;
 	qboolean	inwater;
 	
-	int			intermission;	// don't change view angle, full screen, etc
-	int			completed_time;	// latched at intermission start
+	int32_t			intermission;	// don't change view angle, full screen, etc
+	int32_t			completed_time;	// latched at intermission start
 	
 	double		mtime[2];		// the timestamp of last two messages	
 	double		time;			// clients view of time, should be between
@@ -185,18 +185,18 @@ typedef struct
 	struct sfx_s		*sound_precache[MAX_SOUNDS];
 
 	char		levelname[40];	// for display on solo scoreboard
-	int			viewentity;		// cl_entitites[cl.viewentity] = player
-	int			maxclients;
-	int			gametype;
+	int32_t			viewentity;		// cl_entitites[cl.viewentity] = player
+	int32_t			maxclients;
+	int32_t			gametype;
 
 // refresh related state
 	struct model_s	*worldmodel;	// cl_entitites[0].model
 	struct efrag_s	*free_efrags;
-	int			num_entities;	// held in cl_entities array
-	int			num_statics;	// held in cl_staticentities array
+	int32_t			num_entities;	// held in cl_entities array
+	int32_t			num_statics;	// held in cl_staticentities array
 	entity_t	viewent;			// the gun model
 
-	int			cdtrack, looptrack;	// cd audio
+	int32_t			cdtrack, looptrack;	// cd audio
 
 // frag scoreboard
 	scoreboard_t	*scores;		// [cl.maxclients]
@@ -257,7 +257,7 @@ extern	beam_t			cl_beams[MAX_BEAMS];
 //
 // cl_main
 //
-dlight_t *CL_AllocDlight (int key);
+dlight_t *CL_AllocDlight (int32_t key);
 void	CL_DecayLights (void);
 
 void CL_Init (void);
@@ -273,7 +273,7 @@ void CL_Disconnect_f (void);
 void CL_NextDemo (void);
 
 #define			MAX_VISEDICTS	256
-extern	int				cl_numvisedicts;
+extern	int32_t				cl_numvisedicts;
 extern	entity_t		*cl_visedicts[MAX_VISEDICTS];
 
 //
@@ -281,8 +281,8 @@ extern	entity_t		*cl_visedicts[MAX_VISEDICTS];
 //
 typedef struct
 {
-	int		down[2];		// key nums holding it down
-	int		state;			// low bit is down state
+	int32_t		down[2];		// key nums holding it down
+	int32_t		state;			// low bit is down state
 } kbutton_t;
 
 extern	kbutton_t	in_mlook, in_klook;
@@ -299,19 +299,19 @@ void CL_UpdateTEnts (void);
 void CL_ClearState (void);
 
 
-int  CL_ReadFromServer (void);
+int32_t  CL_ReadFromServer (void);
 void CL_WriteToServer (usercmd_t *cmd);
 void CL_BaseMove (usercmd_t *cmd);
 
 
 float CL_KeyState (kbutton_t *key);
-char *Key_KeynumToString (int keynum);
+char *Key_KeynumToString (int32_t keynum);
 
 //
 // cl_demo.c
 //
 void CL_StopPlayback (void);
-int CL_GetMessage (void);
+int32_t CL_GetMessage (void);
 
 void CL_Stop_f (void);
 void CL_Record_f (void);
@@ -322,7 +322,7 @@ void CL_TimeDemo_f (void);
 // cl_parse.c
 //
 void CL_ParseServerMessage (void);
-void CL_NewTranslation (int slot);
+void CL_NewTranslation (int32_t slot);
 
 //
 // view
@@ -334,7 +334,7 @@ void V_RenderView (void);
 void V_UpdatePalette (void);
 void V_Register (void);
 void V_ParseDamage (void);
-void V_SetContentsColor (int contents);
+void V_SetContentsColor (int32_t contents);
 
 
 //

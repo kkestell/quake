@@ -108,20 +108,20 @@ typedef struct qsocket_s
 	qboolean		canSend;
 	qboolean		sendNext;
 	
-	int				driver;
-	int				landriver;
-	int				socket;
+	int32_t				driver;
+	int32_t				landriver;
+	int32_t				socket;
 	void			*driverdata;
 
 	uint32_t	ackSequence;
 	uint32_t	sendSequence;
 	uint32_t	unreliableSendSequence;
-	int				sendMessageLength;
+	int32_t				sendMessageLength;
 	byte			sendMessage [NET_MAXMESSAGE];
 
 	uint32_t	receiveSequence;
 	uint32_t	unreliableReceiveSequence;
-	int				receiveMessageLength;
+	int32_t				receiveMessageLength;
 	byte			receiveMessage [NET_MAXMESSAGE];
 
 	struct qsockaddr	addr;
@@ -131,71 +131,71 @@ typedef struct qsocket_s
 
 extern qsocket_t	*net_activeSockets;
 extern qsocket_t	*net_freeSockets;
-extern int			net_numsockets;
+extern int32_t			net_numsockets;
 
 typedef struct
 {
 	char		*name;
 	qboolean	initialized;
-	int			controlSock;
-	int			(*Init) (void);
+	int32_t			controlSock;
+	int32_t			(*Init) (void);
 	void		(*Shutdown) (void);
 	void		(*Listen) (qboolean state);
-	int 		(*OpenSocket) (int port);
-	int 		(*CloseSocket) (int socket);
-	int 		(*Connect) (int socket, struct qsockaddr *addr);
-	int 		(*CheckNewConnections) (void);
-	int 		(*Read) (int socket, byte *buf, int len, struct qsockaddr *addr);
-	int 		(*Write) (int socket, byte *buf, int len, struct qsockaddr *addr);
-	int 		(*Broadcast) (int socket, byte *buf, int len);
+	int32_t 		(*OpenSocket) (int32_t port);
+	int32_t 		(*CloseSocket) (int32_t socket);
+	int32_t 		(*Connect) (int32_t socket, struct qsockaddr *addr);
+	int32_t 		(*CheckNewConnections) (void);
+	int32_t 		(*Read) (int32_t socket, byte *buf, int32_t len, struct qsockaddr *addr);
+	int32_t 		(*Write) (int32_t socket, byte *buf, int32_t len, struct qsockaddr *addr);
+	int32_t 		(*Broadcast) (int32_t socket, byte *buf, int32_t len);
 	char *		(*AddrToString) (struct qsockaddr *addr);
-	int 		(*StringToAddr) (char *string, struct qsockaddr *addr);
-	int 		(*GetSocketAddr) (int socket, struct qsockaddr *addr);
-	int 		(*GetNameFromAddr) (struct qsockaddr *addr, char *name);
-	int 		(*GetAddrFromName) (char *name, struct qsockaddr *addr);
-	int			(*AddrCompare) (struct qsockaddr *addr1, struct qsockaddr *addr2);
-	int			(*GetSocketPort) (struct qsockaddr *addr);
-	int			(*SetSocketPort) (struct qsockaddr *addr, int port);
+	int32_t 		(*StringToAddr) (char *string, struct qsockaddr *addr);
+	int32_t 		(*GetSocketAddr) (int32_t socket, struct qsockaddr *addr);
+	int32_t 		(*GetNameFromAddr) (struct qsockaddr *addr, char *name);
+	int32_t 		(*GetAddrFromName) (char *name, struct qsockaddr *addr);
+	int32_t			(*AddrCompare) (struct qsockaddr *addr1, struct qsockaddr *addr2);
+	int32_t			(*GetSocketPort) (struct qsockaddr *addr);
+	int32_t			(*SetSocketPort) (struct qsockaddr *addr, int32_t port);
 } net_landriver_t;
 
 #define	MAX_NET_DRIVERS		8
-extern int 				net_numlandrivers;
+extern int32_t 				net_numlandrivers;
 extern net_landriver_t	net_landrivers[MAX_NET_DRIVERS];
 
 typedef struct
 {
 	char		*name;
 	qboolean	initialized;
-	int			(*Init) (void);
+	int32_t			(*Init) (void);
 	void		(*Listen) (qboolean state);
 	void		(*SearchForHosts) (qboolean xmit);
 	qsocket_t	*(*Connect) (char *host);
 	qsocket_t 	*(*CheckNewConnections) (void);
-	int			(*QGetMessage) (qsocket_t *sock);
-	int			(*QSendMessage) (qsocket_t *sock, sizebuf_t *data);
-	int			(*SendUnreliableMessage) (qsocket_t *sock, sizebuf_t *data);
+	int32_t			(*QGetMessage) (qsocket_t *sock);
+	int32_t			(*QSendMessage) (qsocket_t *sock, sizebuf_t *data);
+	int32_t			(*SendUnreliableMessage) (qsocket_t *sock, sizebuf_t *data);
 	qboolean	(*CanSendMessage) (qsocket_t *sock);
 	qboolean	(*CanSendUnreliableMessage) (qsocket_t *sock);
 	void		(*Close) (qsocket_t *sock);
 	void		(*Shutdown) (void);
-	int			controlSock;
+	int32_t			controlSock;
 } net_driver_t;
 
-extern int			net_numdrivers;
+extern int32_t			net_numdrivers;
 extern net_driver_t	net_drivers[MAX_NET_DRIVERS];
 
-extern int			DEFAULTnet_hostport;
-extern int			net_hostport;
+extern int32_t			DEFAULTnet_hostport;
+extern int32_t			net_hostport;
 
-extern int net_driverlevel;
+extern int32_t net_driverlevel;
 extern cvar_t		hostname;
 extern char			playername[];
-extern int			playercolor;
+extern int32_t			playercolor;
 
-extern int		messagesSent;
-extern int		messagesReceived;
-extern int		unreliableMessagesSent;
-extern int		unreliableMessagesReceived;
+extern int32_t		messagesSent;
+extern int32_t		messagesReceived;
+extern int32_t		unreliableMessagesSent;
+extern int32_t		unreliableMessagesReceived;
 
 qsocket_t *NET_NewQSocket (void);
 void NET_FreeQSocket(qsocket_t *);
@@ -209,14 +209,14 @@ typedef struct
 	char	name[16];
 	char	map[16];
 	char	cname[32];
-	int		users;
-	int		maxusers;
-	int		driver;
-	int		ldriver;
+	int32_t		users;
+	int32_t		maxusers;
+	int32_t		driver;
+	int32_t		ldriver;
 	struct qsockaddr addr;
 } hostcache_t;
 
-extern int hostCacheCount;
+extern int32_t hostCacheCount;
 extern hostcache_t hostcache[HOSTCACHESIZE];
 
 #if !defined(_WIN32 ) && !defined (__linux__) && !defined (__sun__)
@@ -246,7 +246,7 @@ qboolean IsID(struct qsockaddr *addr);
 
 extern	double		net_time;
 extern	sizebuf_t	net_message;
-extern	int			net_activeconnections;
+extern	int32_t			net_activeconnections;
 
 void		NET_Init (void);
 void		NET_Shutdown (void);
@@ -261,21 +261,21 @@ qboolean NET_CanSendMessage (qsocket_t *sock);
 // Returns true or false if the given qsocket can currently accept a
 // message to be transmitted.
 
-int			NET_GetMessage (struct qsocket_s *sock);
+int32_t			NET_GetMessage (struct qsocket_s *sock);
 // returns data in net_message sizebuf
 // returns 0 if no data is waiting
 // returns 1 if a message was received
 // returns 2 if an unreliable message was received
 // returns -1 if the connection died
 
-int			NET_SendMessage (struct qsocket_s *sock, sizebuf_t *data);
-int			NET_SendUnreliableMessage (struct qsocket_s *sock, sizebuf_t *data);
+int32_t			NET_SendMessage (struct qsocket_s *sock, sizebuf_t *data);
+int32_t			NET_SendUnreliableMessage (struct qsocket_s *sock, sizebuf_t *data);
 // returns 0 if the message connot be delivered reliably, but the connection
 //		is still considered valid
 // returns 1 if the message was sent properly
 // returns -1 if the connection died
 
-int			NET_SendToAll(sizebuf_t *data, int blocktime);
+int32_t			NET_SendToAll(sizebuf_t *data, int32_t blocktime);
 // This is a reliable *blocking* send to all attached clients.
 
 
@@ -306,10 +306,10 @@ extern	qboolean	ipxAvailable;
 extern	qboolean	tcpipAvailable;
 extern	char		my_ipx_address[NET_NAMELEN];
 extern	char		my_tcpip_address[NET_NAMELEN];
-extern void (*GetComPortConfig) (int portNumber, int *port, int *irq, int *baud, qboolean *useModem);
-extern void (*SetComPortConfig) (int portNumber, int port, int irq, int baud, qboolean useModem);
-extern void (*GetModemConfig) (int portNumber, char *dialType, char *clear, char *init, char *hangup);
-extern void (*SetModemConfig) (int portNumber, char *dialType, char *clear, char *init, char *hangup);
+extern void (*GetComPortConfig) (int32_t portNumber, int32_t *port, int32_t *irq, int32_t *baud, qboolean *useModem);
+extern void (*SetComPortConfig) (int32_t portNumber, int32_t port, int32_t irq, int32_t baud, qboolean useModem);
+extern void (*GetModemConfig) (int32_t portNumber, char *dialType, char *clear, char *init, char *hangup);
+extern void (*SetModemConfig) (int32_t portNumber, char *dialType, char *clear, char *init, char *hangup);
 
 extern	qboolean	slistInProgress;
 extern	qboolean	slistSilent;

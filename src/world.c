@@ -474,7 +474,7 @@ SV_PointContents
 */
 int32_t SV_PointContents (vec3_t p)
 {
-	int		cont;
+	int32_t		cont;
 
 	cont = SV_HullPointContents (&sv.worldmodel->hulls[0], 0, p);
 	if (cont <= CONTENTS_CURRENT_0 && cont >= CONTENTS_CURRENT_DOWN)
@@ -532,9 +532,9 @@ qboolean SV_RecursiveHullCheck (hull_t *hull, int32_t num, float p1f, float p2f,
 	mplane_t	*plane;
 	float		t1, t2;
 	float		frac;
-	int			i;
+	int32_t			i;
 	vec3_t		mid;
-	int			side;
+	int32_t			side;
 	float		midf;
 
 // check for empty
@@ -768,7 +768,7 @@ void SV_ClipToLinks ( areanode_t *node, moveclip_t *clip )
 				continue;	// don't clip against owner
 		}
 
-		if ((int)touch->v.flags & FL_MONSTER)
+		if ((int32_t)touch->v.flags & FL_MONSTER)
 			trace = SV_ClipMoveToEntity (touch, clip->start, clip->mins2, clip->maxs2, clip->end);
 		else
 			trace = SV_ClipMoveToEntity (touch, clip->start, clip->mins, clip->maxs, clip->end);
@@ -811,7 +811,7 @@ void SV_MoveBounds (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, vec3_t b
 boxmins[0] = boxmins[1] = boxmins[2] = -9999;
 boxmaxs[0] = boxmaxs[1] = boxmaxs[2] = 9999;
 #else
-	int		i;
+	int32_t		i;
 	
 	for (i=0 ; i<3 ; i++)
 	{
@@ -837,7 +837,7 @@ SV_Move
 trace_t SV_Move (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, int32_t type, edict_t *passedict)
 {
 	moveclip_t	clip;
-	int			i;
+	int32_t			i;
 
 	memset ( &clip, 0, sizeof ( moveclip_t ) );
 

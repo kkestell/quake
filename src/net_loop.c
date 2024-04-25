@@ -7,7 +7,7 @@ qboolean	localconnectpending = false;
 qsocket_t	*loop_client = NULL;
 qsocket_t	*loop_server = NULL;
 
-int Loop_Init (void)
+int32_t Loop_Init (void)
 {
 	if (cls.state == ca_dedicated)
 		return -1;
@@ -99,16 +99,16 @@ qsocket_t *Loop_CheckNewConnections (void)
 }
 
 
-static int IntAlign(int value)
+static int32_t IntAlign(int32_t value)
 {
-	return (value + (sizeof(int) - 1)) & (~(sizeof(int) - 1));
+	return (value + (sizeof(int32_t) - 1)) & (~(sizeof(int32_t) - 1));
 }
 
 
-int Loop_GetMessage (qsocket_t *sock)
+int32_t Loop_GetMessage (qsocket_t *sock)
 {
-	int		ret;
-	int		length;
+	int32_t		ret;
+	int32_t		length;
 
 	if (sock->receiveMessageLength == 0)
 		return 0;
@@ -132,10 +132,10 @@ int Loop_GetMessage (qsocket_t *sock)
 }
 
 
-int Loop_SendMessage (qsocket_t *sock, sizebuf_t *data)
+int32_t Loop_SendMessage (qsocket_t *sock, sizebuf_t *data)
 {
 	byte *buffer;
-	int  *bufferLength;
+	int32_t  *bufferLength;
 
 	if (!sock->driverdata)
 		return -1;
@@ -166,10 +166,10 @@ int Loop_SendMessage (qsocket_t *sock, sizebuf_t *data)
 }
 
 
-int Loop_SendUnreliableMessage (qsocket_t *sock, sizebuf_t *data)
+int32_t Loop_SendUnreliableMessage (qsocket_t *sock, sizebuf_t *data)
 {
 	byte *buffer;
-	int  *bufferLength;
+	int32_t  *bufferLength;
 
 	if (!sock->driverdata)
 		return -1;

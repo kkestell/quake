@@ -3,12 +3,12 @@
 #include "quakedef.h"
 #include "d_local.h"
 
-static int	miplevel;
+static int32_t	miplevel;
 
 float		scale_for_mip;
-int			screenwidth;
-int			ubasestep, errorterm, erroradjustup, erroradjustdown;
-int			vstartscan;
+int32_t			screenwidth;
+int32_t			ubasestep, errorterm, erroradjustup, erroradjustdown;
+int32_t			vstartscan;
 
 // FIXME: should go away
 extern void			R_RotateBmodel (void);
@@ -33,9 +33,9 @@ void D_DrawPoly (void)
 D_MipLevelForScale
 =============
 */
-int D_MipLevelForScale (float scale)
+int32_t D_MipLevelForScale (float scale)
 {
-	int		lmiplevel;
+	int32_t		lmiplevel;
 
 	if (scale >= d_scalemip[0] )
 		lmiplevel = 0;
@@ -61,11 +61,11 @@ D_DrawSolidSurface
 
 // FIXME: clean this up
 
-void D_DrawSolidSurface (surf_t *surf, int color)
+void D_DrawSolidSurface (surf_t *surf, int32_t color)
 {
 	espan_t	*span;
 	byte	*pdest;
-	int		u, u2, pix;
+	int32_t		u, u2, pix;
 	
 	pix = (color<<24) | (color<<16) | (color<<8) | color;
 	for (span=surf->spans ; span ; span=span->pnext)
@@ -87,7 +87,7 @@ void D_DrawSolidSurface (surf_t *surf, int color)
 
 			u2 -= 4;
 			for ( ; u <= u2 ; u+=4)
-				*(int *)((byte *)pdest + u) = pix;
+				*(int32_t *)((byte *)pdest + u) = pix;
 			u2 += 4;
 			for ( ; u <= u2 ; u++)
 				((byte *)pdest)[u] = pix;
@@ -176,7 +176,7 @@ void D_DrawSurfaces (void)
 			d_zistepv = s->d_zistepv;
 			d_ziorigin = s->d_ziorigin;
 
-			D_DrawSolidSurface (s, (int)s->data & 0xFF);
+			D_DrawSolidSurface (s, (int32_t)s->data & 0xFF);
 			D_DrawZSpans (s->spans);
 		}
 	}
@@ -211,7 +211,7 @@ void D_DrawSurfaces (void)
 				d_zistepv = 0;
 				d_ziorigin = -0.9;
 
-				D_DrawSolidSurface (s, (int)r_clearcolor.value & 0xFF);
+				D_DrawSolidSurface (s, (int32_t)r_clearcolor.value & 0xFF);
 				D_DrawZSpans (s->spans);
 			}
 			else if (s->flags & SURF_DRAWTURB)

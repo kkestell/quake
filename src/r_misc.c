@@ -49,9 +49,9 @@ For program optimization
 */
 void R_TimeRefresh_f (void)
 {
-	int			i;
+	int32_t			i;
 	float		start, stop, time;
-	int			startangle;
+	int32_t			startangle;
 	vrect_t		vr;
 
 	startangle = r_refdef.viewangles[1];
@@ -89,11 +89,11 @@ R_LineGraph
 Only called by R_DisplayTime
 ================
 */
-void R_LineGraph (int x, int y, int h)
+void R_LineGraph (int32_t x, int32_t y, int32_t h)
 {
-	int		i;
+	int32_t		i;
 	byte	*dest;
-	int		s;
+	int32_t		s;
 
 // FIXME: should be disabled on no-buffer adapters, or should be in the driver
 	
@@ -130,11 +130,11 @@ Performance monitoring tool
 extern float mouse_x, mouse_y;
 void R_TimeGraph (void)
 {
-	static	int		timex;
-	int		a;
+	static	int32_t		timex;
+	int32_t		a;
 	float	r_time2;
 	static byte	r_timings[MAX_TIMINGS];
-	int		x;
+	int32_t		x;
 	
 	r_time2 = Sys_FloatTime ();
 
@@ -207,7 +207,7 @@ void R_PrintDSpeeds (void)
 	ms = (r_time2 - r_time1) * 1000;
 
 	Con_Printf ("%3i %4.1fp %3iw %4.1fb %3is %4.1fe %4.1fv\n",
-				(int)ms, dp_time, (int)rw_time, db_time, (int)se_time, de_time,
+				(int32_t)ms, dp_time, (int32_t)rw_time, db_time, (int32_t)se_time, de_time,
 				dv_time);
 }
 
@@ -225,9 +225,9 @@ void R_PrintAliasStats (void)
 
 void WarpPalette (void)
 {
-	int		i,j;
+	int32_t		i,j;
 	byte	newpalette[768];
-	int		basecolor[3];
+	int32_t		basecolor[3];
 	
 	basecolor[0] = 130;
 	basecolor[1] = 80;
@@ -253,7 +253,7 @@ R_TransformFrustum
 */
 void R_TransformFrustum (void)
 {
-	int		i;
+	int32_t		i;
 	vec3_t	v, v2;
 	
 	for (i=0 ; i<4 ; i++)
@@ -307,7 +307,7 @@ R_SetUpFrustumIndexes
 */
 void R_SetUpFrustumIndexes (void)
 {
-	int		i, j, *pindex;
+	int32_t		i, j, *pindex;
 
 	pindex = r_frustum_indexes;
 
@@ -341,7 +341,7 @@ R_SetupFrame
 */
 void R_SetupFrame (void)
 {
-	int				edgecount;
+	int32_t				edgecount;
 	vrect_t			vrect;
 	float			w, h;
 
@@ -446,11 +446,11 @@ r_refdef.viewangles[2]=    0;
 
 				vrect.x = 0;
 				vrect.y = 0;
-				vrect.width = (int)w;
-				vrect.height = (int)h;
+				vrect.width = (int32_t)w;
+				vrect.height = (int32_t)h;
 
 				R_ViewChanged (&vrect,
-							   (int)((float)sb_lines * (h/(float)vid.height)),
+							   (int32_t)((float)sb_lines * (h/(float)vid.height)),
 							   vid.aspect * (h / w) *
 								 ((float)vid.width / (float)vid.height));
 			}

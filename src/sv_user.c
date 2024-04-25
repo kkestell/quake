@@ -37,10 +37,10 @@ void SV_SetIdealPitch (void)
 	trace_t	tr;
 	vec3_t	top, bottom;
 	float	z[MAX_FORWARD];
-	int		i, j;
-	int		step, dir, steps;
+	int32_t		i, j;
+	int32_t		step, dir, steps;
 
-	if (!((int)sv_player->v.flags & FL_ONGROUND))
+	if (!((int32_t)sv_player->v.flags & FL_ONGROUND))
 		return;
 		
 	angleval = sv_player->v.angles[YAW] * M_PI*2 / 360;
@@ -150,7 +150,7 @@ cvar_t	sv_accelerate = {"sv_accelerate", "10"};
 #if 0
 void SV_Accelerate (vec3_t wishvel)
 {
-	int			i;
+	int32_t			i;
 	float		addspeed, accelspeed;
 	vec3_t		pushvec;
 
@@ -170,7 +170,7 @@ void SV_Accelerate (vec3_t wishvel)
 #endif
 void SV_Accelerate (void)
 {
-	int			i;
+	int32_t			i;
 	float		addspeed, accelspeed, currentspeed;
 
 	currentspeed = DotProduct (velocity, wishdir);
@@ -187,7 +187,7 @@ void SV_Accelerate (void)
 
 void SV_AirAccelerate (vec3_t wishveloc)
 {
-	int			i;
+	int32_t			i;
 	float		addspeed, wishspd, accelspeed, currentspeed;
 		
 	wishspd = VectorNormalize (wishveloc);
@@ -227,7 +227,7 @@ SV_WaterMove
 */
 void SV_WaterMove (void)
 {
-	int		i;
+	int32_t		i;
 	vec3_t	wishvel;
 	float	speed, newspeed, wishspeed, addspeed, accelspeed;
 
@@ -290,7 +290,7 @@ void SV_WaterJump (void)
 	if (sv.time > sv_player->v.teleport_time
 	|| !sv_player->v.waterlevel)
 	{
-		sv_player->v.flags = (int)sv_player->v.flags & ~FL_WATERJUMP;
+		sv_player->v.flags = (int32_t)sv_player->v.flags & ~FL_WATERJUMP;
 		sv_player->v.teleport_time = 0;
 	}
 	sv_player->v.velocity[0] = sv_player->v.movedir[0];
@@ -306,7 +306,7 @@ SV_AirMove
 */
 void SV_AirMove (void)
 {
-	int			i;
+	int32_t			i;
 	vec3_t		wishvel;
 	float		fmove, smove;
 
@@ -322,7 +322,7 @@ void SV_AirMove (void)
 	for (i=0 ; i<3 ; i++)
 		wishvel[i] = forward[i]*fmove + right[i]*smove;
 
-	if ( (int)sv_player->v.movetype != MOVETYPE_WALK)
+	if ( (int32_t)sv_player->v.movetype != MOVETYPE_WALK)
 		wishvel[2] = cmd.upmove;
 	else
 		wishvel[2] = 0;
@@ -365,7 +365,7 @@ void SV_ClientThink (void)
 	if (sv_player->v.movetype == MOVETYPE_NONE)
 		return;
 	
-	onground = (int)sv_player->v.flags & FL_ONGROUND;
+	onground = (int32_t)sv_player->v.flags & FL_ONGROUND;
 
 	origin = sv_player->v.origin;
 	velocity = sv_player->v.velocity;
@@ -392,7 +392,7 @@ void SV_ClientThink (void)
 		angles[YAW] = v_angle[YAW];
 	}
 
-	if ( (int)sv_player->v.flags & FL_WATERJUMP )
+	if ( (int32_t)sv_player->v.flags & FL_WATERJUMP )
 	{
 		SV_WaterJump ();
 		return;
@@ -418,9 +418,9 @@ SV_ReadClientMove
 */
 void SV_ReadClientMove (usercmd_t *move)
 {
-	int		i;
+	int32_t		i;
 	vec3_t	angle;
-	int		bits;
+	int32_t		bits;
 	
 // read ping time
 	host_client->ping_times[host_client->num_pings%NUM_PING_TIMES]
@@ -457,8 +457,8 @@ Returns false if the client should be killed
 */
 qboolean SV_ReadClientMessage (void)
 {
-	int		ret;
-	int		cmd;
+	int32_t		ret;
+	int32_t		cmd;
 	char		*s;
 	
 	do
@@ -575,7 +575,7 @@ SV_RunClients
 */
 void SV_RunClients (void)
 {
-	int				i;
+	int32_t				i;
 	
 	for (i=0, host_client = svs.clients ; i<svs.maxclients ; i++, host_client++)
 	{

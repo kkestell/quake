@@ -18,7 +18,7 @@ float			entity_rotation[3][3];
 
 vec3_t			r_worldmodelorg;
 
-int				r_currentbkey;
+int32_t				r_currentbkey;
 
 typedef enum {touchessolid, drawnode, nodrawnode} solidstate_t;
 
@@ -27,7 +27,7 @@ typedef enum {touchessolid, drawnode, nodrawnode} solidstate_t;
 
 static mvertex_t	*pbverts;
 static bedge_t		*pbedges;
-static int			numbverts, numbedges;
+static int32_t			numbverts, numbedges;
 
 static mvertex_t	*pfrontenter, *pfrontexit;
 
@@ -139,7 +139,7 @@ R_RecursiveClipBPoly
 void R_RecursiveClipBPoly (bedge_t *pedges, mnode_t *pnode, msurface_t *psurf)
 {
 	bedge_t		*psideedges[2], *pnextedge, *ptedge;
-	int			i, side, lastside;
+	int32_t			i, side, lastside;
 	float		dist, frac, lastdist;
 	mplane_t	*splitplane, tplane;
 	mvertex_t	*pvert, *plastvert, *ptvert;
@@ -308,10 +308,10 @@ R_DrawSolidClippedSubmodelPolygons
 */
 void R_DrawSolidClippedSubmodelPolygons (model_t *pmodel)
 {
-	int			i, j, lindex;
+	int32_t			i, j, lindex;
 	vec_t		dot;
 	msurface_t	*psurf;
-	int			numsurfaces;
+	int32_t			numsurfaces;
 	mplane_t	*pplane;
 	mvertex_t	bverts[MAX_BMODEL_VERTS];
 	bedge_t		bedges[MAX_BMODEL_EDGES], *pbedge;
@@ -388,12 +388,12 @@ void R_DrawSolidClippedSubmodelPolygons (model_t *pmodel)
 R_DrawSubmodelPolygons
 ================
 */
-void R_DrawSubmodelPolygons (model_t *pmodel, int clipflags)
+void R_DrawSubmodelPolygons (model_t *pmodel, int32_t clipflags)
 {
-	int			i;
+	int32_t			i;
 	vec_t		dot;
 	msurface_t	*psurf;
-	int			numsurfaces;
+	int32_t			numsurfaces;
 	mplane_t	*pplane;
 
 // FIXME: use bounding-box-based frustum clipping info?
@@ -426,9 +426,9 @@ void R_DrawSubmodelPolygons (model_t *pmodel, int clipflags)
 R_RecursiveWorldNode
 ================
 */
-void R_RecursiveWorldNode (mnode_t *node, int clipflags)
+void R_RecursiveWorldNode (mnode_t *node, int32_t clipflags)
 {
-	int			i, c, side, *pindex;
+	int32_t			i, c, side, *pindex;
 	vec3_t		acceptpt, rejectpt;
 	mplane_t	*plane;
 	msurface_t	*surf, **mark;
@@ -628,7 +628,7 @@ R_RenderWorld
 */
 void R_RenderWorld (void)
 {
-	int			i;
+	int32_t			i;
 	model_t		*clmodel;
 	btofpoly_t	btofpolys[MAX_BTOFPOLYS];
 

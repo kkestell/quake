@@ -5,22 +5,22 @@
 
 qsocket_t	*net_activeSockets = NULL;
 qsocket_t	*net_freeSockets = NULL;
-int			net_numsockets = 0;
+int32_t			net_numsockets = 0;
 
 qboolean	serialAvailable = false;
 qboolean	ipxAvailable = false;
 qboolean	tcpipAvailable = false;
 
-int			net_hostport;
-int			DEFAULTnet_hostport = 26000;
+int32_t			net_hostport;
+int32_t			DEFAULTnet_hostport = 26000;
 
 char		my_ipx_address[NET_NAMELEN];
 char		my_tcpip_address[NET_NAMELEN];
 
-void (*GetComPortConfig) (int portNumber, int *port, int *irq, int *baud, qboolean *useModem);
-void (*SetComPortConfig) (int portNumber, int port, int irq, int baud, qboolean useModem);
-void (*GetModemConfig) (int portNumber, char *dialType, char *clear, char *init, char *hangup);
-void (*SetModemConfig) (int portNumber, char *dialType, char *clear, char *init, char *hangup);
+void (*GetComPortConfig) (int32_t portNumber, int32_t *port, int32_t *irq, int32_t *baud, qboolean *useModem);
+void (*SetComPortConfig) (int32_t portNumber, int32_t port, int32_t irq, int32_t baud, qboolean useModem);
+void (*GetModemConfig) (int32_t portNumber, char *dialType, char *clear, char *init, char *hangup);
+void (*SetModemConfig) (int32_t portNumber, char *dialType, char *clear, char *init, char *hangup);
 
 static qboolean	listening = false;
 
@@ -28,7 +28,7 @@ qboolean	slistInProgress = false;
 qboolean	slistSilent = false;
 qboolean	slistLocal = true;
 static double	slistStartTime;
-static int		slistLastShown;
+static int32_t		slistLastShown;
 
 static void Slist_Send(void);
 static void Slist_Poll(void);
@@ -37,12 +37,12 @@ PollProcedure	slistPollProcedure = {NULL, 0.0, Slist_Poll};
 
 
 sizebuf_t		net_message;
-int				net_activeconnections = 0;
+int32_t				net_activeconnections = 0;
 
-int messagesSent = 0;
-int messagesReceived = 0;
-int unreliableMessagesSent = 0;
-int unreliableMessagesReceived = 0;
+int32_t messagesSent = 0;
+int32_t messagesReceived = 0;
+int32_t unreliableMessagesSent = 0;
+int32_t unreliableMessagesReceived = 0;
 
 cvar_t	net_messagetimeout = {"net_messagetimeout","300"};
 cvar_t	hostname = {"hostname", "UNNAMED"};
@@ -61,14 +61,14 @@ cvar_t	config_modem_hangup = {"_config_modem_hangup", "AT H", true};
 cvar_t	idgods = {"idgods", "0"};
 #endif
 
-int	vcrFile = -1;
+int32_t	vcrFile = -1;
 qboolean recording = false;
 
 // these two macros are to make the code more readable
 #define sfunc	net_drivers[sock->driver]
 #define dfunc	net_drivers[net_driverlevel]
 
-int	net_driverlevel;
+int32_t	net_driverlevel;
 
 
 double			net_time;
@@ -174,7 +174,7 @@ static void NET_Listen_f (void)
 
 static void MaxPlayers_f (void)
 {
-	int 	n;
+	int32_t 	n;
 
 	if (Cmd_Argc () != 2)
 	{
@@ -213,7 +213,7 @@ static void MaxPlayers_f (void)
 
 static void NET_Port_f (void)
 {
-	int 	n;
+	int32_t 	n;
 
 	if (Cmd_Argc () != 2)
 	{
@@ -250,7 +250,7 @@ static void PrintSlistHeader(void)
 
 static void PrintSlist(void)
 {
-	int n;
+	int32_t n;
 
 	for (n = slistLastShown; n < hostCacheCount; n++)
 	{
@@ -343,14 +343,14 @@ NET_Connect
 ===================
 */
 
-int hostCacheCount = 0;
+int32_t hostCacheCount = 0;
 hostcache_t hostcache[HOSTCACHESIZE];
 
 qsocket_t *NET_Connect (char *host)
 {
 	qsocket_t		*ret;
-	int				n;
-	int				numdrivers = net_numdrivers;
+	int32_t				n;
+	int32_t				numdrivers = net_numdrivers;
 
 	SetNetTime();
 
@@ -431,7 +431,7 @@ NET_CheckNewConnections
 struct
 {
 	double	time;
-	int		op;
+	int32_t		op;
 	int32_t	session;
 } vcrConnect;
 
@@ -510,17 +510,17 @@ returns -1 if connection is invalid
 struct
 {
 	double	time;
-	int		op;
+	int32_t		op;
 	int32_t	session;
-	int		ret;
-	int		len;
+	int32_t		ret;
+	int32_t		len;
 } vcrGetMessage;
 
 extern void PrintStats(qsocket_t *s);
 
-int	NET_GetMessage (qsocket_t *sock)
+int32_t	NET_GetMessage (qsocket_t *sock)
 {
-	int ret;
+	int32_t ret;
 
 	if (!sock)
 		return -1;
@@ -598,14 +598,14 @@ returns -1 if the connection died
 struct
 {
 	double	time;
-	int		op;
+	int32_t		op;
 	int32_t	session;
-	int		r;
+	int32_t		r;
 } vcrSendMessage;
 
-int NET_SendMessage (qsocket_t *sock, sizebuf_t *data)
+int32_t NET_SendMessage (qsocket_t *sock, sizebuf_t *data)
 {
-	int		r;
+	int32_t		r;
 	
 	if (!sock)
 		return -1;
@@ -634,9 +634,9 @@ int NET_SendMessage (qsocket_t *sock, sizebuf_t *data)
 }
 
 
-int NET_SendUnreliableMessage (qsocket_t *sock, sizebuf_t *data)
+int32_t NET_SendUnreliableMessage (qsocket_t *sock, sizebuf_t *data)
 {
-	int		r;
+	int32_t		r;
 	
 	if (!sock)
 		return -1;
@@ -675,7 +675,7 @@ message to be transmitted.
 */
 qboolean NET_CanSendMessage (qsocket_t *sock)
 {
-	int		r;
+	int32_t		r;
 	
 	if (!sock)
 		return false;
@@ -700,11 +700,11 @@ qboolean NET_CanSendMessage (qsocket_t *sock)
 }
 
 
-int NET_SendToAll(sizebuf_t *data, int blocktime)
+int32_t NET_SendToAll(sizebuf_t *data, int32_t blocktime)
 {
 	double		start;
-	int			i;
-	int			count = 0;
+	int32_t			i;
+	int32_t			count = 0;
 	qboolean	state1 [MAX_SCOREBOARD];
 	qboolean	state2 [MAX_SCOREBOARD];
 
@@ -784,8 +784,8 @@ NET_Init
 
 void NET_Init (void)
 {
-	int			i;
-	int			controlSocket;
+	int32_t			i;
+	int32_t			controlSocket;
 	qsocket_t	*s;
 
 	if (COM_CheckParm("-playback"))
@@ -918,7 +918,7 @@ void NET_Poll(void)
 				useModem = true;
 			else
 				useModem = false;
-			SetComPortConfig (0, (int)config_com_port.value, (int)config_com_irq.value, (int)config_com_baud.value, useModem);
+			SetComPortConfig (0, (int32_t)config_com_port.value, (int32_t)config_com_irq.value, (int32_t)config_com_baud.value, useModem);
 			SetModemConfig (0, config_modem_dialtype.string, config_modem_clear.string, config_modem_init.string, config_modem_hangup.string);
 		}
 		configRestored = true;
@@ -971,7 +971,7 @@ qboolean IsID(struct qsockaddr *addr)
 	if (addr->sa_family != 2)
 		return false;
 
-	if ((BigLong(*(int *)&addr->sa_data[2]) & 0xffffff00) == IDNET)
+	if ((BigLong(*(int32_t *)&addr->sa_data[2]) & 0xffffff00) == IDNET)
 		return true;
 	return false;
 }
