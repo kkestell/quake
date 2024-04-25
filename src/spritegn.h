@@ -25,67 +25,66 @@
 
 #ifdef INCLUDELIBS
 
-#include <stdlib.h>
-#include <stdio.h>
 #include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "cmdlib.h"
-#include "scriplib.h"
 #include "dictlib.h"
-#include "trilib.h"
 #include "lbmlib.h"
 #include "mathlib.h"
+#include "scriplib.h"
+#include "trilib.h"
 
 #endif
 
-#define SPRITE_VERSION	1
+#define SPRITE_VERSION 1
 
 // must match definition in modelgen.h
 #ifndef SYNCTYPE_T
 #define SYNCTYPE_T
-typedef enum {ST_SYNC=0, ST_RAND } synctype_t;
+typedef enum { ST_SYNC = 0, ST_RAND } synctype_t;
 #endif
 
 // TODO: shorten these?
 typedef struct {
-	int32_t			ident;
-	int32_t			version;
-	int32_t			type;
-	float		boundingradius;
-	int32_t			width;
-	int32_t			height;
-	int32_t			numframes;
-	float		beamlength;
-	synctype_t	synctype;
+  int32_t ident;
+  int32_t version;
+  int32_t type;
+  float boundingradius;
+  int32_t width;
+  int32_t height;
+  int32_t numframes;
+  float beamlength;
+  synctype_t synctype;
 } dsprite_t;
 
-#define SPR_VP_PARALLEL_UPRIGHT		0
-#define SPR_FACING_UPRIGHT			1
-#define SPR_VP_PARALLEL				2
-#define SPR_ORIENTED				3
-#define SPR_VP_PARALLEL_ORIENTED	4
+#define SPR_VP_PARALLEL_UPRIGHT 0
+#define SPR_FACING_UPRIGHT 1
+#define SPR_VP_PARALLEL 2
+#define SPR_ORIENTED 3
+#define SPR_VP_PARALLEL_ORIENTED 4
 
 typedef struct {
-	int32_t			origin[2];
-	int32_t			width;
-	int32_t			height;
+  int32_t origin[2];
+  int32_t width;
+  int32_t height;
 } dspriteframe_t;
 
 typedef struct {
-	int32_t			numframes;
+  int32_t numframes;
 } dspritegroup_t;
 
 typedef struct {
-	float	interval;
+  float interval;
 } dspriteinterval_t;
 
-typedef enum { SPR_SINGLE=0, SPR_GROUP } spriteframetype_t;
+typedef enum { SPR_SINGLE = 0, SPR_GROUP } spriteframetype_t;
 
 typedef struct {
-	spriteframetype_t	type;
+  spriteframetype_t type;
 } dspriteframetype_t;
 
-#define IDSPRITEHEADER	(('P'<<24)+('S'<<16)+('D'<<8)+'I')
-														// little-endian "IDSP"
-
+#define IDSPRITEHEADER (('P' << 24) + ('S' << 16) + ('D' << 8) + 'I')
+// little-endian "IDSP"
