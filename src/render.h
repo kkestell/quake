@@ -19,7 +19,7 @@ typedef struct efrag_s
 
 typedef struct entity_s
 {
-	qboolean				forcelink;		// model changed
+	bool				forcelink;		// model changed
 
 	int32_t						update_type;
 
@@ -126,7 +126,7 @@ void R_PushDlights (void);
 // surface cache related
 //
 extern	int32_t		reinit_surfcache;	// if 1, surface cache is currently empty and
-extern qboolean	r_cache_thrash;	// set if thrashing the surface cache
+extern bool	r_cache_thrash;	// set if thrashing the surface cache
 
 int32_t	D_SurfaceCacheForRes (int32_t width, int32_t height);
 void D_FlushCaches (void);

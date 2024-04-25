@@ -22,7 +22,7 @@ static SDL_Surface *screen = NULL;
 static SDL_Surface *surface8bpp = NULL;
 static SDL_Surface *surface32bpp = NULL;
 
-static qboolean mouse_avail;
+static bool mouse_avail;
 static float   mouse_x, mouse_y;
 static int32_t mouse_oldbuttonstate = 0;
 
@@ -441,6 +441,6 @@ void VID_UnlockBuffer()
 {
 }
 
-void VID_HandlePause(qboolean pause)
+void VID_HandlePause(bool pause)
 {
 }

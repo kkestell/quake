@@ -66,12 +66,12 @@ void M_GameOptions_Key (int32_t key);
 void M_Search_Key (int32_t key);
 void M_ServerList_Key (int32_t key);
 
-qboolean	m_entersound;		// play after drawing a frame, so caching
+bool	m_entersound;		// play after drawing a frame, so caching
 								// won't disrupt the sound
-qboolean	m_recursiveDraw;
+bool	m_recursiveDraw;
 
 int32_t			m_return_state;
-qboolean	m_return_onerror;
+bool	m_return_onerror;
 char		m_return_reason [32];
 
 #define StartingGame	(m_multiplayer_cursor == 1)
@@ -1549,7 +1549,7 @@ void M_Help_Key (int32_t key)
 
 int32_t		msgNumber;
 int32_t		m_quit_prevstate;
-qboolean	wasInMenus;
+bool	wasInMenus;
 
 #ifndef	_WIN32
 char *quitMessage [] = 
@@ -1706,7 +1706,7 @@ void M_Menu_SerialConfig_f (void)
 	int32_t		n;
 	int32_t		port;
 	int32_t		baudrate;
-	qboolean	useModem;
+	bool	useModem;
 
 	key_dest = key_menu;
 	m_state = m_serialconfig;
@@ -2497,7 +2497,7 @@ episode_t	rogueepisodes[] =
 int32_t	startepisode;
 int32_t	startlevel;
 int32_t maxplayers;
-qboolean m_serverInfoMessage = false;
+bool m_serverInfoMessage = false;
 double m_serverInfoMessageTime;
 
 void M_Menu_GameOptions_f (void)
@@ -2807,7 +2807,7 @@ void M_GameOptions_Key (int32_t key)
 //=============================================================================
 /* SEARCH MENU */
 
-qboolean	searchComplete = false;
+bool	searchComplete = false;
 double		searchCompleteTime;
 
 void M_Menu_Search_f (void)
@@ -2868,7 +2868,7 @@ void M_Search_Key (int32_t key)
 /* SLIST MENU */
 
 int32_t		slist_cursor;
-qboolean slist_sorted;
+bool slist_sorted;
 
 void M_Menu_ServerList_f (void)
 {

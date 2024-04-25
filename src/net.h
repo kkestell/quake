@@ -104,9 +104,9 @@ typedef struct qsocket_s
 	double			lastMessageTime;
 	double			lastSendTime;
 
-	qboolean		disconnected;
-	qboolean		canSend;
-	qboolean		sendNext;
+	bool		disconnected;
+	bool		canSend;
+	bool		sendNext;
 	
 	int32_t				driver;
 	int32_t				landriver;
@@ -136,11 +136,11 @@ extern int32_t			net_numsockets;
 typedef struct
 {
 	char		*name;
-	qboolean	initialized;
+	bool	initialized;
 	int32_t			controlSock;
 	int32_t			(*Init) (void);
 	void		(*Shutdown) (void);
-	void		(*Listen) (qboolean state);
+	void		(*Listen) (bool state);
 	int32_t 		(*OpenSocket) (int32_t port);
 	int32_t 		(*CloseSocket) (int32_t socket);
 	int32_t 		(*Connect) (int32_t socket, struct qsockaddr *addr);
@@ -165,17 +165,17 @@ extern net_landriver_t	net_landrivers[MAX_NET_DRIVERS];
 typedef struct
 {
 	char		*name;
-	qboolean	initialized;
+	bool	initialized;
 	int32_t			(*Init) (void);
-	void		(*Listen) (qboolean state);
-	void		(*SearchForHosts) (qboolean xmit);
+	void		(*Listen) (bool state);
+	void		(*SearchForHosts) (bool xmit);
 	qsocket_t	*(*Connect) (char *host);
 	qsocket_t 	*(*CheckNewConnections) (void);
 	int32_t			(*QGetMessage) (qsocket_t *sock);
 	int32_t			(*QSendMessage) (qsocket_t *sock, sizebuf_t *data);
 	int32_t			(*SendUnreliableMessage) (qsocket_t *sock, sizebuf_t *data);
-	qboolean	(*CanSendMessage) (qsocket_t *sock);
-	qboolean	(*CanSendUnreliableMessage) (qsocket_t *sock);
+	bool	(*CanSendMessage) (qsocket_t *sock);
+	bool	(*CanSendUnreliableMessage) (qsocket_t *sock);
 	void		(*Close) (qsocket_t *sock);
 	void		(*Shutdown) (void);
 	int32_t			controlSock;
@@ -235,7 +235,7 @@ extern uint16_t ntohs (uint16_t netshort);
 #endif
 
 #ifdef IDGODS
-qboolean IsID(struct qsockaddr *addr);
+bool IsID(struct qsockaddr *addr);
 #endif
 
 //============================================================================
@@ -257,7 +257,7 @@ struct qsocket_s	*NET_CheckNewConnections (void);
 struct qsocket_s	*NET_Connect (char *host);
 // called by client to connect to a host.  Returns -1 if not able to
 
-qboolean NET_CanSendMessage (qsocket_t *sock);
+bool NET_CanSendMessage (qsocket_t *sock);
 // Returns true or false if the given qsocket can currently accept a
 // message to be transmitted.
 
@@ -301,18 +301,18 @@ typedef struct _PollProcedure
 
 void SchedulePollProcedure(PollProcedure *pp, double timeOffset);
 
-extern	qboolean	serialAvailable;
-extern	qboolean	ipxAvailable;
-extern	qboolean	tcpipAvailable;
+extern	bool	serialAvailable;
+extern	bool	ipxAvailable;
+extern	bool	tcpipAvailable;
 extern	char		my_ipx_address[NET_NAMELEN];
 extern	char		my_tcpip_address[NET_NAMELEN];
-extern void (*GetComPortConfig) (int32_t portNumber, int32_t *port, int32_t *irq, int32_t *baud, qboolean *useModem);
-extern void (*SetComPortConfig) (int32_t portNumber, int32_t port, int32_t irq, int32_t baud, qboolean useModem);
+extern void (*GetComPortConfig) (int32_t portNumber, int32_t *port, int32_t *irq, int32_t *baud, bool *useModem);
+extern void (*SetComPortConfig) (int32_t portNumber, int32_t port, int32_t irq, int32_t baud, bool useModem);
 extern void (*GetModemConfig) (int32_t portNumber, char *dialType, char *clear, char *init, char *hangup);
 extern void (*SetModemConfig) (int32_t portNumber, char *dialType, char *clear, char *init, char *hangup);
 
-extern	qboolean	slistInProgress;
-extern	qboolean	slistSilent;
-extern	qboolean	slistLocal;
+extern	bool	slistInProgress;
+extern	bool	slistSilent;
+extern	bool	slistLocal;
 
 void NET_Slist_f (void);

@@ -85,7 +85,7 @@ Cvar_Set
 void Cvar_Set (char *var_name, char *value)
 {
 	cvar_t	*var;
-	qboolean changed;
+	bool changed;
 	
 	var = Cvar_FindVar (var_name);
 	if (!var)
@@ -165,7 +165,7 @@ Cvar_Command
 Handles variable inspection and changing from the console
 ============
 */
-qboolean	Cvar_Command (void)
+bool	Cvar_Command (void)
 {
 	cvar_t			*v;
 

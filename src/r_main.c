@@ -10,16 +10,16 @@ vec3_t		viewlightvec;
 alight_t	r_viewlighting = {128, 192, viewlightvec};
 float		r_time1;
 int32_t			r_numallocatededges;
-qboolean	r_drawpolys;
-qboolean	r_drawculledpolys;
-qboolean	r_worldpolysbacktofront;
-qboolean	r_recursiveaffinetriangles = true;
+bool	r_drawpolys;
+bool	r_drawculledpolys;
+bool	r_worldpolysbacktofront;
+bool	r_recursiveaffinetriangles = true;
 int32_t			r_pixbytes = 1;
 float		r_aliasuvscale = 1.0;
 int32_t			r_outofsurfaces;
 int32_t			r_outofedges;
 
-qboolean	r_dowarp, r_dowarpold, r_viewchanged;
+bool	r_dowarp, r_dowarpold, r_viewchanged;
 
 int32_t			numbtofpolys;
 btofpoly_t	*pbtofpolys;
@@ -27,14 +27,14 @@ mvertex_t	*r_pcurrentvertbase;
 
 int32_t			c_surf;
 int32_t			r_maxsurfsseen, r_maxedgesseen, r_cnumsurfs;
-qboolean	r_surfsonstack;
+bool	r_surfsonstack;
 int32_t			r_clipflags;
 
 uint8_t		*r_warpbuffer;
 
 uint8_t		*r_stack_start;
 
-qboolean	r_fov_greater_than_90;
+bool	r_fov_greater_than_90;
 
 //
 // view origin

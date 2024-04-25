@@ -18,7 +18,7 @@ float	*angles;
 float	*origin;
 float	*velocity;
 
-qboolean	onground;
+bool	onground;
 
 usercmd_t	cmd;
 
@@ -455,7 +455,7 @@ SV_ReadClientMessage
 Returns false if the client should be killed
 ===================
 */
-qboolean SV_ReadClientMessage (void)
+bool SV_ReadClientMessage (void)
 {
 	int32_t		ret;
 	int32_t		cmd;

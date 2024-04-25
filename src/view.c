@@ -268,7 +268,7 @@ void BuildGammaTable (float g)
 V_CheckGamma
 =================
 */
-qboolean V_CheckGamma (void)
+bool V_CheckGamma (void)
 {
 	static float oldgammavalue;
 	
@@ -452,11 +452,11 @@ void V_CalcPowerupCshift (void)
 void V_UpdatePalette (void)
 {
 	int32_t		i, j;
-	qboolean	new;
+	bool	new;
 	uint8_t	*basepal, *newpal;
 	uint8_t	pal[768];
 	int32_t		r,g,b;
-	qboolean force;
+	bool force;
 
 	V_CalcPowerupCshift ();
 	

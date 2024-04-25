@@ -7,9 +7,9 @@ qsocket_t	*net_activeSockets = NULL;
 qsocket_t	*net_freeSockets = NULL;
 int32_t			net_numsockets = 0;
 
-qboolean	serialAvailable = false;
-qboolean	ipxAvailable = false;
-qboolean	tcpipAvailable = false;
+bool	serialAvailable = false;
+bool	ipxAvailable = false;
+bool	tcpipAvailable = false;
 
 int32_t			net_hostport;
 int32_t			DEFAULTnet_hostport = 26000;
@@ -17,16 +17,16 @@ int32_t			DEFAULTnet_hostport = 26000;
 char		my_ipx_address[NET_NAMELEN];
 char		my_tcpip_address[NET_NAMELEN];
 
-void (*GetComPortConfig) (int32_t portNumber, int32_t *port, int32_t *irq, int32_t *baud, qboolean *useModem);
-void (*SetComPortConfig) (int32_t portNumber, int32_t port, int32_t irq, int32_t baud, qboolean useModem);
+void (*GetComPortConfig) (int32_t portNumber, int32_t *port, int32_t *irq, int32_t *baud, bool *useModem);
+void (*SetComPortConfig) (int32_t portNumber, int32_t port, int32_t irq, int32_t baud, bool useModem);
 void (*GetModemConfig) (int32_t portNumber, char *dialType, char *clear, char *init, char *hangup);
 void (*SetModemConfig) (int32_t portNumber, char *dialType, char *clear, char *init, char *hangup);
 
-static qboolean	listening = false;
+static bool	listening = false;
 
-qboolean	slistInProgress = false;
-qboolean	slistSilent = false;
-qboolean	slistLocal = true;
+bool	slistInProgress = false;
+bool	slistSilent = false;
+bool	slistLocal = true;
 static double	slistStartTime;
 static int32_t		slistLastShown;
 
@@ -47,7 +47,7 @@ int32_t unreliableMessagesReceived = 0;
 cvar_t	net_messagetimeout = {"net_messagetimeout","300"};
 cvar_t	hostname = {"hostname", "UNNAMED"};
 
-qboolean	configRestored = false;
+bool	configRestored = false;
 cvar_t	config_com_port = {"_config_com_port", "0x3f8", true};
 cvar_t	config_com_irq = {"_config_com_irq", "4", true};
 cvar_t	config_com_baud = {"_config_com_baud", "57600", true};
@@ -62,7 +62,7 @@ cvar_t	idgods = {"idgods", "0"};
 #endif
 
 int32_t	vcrFile = -1;
-qboolean recording = false;
+bool recording = false;
 
 // these two macros are to make the code more readable
 #define sfunc	net_drivers[sock->driver]
@@ -673,7 +673,7 @@ Returns true or false if the given qsocket can currently accept a
 message to be transmitted.
 ==================
 */
-qboolean NET_CanSendMessage (qsocket_t *sock)
+bool NET_CanSendMessage (qsocket_t *sock)
 {
 	int32_t		r;
 	
@@ -705,8 +705,8 @@ int32_t NET_SendToAll(sizebuf_t *data, int32_t blocktime)
 	double		start;
 	int32_t			i;
 	int32_t			count = 0;
-	qboolean	state1 [MAX_SCOREBOARD];
-	qboolean	state2 [MAX_SCOREBOARD];
+	bool	state1 [MAX_SCOREBOARD];
+	bool	state2 [MAX_SCOREBOARD];
 
 	for (i=0, host_client = svs.clients ; i<svs.maxclients ; i++, host_client++)
 	{
@@ -908,7 +908,7 @@ static PollProcedure *pollProcedureList = NULL;
 void NET_Poll(void)
 {
 	PollProcedure *pp;
-	qboolean	useModem;
+	bool	useModem;
 
 	if (!configRestored)
 	{
@@ -963,7 +963,7 @@ void SchedulePollProcedure(PollProcedure *proc, double timeOffset)
 #ifdef IDGODS
 #define IDNET	0xc0f62800
 
-qboolean IsID(struct qsockaddr *addr)
+bool IsID(struct qsockaddr *addr)
 {
 	if (idgods.value == 0.0)
 		return false;

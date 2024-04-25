@@ -21,7 +21,7 @@ int32_t			localstack[LOCALSTACK_SIZE];
 int32_t			localstack_used;
 
 
-qboolean	pr_trace;
+bool	pr_trace;
 dfunction_t	*pr_xfunction;
 int32_t			pr_xstatement;
 

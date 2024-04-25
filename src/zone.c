@@ -259,7 +259,7 @@ int32_t		hunk_size;
 int32_t		hunk_low_used;
 int32_t		hunk_high_used;
 
-qboolean	hunk_tempactive;
+bool	hunk_tempactive;
 int32_t		hunk_tempmark;
 
 void R_FreeTextures (void);
@@ -293,7 +293,7 @@ If "all" is specified, every single allocation is printed.
 Otherwise, allocations with the same name will be totaled up before printing.
 ==============
 */
-void Hunk_Print (qboolean all)
+void Hunk_Print (bool all)
 {
 	hunk_t	*h, *next, *endlow, *starthigh, *endhigh;
 	int32_t		count, sum;
@@ -536,7 +536,7 @@ typedef struct cache_system_s
 	struct cache_system_s	*lru_prev, *lru_next;	// for LRU flushing	
 } cache_system_t;
 
-cache_system_t *Cache_TryAlloc (int32_t size, qboolean nobottom);
+cache_system_t *Cache_TryAlloc (int32_t size, bool nobottom);
 
 cache_system_t	cache_head;
 
@@ -650,7 +650,7 @@ Looks for a free block of memory between the high and low hunk marks
 Size should already include the header and padding
 ============
 */
-cache_system_t *Cache_TryAlloc (int32_t size, qboolean nobottom)
+cache_system_t *Cache_TryAlloc (int32_t size, bool nobottom)
 {
 	cache_system_t	*cs, *new;
 	

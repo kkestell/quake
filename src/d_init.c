@@ -10,7 +10,7 @@ cvar_t	d_mipcap = {"d_mipcap", "0"};
 cvar_t	d_mipscale = {"d_mipscale", "1"};
 
 surfcache_t		*d_initial_rover;
-qboolean		d_roverwrapped;
+bool		d_roverwrapped;
 int32_t				d_minmip;
 float			d_scalemip[NUM_MIPS-1];
 

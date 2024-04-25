@@ -686,7 +686,7 @@ void SV_WriteClientdataToMessage (edict_t *ent, sizebuf_t *msg)
 SV_SendClientDatagram
 =======================
 */
-qboolean SV_SendClientDatagram (client_t *client)
+bool SV_SendClientDatagram (client_t *client)
 {
 	uint8_t		buf[MAX_DATAGRAM];
 	sizebuf_t	msg;

@@ -281,7 +281,7 @@ typedef enum {mod_brush, mod_sprite, mod_alias} modtype_t;
 typedef struct model_s
 {
 	char		name[MAX_QPATH];
-	qboolean	needload;		// bmodels and sprites don't cache normally
+	bool	needload;		// bmodels and sprites don't cache normally
 
 	modtype_t	type;
 	int32_t			numframes;
@@ -353,7 +353,7 @@ typedef struct model_s
 
 void	Mod_Init (void);
 void	Mod_ClearAll (void);
-model_t *Mod_ForName (char *name, qboolean crash);
+model_t *Mod_ForName (char *name, bool crash);
 void	*Mod_Extradata (model_t *mod);	// handles caching
 void	Mod_TouchModel (char *name);
 

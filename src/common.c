@@ -13,13 +13,13 @@ static char     *safeargvs[NUM_SAFE_ARGVS] =
 cvar_t  registered = {"registered","0"};
 cvar_t  cmdline = {"cmdline","0", false, true};
 
-qboolean        com_modified;   // set true if using non-id files
+bool        com_modified;   // set true if using non-id files
 
-qboolean		proghack;
+bool		proghack;
 
 int32_t             static_registered = 1;  // only for startup check, then set
 
-qboolean		msg_suppress_1 = 0;
+bool		msg_suppress_1 = 0;
 
 void COM_InitFilesystem (void);
 
@@ -34,7 +34,7 @@ char	**com_argv;
 #define CMDLINE_LENGTH	256
 char	com_cmdline[CMDLINE_LENGTH];
 
-qboolean		standard_quake = true, rogue, hipnotic;
+bool		standard_quake = true, rogue, hipnotic;
 
 // this graphic needs to be in the pak file to use registered features
 uint16_t pop[] =
@@ -412,7 +412,7 @@ float Q_atof (char *str)
 ============================================================================
 */
 
-qboolean        bigendien;
+bool        bigendien;
 
 int16_t   (*BigShort) (int16_t l);
 int16_t   (*LittleShort) (int16_t l);
@@ -561,7 +561,7 @@ void MSG_WriteAngle (sizebuf_t *sb, float f)
 // reading functions
 //
 int32_t                     msg_readcount;
-qboolean        msg_badread;
+bool        msg_badread;
 
 void MSG_BeginReading (void)
 {
@@ -1022,7 +1022,7 @@ COM_InitArgv
 */
 void COM_InitArgv (int32_t argc, char **argv)
 {
-	qboolean        safe;
+	bool        safe;
 	int32_t             i, j, n;
 
 // reconstitute the command line for the cmdline externally visible cvar

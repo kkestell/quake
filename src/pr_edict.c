@@ -17,7 +17,7 @@ uint16_t		pr_crc;
 int32_t		type_size[8] = {1,sizeof(string_t)/4,1,3,1,1,sizeof(func_t)/4,sizeof(void *)/4};
 
 ddef_t *ED_FieldAtOfs (int32_t ofs);
-qboolean	ED_ParseEpair (void *base, ddef_t *key, char *s);
+bool	ED_ParseEpair (void *base, ddef_t *key, char *s);
 
 cvar_t	nomonsters = {"nomonsters", "0"};
 cvar_t	gamecfg = {"gamecfg", "0"};
@@ -706,7 +706,7 @@ Can parse either fields or globals
 returns false if error
 =============
 */
-qboolean	ED_ParseEpair (void *base, ddef_t *key, char *s)
+bool	ED_ParseEpair (void *base, ddef_t *key, char *s)
 {
 	int32_t		i;
 	char	string[128];
@@ -783,8 +783,8 @@ Used for initial level load and for savegames.
 char *ED_ParseEdict (char *data, edict_t *ent)
 {
 	ddef_t		*key;
-	qboolean	anglehack;
-	qboolean	init;
+	bool	anglehack;
+	bool	init;
 	char		keyname[256];
 	int32_t			n;
 

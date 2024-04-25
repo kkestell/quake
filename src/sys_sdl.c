@@ -24,7 +24,7 @@
 
 #include "quakedef.h"
 
-qboolean isDedicated;
+bool isDedicated;
 
 char *basedir = ".";
 
