@@ -37,7 +37,7 @@ char	com_cmdline[CMDLINE_LENGTH];
 qboolean		standard_quake = true, rogue, hipnotic;
 
 // this graphic needs to be in the pak file to use registered features
-unsigned short pop[] =
+uint16_t pop[] =
 {
  0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000
 ,0x0000,0x0000,0x6600,0x0000,0x0000,0x0000,0x6600,0x0000
@@ -414,14 +414,14 @@ float Q_atof (char *str)
 
 qboolean        bigendien;
 
-short   (*BigShort) (short l);
-short   (*LittleShort) (short l);
+int16_t   (*BigShort) (int16_t l);
+int16_t   (*LittleShort) (int16_t l);
 int32_t     (*BigLong) (int32_t l);
 int32_t     (*LittleLong) (int32_t l);
 float   (*BigFloat) (float l);
 float   (*LittleFloat) (float l);
 
-short   ShortSwap (short l)
+int16_t   ShortSwap (int16_t l)
 {
 	byte    b1,b2;
 
@@ -431,7 +431,7 @@ short   ShortSwap (short l)
 	return (b1<<8) + b2;
 }
 
-short   ShortNoSwap (short l)
+int16_t   ShortNoSwap (int16_t l)
 {
 	return l;
 }
@@ -612,7 +612,7 @@ int32_t MSG_ReadShort (void)
 		return -1;
 	}
 		
-	c = (short)(net_message.data[msg_readcount]
+	c = (int16_t)(net_message.data[msg_readcount]
 	+ (net_message.data[msg_readcount+1]<<8));
 	
 	msg_readcount += 2;
@@ -981,7 +981,7 @@ being registered.
 void COM_CheckRegistered (void)
 {
 	int32_t             h;
-	unsigned short  check[128];
+	uint16_t  check[128];
 	int32_t                     i;
 
 	COM_OpenFile("gfx/pop.lmp", &h);
@@ -1002,7 +1002,7 @@ void COM_CheckRegistered (void)
 	COM_CloseFile (h);
 	
 	for (i=0 ; i<128 ; i++)
-		if (pop[i] != (unsigned short)BigShort (check[i]))
+		if (pop[i] != (uint16_t)BigShort (check[i]))
 			Sys_Error ("Corrupted data file.");
 	
 	Cvar_Set ("cmdline", com_cmdline);
@@ -1093,7 +1093,7 @@ void COM_Init (char *basedir)
 	byte    swaptest[2] = {1,0};
 
 // set the byte swapping variables in a portable manner 
-	if ( *(short *)swaptest == 1)
+	if ( *(int16_t *)swaptest == 1)
 	{
 		bigendien = false;
 		BigShort = ShortSwap;
@@ -1591,7 +1591,7 @@ pack_t *COM_LoadPackFile (char *packfile)
 	pack_t                  *pack;
 	int32_t                             packhandle;
 	dpackfile_t             info[MAX_FILES_IN_PACK];
-	unsigned short          crc;
+	uint16_t          crc;
 
 	if (Sys_FileOpenRead (packfile, &packhandle) == -1)
 	{

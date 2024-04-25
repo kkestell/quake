@@ -5,7 +5,7 @@
 #include "d_local.h"
 
 viddef_t    vid;                // global video state
-unsigned short  d_8to16table[256];
+uint16_t  d_8to16table[256];
 
 // The original defaults
 //#define    BASEWIDTH    320

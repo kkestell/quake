@@ -117,7 +117,7 @@ void Draw_Character (int32_t x, int32_t y, int32_t num)
 {
 	byte			*dest;
 	byte			*source;
-	unsigned short	*pusdest;
+	uint16_t	*pusdest;
 	int32_t				drawline;	
 	int32_t				row, col;
 
@@ -169,7 +169,7 @@ void Draw_Character (int32_t x, int32_t y, int32_t num)
 	else
 	{
 	// FIXME: pre-expand to native format?
-		pusdest = (unsigned short *)
+		pusdest = (uint16_t *)
 				((byte *)vid.conbuffer + y*vid.conrowbytes + (x<<1));
 
 		while (drawline--)
@@ -263,7 +263,7 @@ Draw_Pic
 void Draw_Pic (int32_t x, int32_t y, qpic_t *pic)
 {
 	byte			*dest, *source;
-	unsigned short	*pusdest;
+	uint16_t	*pusdest;
 	int32_t				v, u;
 
 	if ((x < 0) ||
@@ -290,7 +290,7 @@ void Draw_Pic (int32_t x, int32_t y, qpic_t *pic)
 	else
 	{
 	// FIXME: pretranslate at load time?
-		pusdest = (unsigned short *)vid.buffer + y * (vid.rowbytes >> 1) + x;
+		pusdest = (uint16_t *)vid.buffer + y * (vid.rowbytes >> 1) + x;
 
 		for (v=0 ; v<pic->height ; v++)
 		{
@@ -314,7 +314,7 @@ Draw_TransPic
 void Draw_TransPic (int32_t x, int32_t y, qpic_t *pic)
 {
 	byte	*dest, *source, tbyte;
-	unsigned short	*pusdest;
+	uint16_t	*pusdest;
 	int32_t				v, u;
 
 	if (x < 0 || (unsigned)(x + pic->width) > vid.width || y < 0 ||
@@ -372,7 +372,7 @@ void Draw_TransPic (int32_t x, int32_t y, qpic_t *pic)
 	else
 	{
 	// FIXME: pretranslate at load time?
-		pusdest = (unsigned short *)vid.buffer + y * (vid.rowbytes >> 1) + x;
+		pusdest = (uint16_t *)vid.buffer + y * (vid.rowbytes >> 1) + x;
 
 		for (v=0 ; v<pic->height ; v++)
 		{
@@ -401,7 +401,7 @@ Draw_TransPicTranslate
 void Draw_TransPicTranslate (int32_t x, int32_t y, qpic_t *pic, byte *translation)
 {
 	byte	*dest, *source, tbyte;
-	unsigned short	*pusdest;
+	uint16_t	*pusdest;
 	int32_t				v, u;
 
 	if (x < 0 || (unsigned)(x + pic->width) > vid.width || y < 0 ||
@@ -459,7 +459,7 @@ void Draw_TransPicTranslate (int32_t x, int32_t y, qpic_t *pic, byte *translatio
 	else
 	{
 	// FIXME: pretranslate at load time?
-		pusdest = (unsigned short *)vid.buffer + y * (vid.rowbytes >> 1) + x;
+		pusdest = (uint16_t *)vid.buffer + y * (vid.rowbytes >> 1) + x;
 
 		for (v=0 ; v<pic->height ; v++)
 		{
@@ -514,7 +514,7 @@ void Draw_ConsoleBackground (int32_t lines)
 {
 	int32_t				x, y, v;
 	byte			*src, *dest;
-	unsigned short	*pusdest;
+	uint16_t	*pusdest;
 	int32_t				f, fstep;
 	qpic_t			*conback;
 	char			ver[100];
@@ -570,7 +570,7 @@ void Draw_ConsoleBackground (int32_t lines)
 	}
 	else
 	{
-		pusdest = (unsigned short *)vid.conbuffer;
+		pusdest = (uint16_t *)vid.conbuffer;
 
 		for (y=0 ; y<lines ; y++, pusdest += (vid.conrowbytes >> 1))
 		{
@@ -655,11 +655,11 @@ void R_DrawRect16 (vrect_t *prect, int32_t rowbytes, byte *psrc,
 {
 	byte			t;
 	int32_t				i, j, srcdelta, destdelta;
-	unsigned short	*pdest;
+	uint16_t	*pdest;
 
 // FIXME: would it be better to pre-expand native-format versions?
 
-	pdest = (unsigned short *)vid.buffer +
+	pdest = (uint16_t *)vid.buffer +
 			(prect->y * (vid.rowbytes >> 1)) + prect->x;
 
 	srcdelta = rowbytes - prect->width;
@@ -786,7 +786,7 @@ Fills a box of pixels with a single color
 void Draw_Fill (int32_t x, int32_t y, int32_t w, int32_t h, int32_t c)
 {
 	byte			*dest;
-	unsigned short	*pusdest;
+	uint16_t	*pusdest;
 	unsigned		uc;
 	int32_t				u, v;
 
@@ -801,7 +801,7 @@ void Draw_Fill (int32_t x, int32_t y, int32_t w, int32_t h, int32_t c)
 	{
 		uc = d_8to16table[c];
 
-		pusdest = (unsigned short *)vid.buffer + y * (vid.rowbytes >> 1) + x;
+		pusdest = (uint16_t *)vid.buffer + y * (vid.rowbytes >> 1) + x;
 		for (v=0 ; v<h ; v++, pusdest += (vid.rowbytes >> 1))
 			for (u=0 ; u<w ; u++)
 				pusdest[u] = uc;

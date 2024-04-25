@@ -2,7 +2,7 @@
 
 struct qsockaddr
 {
-	short sa_family;
+	int16_t sa_family;
 	unsigned char sa_data[14];
 };
 
@@ -224,13 +224,13 @@ extern hostcache_t hostcache[HOSTCACHESIZE];
 extern uint32_t htonl (uint32_t hostlong);
 #endif
 #ifndef htons
-extern unsigned short htons (unsigned short hostshort);
+extern uint16_t htons (uint16_t hostshort);
 #endif
 #ifndef ntohl
 extern uint32_t ntohl (uint32_t netlong);
 #endif
 #ifndef ntohs
-extern unsigned short ntohs (unsigned short netshort);
+extern uint16_t ntohs (uint16_t netshort);
 #endif
 #endif
 

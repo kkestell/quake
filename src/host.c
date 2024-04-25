@@ -472,7 +472,7 @@ void Host_ClearMemory (void)
 ===================
 Host_FilterTime
 
-Returns false if the time is too short to run a frame
+Returns false if the time is too int16_t to run a frame
 ===================
 */
 qboolean Host_FilterTime (float time)

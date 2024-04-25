@@ -12,7 +12,7 @@ globalvars_t	*pr_global_struct;
 float			*pr_globals;			// same as pr_global_struct
 int32_t				pr_edict_size;	// in bytes
 
-unsigned short		pr_crc;
+uint16_t		pr_crc;
 
 int32_t		type_size[8] = {1,sizeof(string_t)/4,1,3,1,1,sizeof(func_t)/4,sizeof(void *)/4};
 

@@ -8,7 +8,7 @@ int32_t	d_vrectx, d_vrecty, d_vrectright_particle, d_vrectbottom_particle;
 int32_t	d_y_aspect_shift, d_pix_min, d_pix_max, d_pix_shift;
 
 int32_t		d_scantable[MAXHEIGHT];
-short	*zspantable[MAXHEIGHT]; 
+int16_t	*zspantable[MAXHEIGHT]; 
 
 /*
 ================

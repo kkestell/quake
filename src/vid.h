@@ -16,7 +16,7 @@ typedef struct
 {
 	pixel_t			*buffer;		// invisible buffer
 	pixel_t			*colormap;		// 256 * VID_GRADES size
-	unsigned short	*colormap16;	// 256 * VID_GRADES size
+	uint16_t	*colormap16;	// 256 * VID_GRADES size
 	int32_t				fullbright;		// index of first fullbright color
 	unsigned		rowbytes;	// may be > width if displayed in a window
 	unsigned		width;		
@@ -35,7 +35,7 @@ typedef struct
 } viddef_t;
 
 extern	viddef_t	vid;				// global video state
-extern	unsigned short	d_8to16table[256];
+extern	uint16_t	d_8to16table[256];
 extern	unsigned	d_8to24table[256];
 extern void (*vid_menudrawfn)(void);
 extern void (*vid_menukeyfn)(int32_t key);

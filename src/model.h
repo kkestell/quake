@@ -68,7 +68,7 @@ typedef struct texture_s
 // !!! if this is changed, it must be changed in asm_draw.h too !!!
 typedef struct
 {
-	unsigned short	v[2];
+	uint16_t	v[2];
 	uint32_t	cachededgeoffset;
 } medge_t;
 
@@ -96,8 +96,8 @@ typedef struct msurface_s
 // surface generation data
 	struct surfcache_s	*cachespots[MIPLEVELS];
 
-	short		texturemins[2];
-	short		extents[2];
+	int16_t		texturemins[2];
+	int16_t		extents[2];
 
 	mtexinfo_t	*texinfo;
 	
@@ -112,7 +112,7 @@ typedef struct mnode_s
 	int32_t			contents;		// 0, to differentiate from leafs
 	int32_t			visframe;		// node needs to be traversed if current
 	
-	short		minmaxs[6];		// for bounding box culling
+	int16_t		minmaxs[6];		// for bounding box culling
 
 	struct mnode_s	*parent;
 
@@ -120,8 +120,8 @@ typedef struct mnode_s
 	mplane_t	*plane;
 	struct mnode_s	*children[2];	
 
-	unsigned short		firstsurface;
-	unsigned short		numsurfaces;
+	uint16_t		firstsurface;
+	uint16_t		numsurfaces;
 } mnode_t;
 
 
@@ -132,7 +132,7 @@ typedef struct mleaf_s
 	int32_t			contents;		// wil be a negative contents number
 	int32_t			visframe;		// node needs to be traversed if current
 
-	short		minmaxs[6];		// for bounding box culling
+	int16_t		minmaxs[6];		// for bounding box culling
 
 	struct mnode_s	*parent;
 

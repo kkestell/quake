@@ -16,15 +16,15 @@ struct in_addr
 	union
 	{
 		struct { unsigned char s_b1,s_b2,s_b3,s_b4; } S_un_b;
-		struct { unsigned short s_w1,s_w2; } S_un_w;
+		struct { uint16_t s_w1,s_w2; } S_un_w;
 		uint32_t S_addr;
 	} S_un;
 };
 #define	s_addr	S_un.S_addr	/* can be used for most tcp & ip code */
 struct sockaddr_in
 {
-    short			sin_family;
-    unsigned short	sin_port;
+    int16_t			sin_family;
+    uint16_t	sin_port;
 	struct in_addr	sin_addr;
     char			sin_zero[8];
 };

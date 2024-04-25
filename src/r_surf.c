@@ -509,13 +509,13 @@ void R_DrawSurfaceBlock16 (void)
 	int32_t				k;
 	unsigned char	*psource;
 	int32_t				lighttemp, lightstep, light;
-	unsigned short	*prowdest;
+	uint16_t	*prowdest;
 
-	prowdest = (unsigned short *)prowdestbase;
+	prowdest = (uint16_t *)prowdestbase;
 
 	for (k=0 ; k<blocksize ; k++)
 	{
-		unsigned short	*pdest;
+		uint16_t	*pdest;
 		unsigned char	pix;
 		int32_t				b;
 
@@ -538,7 +538,7 @@ void R_DrawSurfaceBlock16 (void)
 		pbasesource += sourcetstep;
 		lightright += lightrightstep;
 		lightleft += lightleftstep;
-		prowdest = (unsigned short *)((int32_t)prowdest + surfrowbytes);
+		prowdest = (uint16_t *)((int32_t)prowdest + surfrowbytes);
 	}
 
 	prowdestbase = prowdest;
@@ -582,10 +582,10 @@ void R_GenTurbTile16 (pixel_t *pbasetex, void *pdest)
 {
 	int32_t				*turb;
 	int32_t				i, j, s, t;
-	unsigned short	*pd;
+	uint16_t	*pd;
 
 	turb = sintable + ((int32_t)(cl.time*SPEED)&(CYCLE-1));
-	pd = (unsigned short *)pdest;
+	pd = (uint16_t *)pdest;
 
 	for (i=0 ; i<TILE_SIZE ; i++)
 	{

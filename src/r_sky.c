@@ -204,13 +204,13 @@ void R_GenSkyTile16 (void *pdest)
 	int32_t				ofs, baseofs;
 	int32_t				xshift, yshift;
 	byte			*pnewsky;
-	unsigned short	*pd;
+	uint16_t	*pd;
 
 	xshift = skytime * skyspeed;
 	yshift = skytime * skyspeed;
 
 	pnewsky = (byte *)&newsky[0];
-	pd = (unsigned short *)pdest;
+	pd = (uint16_t *)pdest;
 
 	for (y=0 ; y<SKYSIZE ; y++)
 	{

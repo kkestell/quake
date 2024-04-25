@@ -21,7 +21,7 @@ fixed16_t	sadjust, tadjust, bbextents, bbextentt;
 pixel_t			*cacheblock;
 int32_t				cachewidth;
 pixel_t			*d_viewbuffer;
-short			*d_pzbuffer;
+int16_t			*d_pzbuffer;
 uint32_t	d_zrowbytes;
 uint32_t	d_zwidth;
 
