@@ -10,7 +10,7 @@ struct qsockaddr
 #define	NET_NAMELEN			64
 
 #define NET_MAXMESSAGE		8192
-#define NET_HEADERSIZE		(2 * sizeof(unsigned int))
+#define NET_HEADERSIZE		(2 * sizeof(uint32_t))
 #define NET_DATAGRAMSIZE	(MAX_DATAGRAM + NET_HEADERSIZE)
 
 // NetHeader flags
@@ -113,14 +113,14 @@ typedef struct qsocket_s
 	int				socket;
 	void			*driverdata;
 
-	unsigned int	ackSequence;
-	unsigned int	sendSequence;
-	unsigned int	unreliableSendSequence;
+	uint32_t	ackSequence;
+	uint32_t	sendSequence;
+	uint32_t	unreliableSendSequence;
 	int				sendMessageLength;
 	byte			sendMessage [NET_MAXMESSAGE];
 
-	unsigned int	receiveSequence;
-	unsigned int	unreliableReceiveSequence;
+	uint32_t	receiveSequence;
+	uint32_t	unreliableReceiveSequence;
 	int				receiveMessageLength;
 	byte			receiveMessage [NET_MAXMESSAGE];
 

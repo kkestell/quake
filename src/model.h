@@ -69,7 +69,7 @@ typedef struct texture_s
 typedef struct
 {
 	unsigned short	v[2];
-	unsigned int	cachededgeoffset;
+	uint32_t	cachededgeoffset;
 } medge_t;
 
 typedef struct

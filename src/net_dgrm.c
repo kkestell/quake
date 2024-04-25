@@ -54,8 +54,8 @@ static int myDriverLevel;
 
 struct
 {
-	unsigned int	length;
-	unsigned int	sequence;
+	uint32_t	length;
+	uint32_t	sequence;
 	byte			data[MAX_DATAGRAM];
 } packetBuffer;
 
@@ -141,9 +141,9 @@ void NET_Ban_f (void)
 
 int Datagram_SendMessage (qsocket_t *sock, sizebuf_t *data)
 {
-	unsigned int	packetLen;
-	unsigned int	dataLen;
-	unsigned int	eom;
+	uint32_t	packetLen;
+	uint32_t	dataLen;
+	uint32_t	eom;
 
 #ifdef DEBUG
 	if (data->cursize == 0)
@@ -188,9 +188,9 @@ int Datagram_SendMessage (qsocket_t *sock, sizebuf_t *data)
 
 int SendMessageNext (qsocket_t *sock)
 {
-	unsigned int	packetLen;
-	unsigned int	dataLen;
-	unsigned int	eom;
+	uint32_t	packetLen;
+	uint32_t	dataLen;
+	uint32_t	eom;
 
 	if (sock->sendMessageLength <= MAX_DATAGRAM)
 	{
@@ -221,9 +221,9 @@ int SendMessageNext (qsocket_t *sock)
 
 int ReSendMessage (qsocket_t *sock)
 {
-	unsigned int	packetLen;
-	unsigned int	dataLen;
-	unsigned int	eom;
+	uint32_t	packetLen;
+	uint32_t	dataLen;
+	uint32_t	eom;
 
 	if (sock->sendMessageLength <= MAX_DATAGRAM)
 	{
@@ -295,12 +295,12 @@ int Datagram_SendUnreliableMessage (qsocket_t *sock, sizebuf_t *data)
 
 int	Datagram_GetMessage (qsocket_t *sock)
 {
-	unsigned int	length;
-	unsigned int	flags;
+	uint32_t	length;
+	uint32_t	flags;
 	int				ret = 0;
 	struct qsockaddr readaddr;
-	unsigned int	sequence;
-	unsigned int	count;
+	uint32_t	sequence;
+	uint32_t	count;
 
 	if (!sock->canSend)
 		if ((net_time - sock->lastSendTime) > 1.0)

@@ -11,7 +11,7 @@
 #define FULLY_CLIPPED_CACHED	0x80000000
 #define FRAMECOUNT_MASK			0x7FFFFFFF
 
-unsigned int	cacheoffset;
+uint32_t	cacheoffset;
 
 int			c_faceclip;					// number of faces clipped
 
