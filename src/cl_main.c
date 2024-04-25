@@ -257,7 +257,7 @@ void SetPal (int32_t i)
 {
 #if 0
 	static int32_t old;
-	byte	pal[768];
+	uint8_t	pal[768];
 	int32_t		c;
 	
 	if (i == old)

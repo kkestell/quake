@@ -128,7 +128,7 @@ typedef struct
 	int32_t		s_file;			// source file defined in
 	
 	int32_t		numparms;
-	byte	parm_size[MAX_PARMS];
+	uint8_t	parm_size[MAX_PARMS];
 } dfunction_t;
 
 

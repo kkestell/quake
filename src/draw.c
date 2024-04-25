@@ -8,13 +8,13 @@ typedef struct {
 	vrect_t	rect;
 	int32_t		width;
 	int32_t		height;
-	byte	*ptexbytes;
+	uint8_t	*ptexbytes;
 	int32_t		rowbytes;
 } rectdesc_t;
 
 static rectdesc_t	r_rectdesc;
 
-byte		*draw_chars;				// 8*8 graphic characters
+uint8_t		*draw_chars;				// 8*8 graphic characters
 qpic_t		*draw_disc;
 qpic_t		*draw_backtile;
 
@@ -115,8 +115,8 @@ smoothly scrolled off.
 */
 void Draw_Character (int32_t x, int32_t y, int32_t num)
 {
-	byte			*dest;
-	byte			*source;
+	uint8_t			*dest;
+	uint8_t			*source;
 	uint16_t	*pusdest;
 	int32_t				drawline;	
 	int32_t				row, col;
@@ -223,10 +223,10 @@ of the code.
 */
 void Draw_DebugChar (char num)
 {
-	byte			*dest;
-	byte			*source;
+	uint8_t			*dest;
+	uint8_t			*source;
 	int32_t				drawline;	
-	extern byte		*draw_chars;
+	extern uint8_t		*draw_chars;
 	int32_t				row, col;
 
 	if (!vid.direct)
@@ -262,7 +262,7 @@ Draw_Pic
 */
 void Draw_Pic (int32_t x, int32_t y, qpic_t *pic)
 {
-	byte			*dest, *source;
+	uint8_t			*dest, *source;
 	uint16_t	*pusdest;
 	int32_t				v, u;
 
@@ -313,7 +313,7 @@ Draw_TransPic
 */
 void Draw_TransPic (int32_t x, int32_t y, qpic_t *pic)
 {
-	byte	*dest, *source, tbyte;
+	uint8_t	*dest, *source, tbyte;
 	uint16_t	*pusdest;
 	int32_t				v, u;
 
@@ -400,7 +400,7 @@ Draw_TransPicTranslate
 */
 void Draw_TransPicTranslate (int32_t x, int32_t y, qpic_t *pic, byte *translation)
 {
-	byte	*dest, *source, tbyte;
+	uint8_t	*dest, *source, tbyte;
 	uint16_t	*pusdest;
 	int32_t				v, u;
 
@@ -483,7 +483,7 @@ void Draw_TransPicTranslate (int32_t x, int32_t y, qpic_t *pic, byte *translatio
 void Draw_CharToConback (int32_t num, byte *dest)
 {
 	int32_t		row, col;
-	byte	*source;
+	uint8_t	*source;
 	int32_t		drawline;
 	int32_t		x;
 
@@ -513,7 +513,7 @@ Draw_ConsoleBackground
 void Draw_ConsoleBackground (int32_t lines)
 {
 	int32_t				x, y, v;
-	byte			*src, *dest;
+	uint8_t			*src, *dest;
 	uint16_t	*pusdest;
 	int32_t				f, fstep;
 	qpic_t			*conback;
@@ -604,9 +604,9 @@ R_DrawRect8
 void R_DrawRect8 (vrect_t *prect, int32_t rowbytes, byte *psrc,
 	int32_t transparent)
 {
-	byte	t;
+	uint8_t	t;
 	int32_t		i, j, srcdelta, destdelta;
-	byte	*pdest;
+	uint8_t	*pdest;
 
 	pdest = vid.buffer + (prect->y * vid.rowbytes) + prect->x;
 
@@ -653,7 +653,7 @@ R_DrawRect16
 void R_DrawRect16 (vrect_t *prect, int32_t rowbytes, byte *psrc,
 	int32_t transparent)
 {
-	byte			t;
+	uint8_t			t;
 	int32_t				i, j, srcdelta, destdelta;
 	uint16_t	*pdest;
 
@@ -714,7 +714,7 @@ refresh window.
 void Draw_TileClear (int32_t x, int32_t y, int32_t w, int32_t h)
 {
 	int32_t				width, height, tileoffsetx, tileoffsety;
-	byte			*psrc;
+	uint8_t			*psrc;
 	vrect_t			vr;
 
 	r_rectdesc.rect.x = x;
@@ -785,7 +785,7 @@ Fills a box of pixels with a single color
 */
 void Draw_Fill (int32_t x, int32_t y, int32_t w, int32_t h, int32_t c)
 {
-	byte			*dest;
+	uint8_t			*dest;
 	uint16_t	*pusdest;
 	uint32_t		uc;
 	int32_t				u, v;
@@ -818,7 +818,7 @@ Draw_FadeScreen
 void Draw_FadeScreen (void)
 {
 	int32_t			x,y;
-	byte		*pbuf;
+	uint8_t		*pbuf;
 
 	VID_UnlockBuffer ();
 	S_ExtraUpdate ();

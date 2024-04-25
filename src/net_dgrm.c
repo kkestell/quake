@@ -56,7 +56,7 @@ struct
 {
 	uint32_t	length;
 	uint32_t	sequence;
-	byte			data[MAX_DATAGRAM];
+	uint8_t			data[MAX_DATAGRAM];
 } packetBuffer;
 
 extern int32_t m_return_state;
@@ -510,7 +510,7 @@ static void Test_Poll(void)
 	int32_t		colors;
 	int32_t		frags;
 	int32_t		connectTime;
-	byte	playerNumber;
+	uint8_t	playerNumber;
 
 	net_landriverlevel = testDriver;
 

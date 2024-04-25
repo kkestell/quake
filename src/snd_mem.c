@@ -78,12 +78,12 @@ S_LoadSound
 sfxcache_t *S_LoadSound (sfx_t *s)
 {
     char	namebuffer[256];
-	byte	*data;
+	uint8_t	*data;
 	wavinfo_t	info;
 	int32_t		len;
 	float	stepscale;
 	sfxcache_t	*sc;
-	byte	stackbuf[1*1024];		// avoid dirtying the cache heap
+	uint8_t	stackbuf[1*1024];		// avoid dirtying the cache heap
 
 // see if still in memory
 	sc = Cache_Check (&s->cache);
@@ -143,7 +143,7 @@ WAV loading
 */
 
 
-byte	*data_p;
+uint8_t	*data_p;
 byte 	*iff_end;
 byte 	*last_chunk;
 byte 	*iff_data;

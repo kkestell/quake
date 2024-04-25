@@ -26,11 +26,11 @@ void D_WarpScreen (void)
 {
 	int32_t		w, h;
 	int32_t		u,v;
-	byte	*dest;
+	uint8_t	*dest;
 	int32_t		*turb;
 	int32_t		*col;
-	byte	**row;
-	byte	*rowptr[MAXHEIGHT+(AMP2*2)];
+	uint8_t	**row;
+	uint8_t	*rowptr[MAXHEIGHT+(AMP2*2)];
 	int32_t		column[MAXWIDTH+(AMP2*2)];
 	float	wratio, hratio;
 

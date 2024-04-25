@@ -32,8 +32,8 @@ client_t	*host_client;			// current client
 
 jmp_buf 	host_abortserver;
 
-byte		*host_basepal;
-byte		*host_colormap;
+uint8_t		*host_basepal;
+uint8_t		*host_colormap;
 
 cvar_t	host_framerate = {"host_framerate","0"};	// set for slow motion
 cvar_t	host_speeds = {"host_speeds","0"};			// set for running times

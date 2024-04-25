@@ -530,7 +530,7 @@ void WritePCXfile (char *filename, byte *data, int32_t width, int32_t height,
 {
 	int32_t		i, j, length;
 	pcx_t	*pcx;
-	byte		*pack;
+	uint8_t		*pack;
 	  
 	pcx = Hunk_TempAlloc (width*height*2+1000);
 	if (pcx == NULL)

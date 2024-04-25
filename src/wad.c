@@ -4,7 +4,7 @@
 
 int32_t 			wad_numlumps;
 lumpinfo_t	*wad_lumps;
-byte		*wad_base;
+uint8_t		*wad_base;
 
 void SwapPic (qpic_t *pic);
 

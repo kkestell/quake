@@ -115,7 +115,7 @@ void R_BuildLightMap (void)
 	int32_t			smax, tmax;
 	int32_t			t;
 	int32_t			i, size;
-	byte		*lightmap;
+	uint8_t		*lightmap;
 	uint32_t	scale;
 	int32_t			maps;
 	msurface_t	*surf;
@@ -556,7 +556,7 @@ void R_GenTurbTile (pixel_t *pbasetex, void *pdest)
 {
 	int32_t		*turb;
 	int32_t		i, j, s, t;
-	byte	*pd;
+	uint8_t	*pd;
 	
 	turb = sintable + ((int32_t)(cl.time*SPEED)&(CYCLE-1));
 	pd = (byte *)pdest;

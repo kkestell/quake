@@ -22,7 +22,7 @@ typedef struct
 	float	entertime;
 	int32_t		frags;
 	int32_t		colors;			// two 4 bit fields
-	byte	translations[VID_GRADES*256];
+	uint8_t	translations[VID_GRADES*256];
 } scoreboard_t;
 
 typedef struct

@@ -41,13 +41,13 @@ typedef struct
 	server_state_t	state;			// some actions are only valid during load
 
 	sizebuf_t	datagram;
-	byte		datagram_buf[MAX_DATAGRAM];
+	uint8_t		datagram_buf[MAX_DATAGRAM];
 
 	sizebuf_t	reliable_datagram;	// copied to all clients at end of frame
-	byte		reliable_datagram_buf[MAX_DATAGRAM];
+	uint8_t		reliable_datagram_buf[MAX_DATAGRAM];
 
 	sizebuf_t	signon;
-	byte		signon_buf[8192];
+	uint8_t		signon_buf[8192];
 } server_t;
 
 
@@ -72,7 +72,7 @@ typedef struct client_s
 
 	sizebuf_t		message;			// can be added to at any time,
 										// copied and clear once per frame
-	byte			msgbuf[MAX_MSGLEN];
+	uint8_t			msgbuf[MAX_MSGLEN];
 	edict_t			*edict;				// EDICT_NUM(clientnum+1)
 	char			name[32];			// for printing to other people
 	int32_t				colors;

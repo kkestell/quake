@@ -15,7 +15,7 @@ typedef struct {
 	void			*pdest;
 	int16_t			*pz;
 	int32_t				count;
-	byte			*ptex;
+	uint8_t			*ptex;
 	int32_t				sfrac, tfrac, light, zi;
 } spanpackage_t;
 
@@ -33,7 +33,7 @@ typedef struct {
 
 int32_t	r_p0[6], r_p1[6], r_p2[6];
 
-byte		*d_pcolormap;
+uint8_t		*d_pcolormap;
 
 int32_t			d_aflatcolor;
 int32_t			d_xdenom;
@@ -64,7 +64,7 @@ int32_t				d_aspancount, d_countextrastep;
 spanpackage_t			*a_spans;
 spanpackage_t			*d_pedgespanpackage;
 static int32_t				ystart;
-byte					*d_pdest, *d_ptex;
+uint8_t					*d_pdest, *d_ptex;
 int16_t					*d_pz;
 int32_t						d_sfrac, d_tfrac, d_light, d_zi;
 int32_t						d_ptexextrastep, d_sfracextrastep;
@@ -83,9 +83,9 @@ static adivtab_t	adivtab[32*32] = {
 #include "adivtab.h"
 };
 
-byte	*skintable[MAX_LBM_HEIGHT];
+uint8_t	*skintable[MAX_LBM_HEIGHT];
 int32_t		skinwidth;
-byte	*skinstart;
+uint8_t	*skinstart;
 
 void D_PolysetDrawSpans8 (spanpackage_t *pspanpackage);
 void D_PolysetCalcGradients (int32_t skinwidth);
@@ -373,7 +373,7 @@ D_PolysetUpdateTables
 void D_PolysetUpdateTables (void)
 {
 	int32_t		i;
-	byte	*s;
+	uint8_t	*s;
 	
 	if (r_affinetridesc.skinwidth != skinwidth ||
 		r_affinetridesc.pskin != skinstart)
@@ -554,8 +554,8 @@ D_PolysetDrawSpans8
 void D_PolysetDrawSpans8 (spanpackage_t *pspanpackage)
 {
 	int32_t		lcount;
-	byte	*lpdest;
-	byte	*lptex;
+	uint8_t	*lpdest;
+	uint8_t	*lptex;
 	int32_t		lsfrac, ltfrac;
 	int32_t		llight;
 	int32_t		lzi;
@@ -631,7 +631,7 @@ void D_PolysetFillSpans8 (spanpackage_t *pspanpackage)
 	while (1)
 	{
 		int32_t		lcount;
-		byte	*lpdest;
+		uint8_t	*lpdest;
 
 		lcount = pspanpackage->count;
 

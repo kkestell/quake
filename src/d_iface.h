@@ -154,7 +154,7 @@ void D_PolysetUpdateTables (void);
 
 // these are currently for internal use only, and should not be used by drivers
 extern int32_t				r_skydirect;
-extern byte				*r_skysource;
+extern uint8_t				*r_skysource;
 
 // transparency types for D_DrawRect ()
 #define DR_SOLID		0
@@ -206,5 +206,5 @@ extern float	skytime;
 extern int32_t		c_surf;
 extern vrect_t	scr_vrect;
 
-extern byte		*r_warpbuffer;
+extern uint8_t		*r_warpbuffer;
 

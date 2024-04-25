@@ -34,7 +34,7 @@ typedef struct entity_s
 	struct efrag_s			*efrag;			// linked list of efrags
 	int32_t						frame;
 	float					syncbase;		// for client-side animations
-	byte					*colormap;
+	uint8_t					*colormap;
 	int32_t						effects;		// light, particals, etc
 	int32_t						skinnum;		// for Alias models
 	int32_t						visframe;		// last frame this entity was

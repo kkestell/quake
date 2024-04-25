@@ -30,9 +30,9 @@ int32_t			r_maxsurfsseen, r_maxedgesseen, r_cnumsurfs;
 qboolean	r_surfsonstack;
 int32_t			r_clipflags;
 
-byte		*r_warpbuffer;
+uint8_t		*r_warpbuffer;
 
-byte		*r_stack_start;
+uint8_t		*r_stack_start;
 
 qboolean	r_fov_greater_than_90;
 
@@ -131,7 +131,7 @@ R_InitTextures
 void	R_InitTextures (void)
 {
 	int32_t		x,y, m;
-	byte	*dest;
+	uint8_t	*dest;
 	
 // create a simple checkerboard texture for the default
 	r_notexture_mip = Hunk_AllocName (sizeof(texture_t) + 16*16+8*8+4*4+2*2, "notexture");
@@ -447,7 +447,7 @@ R_MarkLeaves
 */
 void R_MarkLeaves (void)
 {
-	byte	*vis;
+	uint8_t	*vis;
 	mnode_t	*node;
 	int32_t		i;
 
@@ -905,7 +905,7 @@ r_refdef must be set before the first call
 */
 void R_RenderView_ (void)
 {
-	byte	warpbuffer[WARP_WIDTH * WARP_HEIGHT];
+	uint8_t	warpbuffer[WARP_WIDTH * WARP_HEIGHT];
 
 	r_warpbuffer = warpbuffer;
 

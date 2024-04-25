@@ -631,12 +631,12 @@ void PF_checkpos (void)
 
 //============================================================================
 
-byte	checkpvs[MAX_MAP_LEAFS/8];
+uint8_t	checkpvs[MAX_MAP_LEAFS/8];
 
 int32_t PF_newcheckclient (int32_t check)
 {
 	int32_t		i;
-	byte	*pvs;
+	uint8_t	*pvs;
 	edict_t	*ent;
 	mleaf_t	*leaf;
 	vec3_t	org;

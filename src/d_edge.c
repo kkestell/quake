@@ -64,7 +64,7 @@ D_DrawSolidSurface
 void D_DrawSolidSurface (surf_t *surf, int32_t color)
 {
 	espan_t	*span;
-	byte	*pdest;
+	uint8_t	*pdest;
 	int32_t		u, u2, pix;
 	
 	pix = (color<<24) | (color<<16) | (color<<8) | color;

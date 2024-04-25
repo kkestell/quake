@@ -253,7 +253,7 @@ typedef struct
 	char	name[8];
 } hunk_t;
 
-byte	*hunk_base;
+uint8_t	*hunk_base;
 int32_t		hunk_size;
 
 int32_t		hunk_low_used;

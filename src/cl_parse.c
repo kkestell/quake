@@ -130,7 +130,7 @@ void CL_KeepaliveMessage (void)
 	static float lastmsg;
 	int32_t		ret;
 	sizebuf_t	old;
-	byte		olddata[8192];
+	uint8_t		olddata[8192];
 	
 	if (sv.active)
 		return;		// no need if server is local
@@ -594,7 +594,7 @@ void CL_NewTranslation (int32_t slot)
 {
 	int32_t		i, j;
 	int32_t		top, bottom;
-	byte	*dest, *source;
+	uint8_t	*dest, *source;
 	
 	if (slot > cl.maxclients)
 		Sys_Error ("CL_NewTranslation: slot > cl.maxclients");

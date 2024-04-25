@@ -131,7 +131,7 @@ byte translationTable[256];
 void M_BuildTranslationTable(int32_t top, int32_t bottom)
 {
 	int32_t		j;
-	byte	*dest, *source;
+	uint8_t	*dest, *source;
 
 	for (j = 0; j < 256; j++)
 		identityTable[j] = j;

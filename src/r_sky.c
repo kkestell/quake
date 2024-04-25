@@ -11,7 +11,7 @@ float	skyspeed, skyspeed2;
 
 float		skytime;
 
-byte		*r_skysource;
+uint8_t		*r_skysource;
 
 int32_t r_skymade;
 int32_t r_skydirect;		// not used?
@@ -19,9 +19,9 @@ int32_t r_skydirect;		// not used?
 
 // TODO: clean up these routines
 
-byte	bottomsky[128*131];
-byte	bottommask[128*131];
-byte	newsky[128*256];	// newsky and topsky both pack in here, 128 bytes
+uint8_t	bottomsky[128*131];
+uint8_t	bottommask[128*131];
+uint8_t	newsky[128*256];	// newsky and topsky both pack in here, 128 bytes
 							//  of newsky on the left of each scan, 128 bytes
 							//  of topsky on the right, because the low-level
 							//  drawers need 256-byte scan widths
@@ -37,7 +37,7 @@ A sky texture is 256*128, with the right side being a masked overlay
 void R_InitSky (texture_t *mt)
 {
 	int32_t			i, j;
-	byte		*src;
+	uint8_t		*src;
 
 	src = (byte *)mt + mt->offsets[0];
 
@@ -203,7 +203,7 @@ void R_GenSkyTile16 (void *pdest)
 	int32_t				x, y;
 	int32_t				ofs, baseofs;
 	int32_t				xshift, yshift;
-	byte			*pnewsky;
+	uint8_t			*pnewsky;
 	uint16_t	*pd;
 
 	xshift = skytime * skyspeed;

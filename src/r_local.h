@@ -69,9 +69,9 @@ typedef struct clipplane_s
 	vec3_t		normal;
 	float		dist;
 	struct		clipplane_s	*next;
-	byte		leftedge;
-	byte		rightedge;
-	byte		reserved[2];
+	uint8_t		leftedge;
+	uint8_t		rightedge;
+	uint8_t		reserved[2];
 } clipplane_t;
 
 extern	clipplane_t	view_clipplanes[4];

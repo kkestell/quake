@@ -1,9 +1,6 @@
 // comndef.h  -- general definitions
 
-#if !defined BYTE_DEFINED
-typedef unsigned char 		byte;
-#define BYTE_DEFINED 1
-#endif
+#include <stdint.h>
 
 #undef true
 #undef false
@@ -16,7 +13,7 @@ typedef struct sizebuf_s
 {
 	qboolean	allowoverflow;	// if false, do a Sys_Error
 	qboolean	overflowed;		// set to true if the buffer size failed
-	byte	*data;
+	uint8_t	*data;
 	int32_t		maxsize;
 	int32_t		cursize;
 } sizebuf_t;

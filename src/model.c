@@ -14,7 +14,7 @@ void Mod_LoadBrushModel (model_t *mod, void *buffer);
 void Mod_LoadAliasModel (model_t *mod, void *buffer);
 model_t *Mod_LoadModel (model_t *mod, qboolean crash);
 
-byte	mod_novis[MAX_MAP_LEAFS/8];
+uint8_t	mod_novis[MAX_MAP_LEAFS/8];
 
 #define	MAX_MOD_KNOWN	256
 model_t	mod_known[MAX_MOD_KNOWN];
@@ -95,9 +95,9 @@ Mod_DecompressVis
 */
 byte *Mod_DecompressVis (byte *in, model_t *model)
 {
-	static byte	decompressed[MAX_MAP_LEAFS/8];
+	static uint8_t	decompressed[MAX_MAP_LEAFS/8];
 	int32_t		c;
-	byte	*out;
+	uint8_t	*out;
 	int32_t		row;
 
 	row = (model->numleafs+7)>>3;	
@@ -237,7 +237,7 @@ Loads a model into the cache
 model_t *Mod_LoadModel (model_t *mod, qboolean crash)
 {
 	uint32_t *buf;
-	byte	stackbuf[1024];		// avoid dirtying the cache heap
+	uint8_t	stackbuf[1024];		// avoid dirtying the cache heap
 
 	if (mod->type == mod_alias)
 	{
@@ -325,7 +325,7 @@ model_t *Mod_ForName (char *name, qboolean crash)
 ===============================================================================
 */
 
-byte	*mod_base;
+uint8_t	*mod_base;
 
 
 /*
@@ -1330,7 +1330,7 @@ void * Mod_LoadAliasSkin (void * pin, int32_t *pskinindex, int32_t skinsize,
 	aliashdr_t *pheader)
 {
 	int32_t		i;
-	byte	*pskin, *pinskin;
+	uint8_t	*pskin, *pinskin;
 	uint16_t	*pusskin;
 
 	pskin = Hunk_AllocName (skinsize * r_pixbytes, loadname);
@@ -1653,7 +1653,7 @@ void * Mod_LoadSpriteFrame (void * pin, mspriteframe_t **ppframe)
 	mspriteframe_t		*pspriteframe;
 	int32_t					i, width, height, size, origin[2];
 	uint16_t		*ppixout;
-	byte				*ppixin;
+	uint8_t				*ppixin;
 
 	pinframe = (dspriteframe_t *)pin;
 
