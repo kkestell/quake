@@ -7,15 +7,8 @@
 viddef_t vid; // global video state
 uint16_t d_8to16table[256];
 
-// The original defaults
-// #define    BASEWIDTH    320
-// #define    BASEHEIGHT   200
-// Much better for high resolution displays
 #define BASEWIDTH (640)
 #define BASEHEIGHT (400)
-
-int32_t VGA_width, VGA_height, VGA_rowbytes, VGA_bufferrowbytes = 0;
-uint8_t *VGA_pagebase;
 
 static SDL_Window *window = NULL;
 static SDL_Surface *screen = NULL;
@@ -110,14 +103,14 @@ void VID_Init(unsigned char *palette)
     VID_SetPalette(palette);
 
     // now we know everything we need to know about the buffer
-    VGA_width = vid.conwidth = vid.width;
-    VGA_height = vid.conheight = vid.height;
+    vid.conwidth = vid.width;
+    vid.conheight = vid.height;
     vid.aspect = ((float)vid.height / (float)vid.width) * (320.0 / 240.0);
     vid.numpages = 1;
     vid.colormap = host_colormap;
     vid.fullbright = 256 - LittleLong(*((int32_t *)vid.colormap + 2048));
-    VGA_pagebase = vid.buffer = surface8bpp->pixels;
-    VGA_rowbytes = vid.rowbytes = surface8bpp->pitch;
+    vid.buffer = surface8bpp->pixels;
+    vid.rowbytes = surface8bpp->pitch;
     vid.conbuffer = vid.buffer;
     vid.conrowbytes = vid.rowbytes;
     vid.direct = 0;
@@ -145,72 +138,9 @@ void VID_Shutdown(void)
 
 void VID_Update(vrect_t *rects)
 {
-    /*
-    SDL_Rect *sdlrects;
-    int32_t n, i;
-    vrect_t *rect;
-
-    // Two-pass system, since Quake doesn't do it the SDL way...
-
-    // First, count the number of rectangles
-    n = 0;
-    for (rect = rects; rect; rect = rect->pnext)
-        ++n;
-
-    // Second, copy them to SDL rectangles and update
-    if (!(sdlrects = (SDL_Rect *)alloca(n * sizeof(*sdlrects))))
-        Sys_Error("Out of memory");
-    i = 0;
-    for (rect = rects; rect; rect = rect->pnext)
-    {
-        sdlrects[i].x = rect->x;
-        sdlrects[i].y = rect->y;
-        sdlrects[i].w = rect->width;
-        sdlrects[i].h = rect->height;
-        ++i;
-    }
-    SDL_UpdateWindowSurfaceRects(screen, n, sdlrects);
-    */
-
     SDL_BlitSurface(surface8bpp, NULL, surface32bpp, NULL);
     SDL_BlitScaled(surface32bpp, NULL, screen, NULL);
-    // SDL_Blit(surface, NULL, screen, NULL);
     SDL_UpdateWindowSurface(window);
-}
-
-/*
-================
-D_BeginDirectRect
-================
-*/
-void D_BeginDirectRect(int32_t x, int32_t y, uint8_t *pbitmap, int32_t width, int32_t height)
-{
-    /*
-    Uint8 *offset;
-    if (!screen) return;
-    if (x < 0) x = screen->w + x - 1;
-    offset = (Uint8 *)screen->pixels + y*screen->pitch + x;
-    while (height--)
-    {
-        memcpy(offset, pbitmap, width);
-        offset += screen->pitch;
-        pbitmap += width;
-    }
-    */
-}
-
-/*
-================
-D_EndDirectRect
-================
-*/
-void D_EndDirectRect(int32_t x, int32_t y, int32_t width, int32_t height)
-{
-    /*
-    if (!screen) return;
-    if (x < 0) x = screen->w + x - 1;
-    SDL_UpdateRect(screen, x, y, width, height);
-    */
 }
 
 /*
@@ -321,49 +251,6 @@ void Sys_SendKeyEvents(void)
             case SDLK_LALT:
                 sym = K_ALT;
                 break;
-            /*
-            case SDLK_KP0:
-                if (modstate & KMOD_NUM) sym = K_INS;
-                else sym = SDLK_0;
-                break;
-            case SDLK_KP1:
-                if (modstate & KMOD_NUM) sym = K_END;
-                else sym = SDLK_1;
-                break;
-            case SDLK_KP2:
-                if (modstate & KMOD_NUM) sym = K_DOWNARROW;
-                else sym = SDLK_2;
-                break;
-            case SDLK_KP3:
-                if (modstate & KMOD_NUM) sym = K_PGDN;
-                else sym = SDLK_3;
-                break;
-            case SDLK_KP4:
-                if (modstate & KMOD_NUM) sym = K_LEFTARROW;
-                else sym = SDLK_4;
-                break;
-            case SDLK_KP5: sym = SDLK_5; break;
-            case SDLK_KP6:
-                if (modstate & KMOD_NUM) sym = K_RIGHTARROW;
-                else sym = SDLK_6;
-                break;
-            case SDLK_KP7:
-                if (modstate & KMOD_NUM) sym = K_HOME;
-                else sym = SDLK_7;
-                break;
-            case SDLK_KP8:
-                if (modstate & KMOD_NUM) sym = K_UPARROW;
-                else sym = SDLK_8;
-                break;
-            case SDLK_KP9:
-                if (modstate & KMOD_NUM) sym = K_PGUP;
-                else sym = SDLK_9;
-                break;
-            case SDLK_KP_PERIOD:
-                if (modstate & KMOD_NUM) sym = K_DEL;
-                else sym = SDLK_PERIOD;
-                break;
-            */
             case SDLK_KP_DIVIDE:
                 sym = SDLK_SLASH;
                 break;

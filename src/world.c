@@ -556,17 +556,10 @@ bool SV_RecursiveHullCheck(hull_t *hull, int32_t num, float p1f, float p2f, vec3
         t2 = DotProduct(plane->normal, p2) - plane->dist;
     }
 
-#if 1
     if (t1 >= 0 && t2 >= 0)
         return SV_RecursiveHullCheck(hull, node->children[0], p1f, p2f, p1, p2, trace);
     if (t1 < 0 && t2 < 0)
         return SV_RecursiveHullCheck(hull, node->children[1], p1f, p2f, p1, p2, trace);
-#else
-    if ((t1 >= DIST_EPSILON && t2 >= DIST_EPSILON) || (t2 > t1 && t1 >= 0))
-        return SV_RecursiveHullCheck(hull, node->children[0], p1f, p2f, p1, p2, trace);
-    if ((t1 <= -DIST_EPSILON && t2 <= -DIST_EPSILON) || (t2 < t1 && t1 <= 0))
-        return SV_RecursiveHullCheck(hull, node->children[1], p1f, p2f, p1, p2, trace);
-#endif
 
     // put the crosspoint DIST_EPSILON pixels on the near side
     if (t1 < 0)
@@ -780,11 +773,6 @@ SV_MoveBounds
 */
 void SV_MoveBounds(vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, vec3_t boxmins, vec3_t boxmaxs)
 {
-#if 0
-// debug to test against everything
-boxmins[0] = boxmins[1] = boxmins[2] = -9999;
-boxmaxs[0] = boxmaxs[1] = boxmaxs[2] = 9999;
-#else
     int32_t i;
 
     for (i = 0; i < 3; i++)
@@ -800,7 +788,6 @@ boxmaxs[0] = boxmaxs[1] = boxmaxs[2] = 9999;
             boxmaxs[i] = start[i] + maxs[i] + 1;
         }
     }
-#endif
 }
 
 /*

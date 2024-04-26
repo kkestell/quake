@@ -1,24 +1,14 @@
 /* -*- Mode: C; tab-width: 4 -*- */
 
-#include <ctype.h>
 #include <errno.h>
-#include <fcntl.h>
-#include <limits.h>
 #include <signal.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
-#include <sys/ipc.h>
-#include <sys/mman.h>
-#include <sys/shm.h>
 #include <sys/stat.h>
 #include <sys/time.h>
-#include <sys/wait.h>
-#include <unistd.h>
-
-#include <SDL2/SDL.h>
 
 #include "quakedef.h"
 
@@ -297,62 +287,18 @@ double Sys_FloatTime(void)
 // Sleeps for microseconds
 // =======================================================================
 
-static volatile int32_t oktogo;
-
-void alarm_handler(int32_t x)
-{
-    oktogo = 1;
-}
-
-uint8_t *Sys_ZoneBase(int32_t *size)
-{
-
-    char *QUAKEOPT = getenv("QUAKEOPT");
-
-    *size = 0xc00000;
-    if (QUAKEOPT)
-    {
-        while (*QUAKEOPT)
-            if (tolower(*QUAKEOPT++) == 'm')
-            {
-                *size = atof(QUAKEOPT) * 1024 * 1024;
-                break;
-            }
-    }
-    return malloc(*size);
-}
-
-void Sys_LineRefresh(void)
-{
-}
-
-void Sys_Sleep(void)
-{
-    SDL_Delay(1);
-}
-
 void floating_point_exception_handler(int32_t whatever)
 {
-    //	Sys_Warn("floating point exception\n");
+    Sys_Warn("floating point exception\n");
     signal(SIGFPE, floating_point_exception_handler);
-}
-
-void moncontrol(int32_t x)
-{
 }
 
 int32_t main(int32_t argc, char *argv[])
 {
-
     double time, oldtime, newtime;
     quakeparms_t parms;
-    extern int32_t vcrFile;
-    extern int32_t recording;
     static int32_t frame;
 
-    moncontrol(0);
-
-    //	signal(SIGFPE, floating_point_exception_handler);
     signal(SIGFPE, SIG_IGN);
 
     parms.memsize = 32 * 1024 * 1024;
@@ -374,58 +320,14 @@ int32_t main(int32_t argc, char *argv[])
     oldtime = Sys_FloatTime() - 0.1;
     while (1)
     {
-        SDL_Delay(1);
-        // find time spent rendering last frame
         newtime = Sys_FloatTime();
         time = newtime - oldtime;
-
-        /*
-        if (cls.state == ca_dedicated)
-        {   // play vcrfiles at max speed
-            if (time < sys_ticrate.value && (vcrFile == -1 || recording))
-            {
-                SDL_Delay(1);
-                continue;       // not time to run a server only tic yet
-            }
-            time = sys_ticrate.value;
-        }
-        */
 
         if (time > sys_ticrate.value * 2)
             oldtime = newtime;
         else
             oldtime += time;
 
-        // if (++frame > 10)
-        //	moncontrol(1);      // profile only while we do each Quake frame
-        Host_Frame(time);
-        // moncontrol(0);
-
-        // graphic debugging aids
-        // if (sys_linerefresh.value)
-        //	Sys_LineRefresh();
+        Host_Frame((float)time);
     }
-}
-
-/*
-================
-Sys_MakeCodeWriteable
-================
-*/
-void Sys_MakeCodeWriteable(uint32_t startaddr, uint32_t length)
-{
-    /*
-    int32_t r;
-    uint32_t addr;
-    int32_t psize = getpagesize();
-
-    fprintf(stderr, "writable code %lx-%lx\n", startaddr, startaddr + length);
-
-    addr = startaddr & ~(psize - 1);
-
-    r = mprotect((char*)addr, length + startaddr - addr, 7);
-
-    if (r < 0)
-        Sys_Error("Protection change failed\n");
-    */
 }

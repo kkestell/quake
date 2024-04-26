@@ -1,6 +1,7 @@
 
 #include "quakedef.h"
 #include <SDL2/SDL_audio.h>
+#include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_endian.h>
 #include <stdio.h>
 
@@ -16,7 +17,6 @@ static void paint_audio(void *unused, Uint8 *stream, int32_t len)
     {
         shm->buffer = stream;
         shm->samplepos += len / (shm->samplebits / 8) / 2;
-        // Check for samplepos overflow?
         S_PaintChannels(shm->samplepos);
     }
 }
@@ -35,10 +35,7 @@ bool SNDDMA_Init(void)
         desired.format = AUDIO_U8;
         break;
     case 16:
-        if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
-            desired.format = AUDIO_S16MSB;
-        else
-            desired.format = AUDIO_S16LSB;
+        desired.format = AUDIO_S16LSB;
         break;
     default:
         Con_Printf("Unknown number of audio bits: %d\n", desired_bits);
@@ -55,23 +52,16 @@ bool SNDDMA_Init(void)
         return 0;
     }
 
-    /* Make sure we can support the audio format */
+    // Make sure we can support the audio format
     switch (obtained.format)
     {
     case AUDIO_U8:
-        /* Supported */
         break;
     case AUDIO_S16LSB:
     case AUDIO_S16MSB:
-        if (((obtained.format == AUDIO_S16LSB) && (SDL_BYTEORDER == SDL_LIL_ENDIAN)) ||
-            ((obtained.format == AUDIO_S16MSB) && (SDL_BYTEORDER == SDL_BIG_ENDIAN)))
-        {
-            /* Supported */
+        if ((obtained.format == AUDIO_S16LSB) != 0)
             break;
-        }
-        /* Unsupported, fall through */;
     default:
-        /* Not supported -- force SDL to do our bidding */
         SDL_CloseAudio();
         if (SDL_OpenAudio(&desired, NULL) < 0)
         {
@@ -83,7 +73,7 @@ bool SNDDMA_Init(void)
     }
     SDL_PauseAudio(0);
 
-    /* Fill the audio DMA information block */
+    // Fill the audio DMA information block
     shm = &the_shm;
     shm->splitbuffer = 0;
     shm->samplebits = (obtained.format & 0xFF);
@@ -93,6 +83,13 @@ bool SNDDMA_Init(void)
     shm->samplepos = 0;
     shm->submission_chunk = 1;
     shm->buffer = NULL;
+
+    if (Mix_OpenAudio(desired.freq, AUDIO_S16SYS, 2, 1024) == -1) {
+        Con_Printf("Could not initialize mixer: %s\n", Mix_GetError());
+        return 0;
+    }
+
+    Mix_AllocateChannels(16);
 
     snd_inited = 1;
     return 1;
