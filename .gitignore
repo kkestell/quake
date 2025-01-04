@@ -3,3 +3,4 @@ cmake-build-*/
 .idea/
 .vscode/
 compile_commands.json
+id1/music/*
