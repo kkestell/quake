@@ -1,5 +1,9 @@
 // common.c -- misc functions used in client and server
 
+#include <stdint.h>
+#include <stdlib.h>
+#include <string.h>
+#include <strings.h>
 #include "quakedef.h"
 
 #define NUM_SAFE_ARGVS 7
@@ -113,300 +117,80 @@ void InsertLinkAfter(link_t *l, link_t *after)
     l->next->prev = l;
 }
 
-/*
-============================================================================
-
-                                        LIBRARY REPLACEMENT FUNCTIONS
-
-============================================================================
-*/
-
 void Q_memset(void *dest, int32_t fill, int32_t count)
 {
-    int32_t i;
-
-    if ((((int32_t)dest | count) & 3) == 0)
-    {
-        count >>= 2;
-        fill = fill | (fill << 8) | (fill << 16) | (fill << 24);
-        for (i = 0; i < count; i++)
-            ((int32_t *)dest)[i] = fill;
-    }
-    else
-        for (i = 0; i < count; i++)
-            ((uint8_t *)dest)[i] = fill;
+    memset(dest, fill, (size_t)count);
 }
 
 void Q_memcpy(void *dest, void *src, int32_t count)
 {
-    int32_t i;
-
-    if ((((int32_t)dest | (int32_t)src | count) & 3) == 0)
-    {
-        count >>= 2;
-        for (i = 0; i < count; i++)
-            ((int32_t *)dest)[i] = ((int32_t *)src)[i];
-    }
-    else
-        for (i = 0; i < count; i++)
-            ((uint8_t *)dest)[i] = ((uint8_t *)src)[i];
+    memcpy(dest, src, (size_t)count);
 }
 
 int32_t Q_memcmp(void *m1, void *m2, int32_t count)
 {
-    while (count)
-    {
-        count--;
-        if (((uint8_t *)m1)[count] != ((uint8_t *)m2)[count])
-            return -1;
-    }
-    return 0;
+    return memcmp(m1, m2, (size_t)count) == 0 ? 0 : -1;
 }
 
 void Q_strcpy(char *dest, char *src)
 {
-    while (*src)
-    {
-        *dest++ = *src++;
-    }
-    *dest++ = 0;
+    strcpy(dest, src);
 }
 
 void Q_strncpy(char *dest, char *src, int32_t count)
 {
-    while (*src && count--)
-    {
-        *dest++ = *src++;
-    }
-    if (count)
-        *dest++ = 0;
+    if (count <= 0) return;
+    strncpy(dest, src, (size_t)count);
+    dest[(size_t)count - 1] = '\0';
 }
 
 int32_t Q_strlen(char *str)
 {
-    int32_t count;
-
-    count = 0;
-    while (str[count])
-        count++;
-
-    return count;
+    return (int32_t)strlen(str);
 }
 
 char *Q_strrchr(char *s, char c)
 {
-    int32_t len = Q_strlen(s);
-    s += len;
-    while (len--)
-        if (*--s == c)
-            return s;
-    return 0;
+    return (char *)strrchr(s, (unsigned char)c);
 }
 
 void Q_strcat(char *dest, char *src)
 {
-    dest += Q_strlen(dest);
-    Q_strcpy(dest, src);
+    strcat(dest, src);
 }
 
 int32_t Q_strcmp(char *s1, char *s2)
 {
-    while (1)
-    {
-        if (*s1 != *s2)
-            return -1; // strings not equal
-        if (!*s1)
-            return 0; // strings are equal
-        s1++;
-        s2++;
-    }
-
-    return -1;
+    return strcmp(s1, s2) == 0 ? 0 : -1;
 }
 
 int32_t Q_strncmp(char *s1, char *s2, int32_t count)
 {
-    while (1)
-    {
-        if (!count--)
-            return 0;
-        if (*s1 != *s2)
-            return -1; // strings not equal
-        if (!*s1)
-            return 0; // strings are equal
-        s1++;
-        s2++;
-    }
-
-    return -1;
+    return strncmp(s1, s2, (size_t)count) == 0 ? 0 : -1;
 }
 
 int32_t Q_strncasecmp(char *s1, char *s2, int32_t n)
 {
-    int32_t c1, c2;
-
-    while (1)
-    {
-        c1 = *s1++;
-        c2 = *s2++;
-
-        if (!n--)
-            return 0; // strings are equal until end point
-
-        if (c1 != c2)
-        {
-            if (c1 >= 'a' && c1 <= 'z')
-                c1 -= ('a' - 'A');
-            if (c2 >= 'a' && c2 <= 'z')
-                c2 -= ('a' - 'A');
-            if (c1 != c2)
-                return -1; // strings not equal
-        }
-        if (!c1)
-            return 0; // strings are equal
-                      //              s1++;
-                      //              s2++;
-    }
-
-    return -1;
+    return strncasecmp(s1, s2, (size_t)n) == 0 ? 0 : -1;
 }
 
 int32_t Q_strcasecmp(char *s1, char *s2)
 {
-    return Q_strncasecmp(s1, s2, 99999);
+    return strcasecmp(s1, s2) == 0 ? 0 : -1;
 }
 
 int32_t Q_atoi(char *str)
 {
-    int32_t val;
-    int32_t sign;
-    int32_t c;
-
-    if (*str == '-')
-    {
-        sign = -1;
-        str++;
-    }
-    else
-        sign = 1;
-
-    val = 0;
-
-    //
-    // check for hex
-    //
-    if (str[0] == '0' && (str[1] == 'x' || str[1] == 'X'))
-    {
-        str += 2;
-        while (1)
-        {
-            c = *str++;
-            if (c >= '0' && c <= '9')
-                val = (val << 4) + c - '0';
-            else if (c >= 'a' && c <= 'f')
-                val = (val << 4) + c - 'a' + 10;
-            else if (c >= 'A' && c <= 'F')
-                val = (val << 4) + c - 'A' + 10;
-            else
-                return val * sign;
-        }
-    }
-
-    //
-    // check for character
-    //
-    if (str[0] == '\'')
-    {
-        return sign * str[1];
-    }
-
-    //
-    // assume decimal
-    //
-    while (1)
-    {
-        c = *str++;
-        if (c < '0' || c > '9')
-            return val * sign;
-        val = val * 10 + c - '0';
-    }
-
-    return 0;
+    if (str && str[0] == '\'' && str[1])
+        return (unsigned char)str[1];
+    return (int32_t)strtol(str, NULL, 0);
 }
 
 float Q_atof(char *str)
 {
-    double val;
-    int32_t sign;
-    int32_t c;
-    int32_t decimal, total;
-
-    if (*str == '-')
-    {
-        sign = -1;
-        str++;
-    }
-    else
-        sign = 1;
-
-    val = 0;
-
-    //
-    // check for hex
-    //
-    if (str[0] == '0' && (str[1] == 'x' || str[1] == 'X'))
-    {
-        str += 2;
-        while (1)
-        {
-            c = *str++;
-            if (c >= '0' && c <= '9')
-                val = (val * 16) + c - '0';
-            else if (c >= 'a' && c <= 'f')
-                val = (val * 16) + c - 'a' + 10;
-            else if (c >= 'A' && c <= 'F')
-                val = (val * 16) + c - 'A' + 10;
-            else
-                return val * sign;
-        }
-    }
-
-    //
-    // check for character
-    //
-    if (str[0] == '\'')
-    {
-        return sign * str[1];
-    }
-
-    //
-    // assume decimal
-    //
-    decimal = -1;
-    total = 0;
-    while (1)
-    {
-        c = *str++;
-        if (c == '.')
-        {
-            decimal = total;
-            continue;
-        }
-        if (c < '0' || c > '9')
-            break;
-        val = val * 10 + c - '0';
-        total++;
-    }
-
-    if (decimal == -1)
-        return val * sign;
-    while (total > decimal)
-    {
-        val /= 10;
-        total--;
-    }
-
-    return val * sign;
+    if (str && str[0] == '\'' && str[1])
+        return (float)(unsigned char)str[1];
+    return (float)strtod(str, NULL);
 }
 
 /*

@@ -1,5 +1,6 @@
 // r_edge.c
 
+#include <stdint.h>
 #include "quakedef.h"
 #include "r_local.h"
 
@@ -615,9 +616,9 @@ void R_ScanEdges(void)
     espan_t *basespan_p;
     surf_t *s;
 
-    basespan_p = (espan_t *)((int32_t)(basespans + CACHE_SIZE - 1) & ~(CACHE_SIZE - 1));
+    basespan_p = (espan_t *)(((uintptr_t)(basespans) + (uintptr_t)CACHE_SIZE - 1) &
+                             ~((uintptr_t)CACHE_SIZE - 1));
     max_span_p = &basespan_p[MAXSPANS - r_refdef.vrect.width];
-
     span_p = basespan_p;
 
     // clear active edges to just the background edges around the whole screen

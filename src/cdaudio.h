@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 int32_t CDAudio_Init(void);
 void CDAudio_Play(uint8_t track, bool looping);
 void CDAudio_Stop(void);

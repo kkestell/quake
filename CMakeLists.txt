@@ -1,27 +1,36 @@
-cmake_minimum_required(VERSION 3.15)
-project(Quake1)
+cmake_minimum_required(VERSION 3.10)
+project(quake C)
 
-set(CMAKE_C_COMPILER "gcc")
-set(CMAKE_CXX_COMPILER "g++")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m32 -Og -fcommon -Wno-error=implicit-function-declaration")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32")
-set(CMAKE_EXE_LINKER_FLAGS "-m32")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
-set(SDL2_LIBRARIES "/usr/lib/i386-linux-gnu/libSDL2.so" "/usr/lib/i386-linux-gnu/libSDL2main.a")
-set(SDL2_MIXER_LIBRARIES "/usr/lib/i386-linux-gnu/libSDL2_mixer.so")
-set(SDL2_INCLUDE_DIRS "/usr/include/SDL2")
-
-include_directories(${SDL2_INCLUDE_DIRS})
+# Find raylib library and headers directly
+find_path(RAYLIB_INCLUDE_DIR NAMES raylib.h)
+find_library(RAYLIB_LIBRARY NAMES raylib)
 
 file(GLOB SOURCES "src/*.c")
 
 add_executable(quake ${SOURCES})
 
-target_link_libraries(quake m c ${SDL2_LIBRARIES} ${SDL2_MIXER_LIBRARIES})
+target_compile_options(quake PRIVATE
+        -O3
+        -g3
+        -fno-omit-frame-pointer
+        -Wno-implicit-function-declaration
+)
 
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+# Use the variables from find_path and find_library
+target_include_directories(quake PRIVATE ${RAYLIB_INCLUDE_DIR})
+target_link_libraries(quake PRIVATE ${RAYLIB_LIBRARY})
+
+add_custom_command(
+        TARGET quake POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_SOURCE_DIR}/id1"
+        "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/id1"
+)
 
 add_custom_target(test
         COMMAND quake +timedemo demo1
-        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        DEPENDS quake
+        WORKING_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
 )

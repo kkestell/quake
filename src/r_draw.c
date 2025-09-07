@@ -327,12 +327,12 @@ void R_EmitCachedEdge(void)
 {
     edge_t *pedge_t;
 
-    pedge_t = (edge_t *)((uint32_t)r_edges + r_pedge->cachededgeoffset);
+    pedge_t = (edge_t *)((uint8_t *)r_edges + r_pedge->cachededgeoffset);
 
     if (!pedge_t->surfs[0])
-        pedge_t->surfs[0] = surface_p - surfaces;
+        pedge_t->surfs[0] = (int32_t)(surface_p - surfaces);
     else
-        pedge_t->surfs[1] = surface_p - surfaces;
+        pedge_t->surfs[1] = (int32_t)(surface_p - surfaces);
 
     if (pedge_t->nearzi > r_nearzi) // for mipmap finding
         r_nearzi = pedge_t->nearzi;
@@ -355,14 +355,12 @@ void R_RenderFace(msurface_t *fa, int32_t clipflags)
     medge_t *pedges, tedge;
     clipplane_t *pclip;
 
-    // skip out if no more surfs
     if ((surface_p) >= surf_max)
     {
         r_outofsurfaces++;
         return;
     }
 
-    // ditto if not enough edges left, or switch to auxedges if possible
     if ((edge_p + fa->numedges + 4) >= edge_max)
     {
         r_outofedges += fa->numedges;
@@ -371,9 +369,7 @@ void R_RenderFace(msurface_t *fa, int32_t clipflags)
 
     c_faceclip++;
 
-    // set up clip planes
     pclip = NULL;
-
     for (i = 3, mask = 0x08; i >= 0; i--, mask >>= 1)
     {
         if (clipflags & mask)
@@ -383,7 +379,6 @@ void R_RenderFace(msurface_t *fa, int32_t clipflags)
         }
     }
 
-    // push the edges through
     r_emitted = 0;
     r_nearzi = 0;
     r_nearzionly = false;
@@ -399,7 +394,6 @@ void R_RenderFace(msurface_t *fa, int32_t clipflags)
         {
             r_pedge = &pedges[lindex];
 
-            // if the edge is cached, we can just reuse the edge
             if (!insubmodel)
             {
                 if (r_pedge->cachededgeoffset & FULLY_CLIPPED_CACHED)
@@ -412,8 +406,12 @@ void R_RenderFace(msurface_t *fa, int32_t clipflags)
                 }
                 else
                 {
-                    if ((((uint32_t)edge_p - (uint32_t)r_edges) > r_pedge->cachededgeoffset) &&
-                        (((edge_t *)((uint32_t)r_edges + r_pedge->cachededgeoffset))->owner == r_pedge))
+                    uintptr_t edge_base = (uintptr_t)(uint8_t *)r_edges;
+                    uintptr_t edge_cur  = (uintptr_t)(uint8_t *)edge_p;
+                    uintptr_t edge_diff = edge_cur - edge_base;
+
+                    if ((edge_diff > (uintptr_t)r_pedge->cachededgeoffset) &&
+                        (((edge_t *)((uint8_t *)r_edges + r_pedge->cachededgeoffset))->owner == r_pedge))
                     {
                         R_EmitCachedEdge();
                         r_lastvertvalid = false;
@@ -422,7 +420,6 @@ void R_RenderFace(msurface_t *fa, int32_t clipflags)
                 }
             }
 
-            // assume it's cacheable
             cacheoffset = (uint8_t *)edge_p - (uint8_t *)r_edges;
             r_leftclipped = r_rightclipped = false;
             R_ClipEdge(&r_pcurrentvertbase[r_pedge->v[0]], &r_pcurrentvertbase[r_pedge->v[1]], pclip);
@@ -438,7 +435,7 @@ void R_RenderFace(msurface_t *fa, int32_t clipflags)
         {
             lindex = -lindex;
             r_pedge = &pedges[lindex];
-            // if the edge is cached, we can just reuse the edge
+
             if (!insubmodel)
             {
                 if (r_pedge->cachededgeoffset & FULLY_CLIPPED_CACHED)
@@ -451,10 +448,12 @@ void R_RenderFace(msurface_t *fa, int32_t clipflags)
                 }
                 else
                 {
-                    // it's cached if the cached edge is valid and is owned
-                    // by this medge_t
-                    if ((((uint32_t)edge_p - (uint32_t)r_edges) > r_pedge->cachededgeoffset) &&
-                        (((edge_t *)((uint32_t)r_edges + r_pedge->cachededgeoffset))->owner == r_pedge))
+                    uintptr_t edge_base = (uintptr_t)(uint8_t *)r_edges;
+                    uintptr_t edge_cur  = (uintptr_t)(uint8_t *)edge_p;
+                    uintptr_t edge_diff = edge_cur - edge_base;
+
+                    if ((edge_diff > (uintptr_t)r_pedge->cachededgeoffset) &&
+                        (((edge_t *)((uint8_t *)r_edges + r_pedge->cachededgeoffset))->owner == r_pedge))
                     {
                         R_EmitCachedEdge();
                         r_lastvertvalid = false;
@@ -463,7 +462,6 @@ void R_RenderFace(msurface_t *fa, int32_t clipflags)
                 }
             }
 
-            // assume it's cacheable
             cacheoffset = (uint8_t *)edge_p - (uint8_t *)r_edges;
             r_leftclipped = r_rightclipped = false;
             R_ClipEdge(&r_pcurrentvertbase[r_pedge->v[1]], &r_pcurrentvertbase[r_pedge->v[0]], pclip);
@@ -477,9 +475,6 @@ void R_RenderFace(msurface_t *fa, int32_t clipflags)
         }
     }
 
-    // if there was a clip off the left edge, add that edge too
-    // FIXME: faster to do in screen space?
-    // FIXME: share clipped edges?
     if (makeleftedge)
     {
         r_pedge = &tedge;
@@ -487,7 +482,6 @@ void R_RenderFace(msurface_t *fa, int32_t clipflags)
         R_ClipEdge(&r_leftexit, &r_leftenter, pclip->next);
     }
 
-    // if there was a clip off the right edge, get the right r_nearzi
     if (makerightedge)
     {
         r_pedge = &tedge;
@@ -496,7 +490,6 @@ void R_RenderFace(msurface_t *fa, int32_t clipflags)
         R_ClipEdge(&r_rightexit, &r_rightenter, view_clipplanes[1].next);
     }
 
-    // if no edges made it out, return without posting the surface
     if (!r_emitted)
         return;
 
@@ -512,18 +505,16 @@ void R_RenderFace(msurface_t *fa, int32_t clipflags)
     surface_p->spans = NULL;
 
     pplane = fa->plane;
-    // FIXME: cache this?
     TransformVector(pplane->normal, p_normal);
-    // FIXME: cache this?
-    distinv = 1.0 / (pplane->dist - DotProduct(modelorg, pplane->normal));
+    distinv = 1.0f / (pplane->dist - DotProduct(modelorg, pplane->normal));
 
     surface_p->d_zistepu = p_normal[0] * xscaleinv * distinv;
     surface_p->d_zistepv = -p_normal[1] * yscaleinv * distinv;
     surface_p->d_ziorigin = p_normal[2] * distinv - xcenter * surface_p->d_zistepu - ycenter * surface_p->d_zistepv;
 
-    // JDC	VectorCopy (r_worldmodelorg, surface_p->modelorg);
     surface_p++;
 }
+
 
 /*
 ================

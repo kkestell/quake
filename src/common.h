@@ -1,15 +1,7 @@
 // comndef.h  -- general definitions
 
 #include <stdint.h>
-
-#undef true
-#undef false
-
-typedef enum
-{
-    false,
-    true
-} bool;
+#include <stdbool.h>
 
 //============================================================================
 

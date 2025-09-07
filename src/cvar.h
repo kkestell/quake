@@ -36,6 +36,8 @@ Cvars are restricted from having the same names as commands to keep this
 interface from being ambiguous.
 */
 
+#include <stdbool.h>
+
 typedef struct cvar_s
 {
     char *name;

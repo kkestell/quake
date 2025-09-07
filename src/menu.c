@@ -1,4 +1,3 @@
-#include <SDL_mixer.h>
 #include "quakedef.h"
 
 void (*vid_menudrawfn)(void);

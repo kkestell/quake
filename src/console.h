@@ -1,7 +1,5 @@
+#include <stdbool.h>
 
-//
-// console
-//
 extern int32_t con_totallines;
 extern int32_t con_backscroll;
 extern bool con_forcedup; // because no entities to refresh

@@ -21,6 +21,9 @@
 void VID_LockBuffer(void);
 void VID_UnlockBuffer(void);
 
+#define ALIGN_PTR(p, a) (void *)(((uintptr_t)(p) + ((a) - 1)) & ~((uintptr_t)((a) - 1)))
+#define ALIGN_PAD_ELEMS(T,A) (((A) + sizeof(T) - 2) / sizeof(T))
+
 #define UNALIGNED_OK 0
 
 // !!! if this is changed, it must be changed in d_ifacea.h too !!!

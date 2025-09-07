@@ -103,7 +103,7 @@ void D_PolysetDraw(void)
     spanpackage_t spans[DPS_MAXSPANS + 1 + ((CACHE_SIZE - 1) / sizeof(spanpackage_t)) + 1];
     // one extra because of cache line pretouching
 
-    a_spans = (spanpackage_t *)(((int32_t)&spans[0] + CACHE_SIZE - 1) & ~(CACHE_SIZE - 1));
+    a_spans = (spanpackage_t *)ALIGN_PTR(&spans[0], CACHE_SIZE);
 
     if (r_affinetridesc.drawtype)
     {
@@ -132,13 +132,22 @@ void D_PolysetDrawFinalVerts(finalvert_t *fv, int32_t numverts)
         if ((fv->v[0] < r_refdef.vrectright) && (fv->v[1] < r_refdef.vrectbottom))
         {
             z = fv->v[5] >> 16;
+            if (z > 0x7FFF) z = 0x7FFF;       // clamp to int16_t range
+            if (z < 0)      z = 0;            // guard negatives
+
             zbuf = zspantable[fv->v[1]] + fv->v[0];
             if (z >= *zbuf)
             {
                 int32_t pix;
 
                 *zbuf = z;
-                pix = skintable[fv->v[3] >> 16][fv->v[2] >> 16];
+                // safe skin fetch (clamp; switch to wrap if desired)
+                int s = fv->v[2] >> 16;
+                int t = fv->v[3] >> 16;
+                if ((unsigned)s >= (unsigned)skinwidth) s = (skinwidth - 1);
+                if ((unsigned)t >= (unsigned)MAX_LBM_HEIGHT) t = (MAX_LBM_HEIGHT - 1);
+                pix = skintable[t][s];
+
                 pix = ((uint8_t *)acolormap)[pix + (fv->v[4] & 0xFF00)];
                 d_viewbuffer[d_scantable[fv->v[1]] + fv->v[0]] = pix;
             }
