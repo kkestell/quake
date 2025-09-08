@@ -16,11 +16,12 @@ target_compile_options(quake PRIVATE
         -g3
         -fno-omit-frame-pointer
         -Wno-implicit-function-declaration
+        -fcommon
 )
 
 # Use the variables from find_path and find_library
 target_include_directories(quake PRIVATE ${RAYLIB_INCLUDE_DIR})
-target_link_libraries(quake PRIVATE ${RAYLIB_LIBRARY})
+target_link_libraries(quake PRIVATE ${RAYLIB_LIBRARY} m)
 
 add_custom_command(
         TARGET quake POST_BUILD
