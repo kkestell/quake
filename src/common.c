@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <strings.h>
+
 #include "quakedef.h"
 
 #define NUM_SAFE_ARGVS 7
@@ -546,16 +547,8 @@ COM_SkipPath
 */
 char *COM_SkipPath(char *pathname)
 {
-    char *last;
-
-    last = pathname;
-    while (*pathname)
-    {
-        if (*pathname == '/')
-            last = pathname + 1;
-        pathname++;
-    }
-    return last;
+    char *p = strrchr(pathname, '/');
+    return p ? p + 1 : pathname;
 }
 
 /*
@@ -565,9 +558,9 @@ COM_StripExtension
 */
 void COM_StripExtension(char *in, char *out)
 {
-    while (*in && *in != '.')
-        *out++ = *in++;
-    *out = 0;
+    size_t n = strcspn(in, ".");
+    memcpy(out, in, n);
+    out[n] = '\0';
 }
 
 /*
@@ -578,16 +571,20 @@ COM_FileExtension
 char *COM_FileExtension(char *in)
 {
     static char exten[8];
-    int32_t i;
+    const char *dot = strchr(in, '.');
 
-    while (*in && *in != '.')
-        in++;
-    if (!*in)
+    if (!dot || !*(dot + 1))
         return "";
-    in++;
-    for (i = 0; i < 7 && *in; i++, in++)
-        exten[i] = *in;
-    exten[i] = 0;
+
+    dot++; // skip the '.'
+
+    size_t i = 0;
+    while (i < sizeof(exten) - 1 && dot[i] != '\0')
+    {
+        exten[i] = dot[i];
+        i++;
+    }
+    exten[i] = '\0';
     return exten;
 }
 
@@ -598,24 +595,31 @@ COM_FileBase
 */
 void COM_FileBase(char *in, char *out)
 {
-    char *s, *s2;
-
-    s = in + strlen(in) - 1;
-
-    while (s != in && *s != '.')
-        s--;
-
-    for (s2 = s; *s2 && *s2 != '/'; s2--)
-        ;
-
-    if (s - s2 < 2)
-        strcpy(out, "?model?");
-    else
+    const char *dot = strrchr(in, '.');
+    if (!dot)
     {
-        s--;
-        strncpy(out, s2 + 1, s - s2);
-        out[s - s2] = 0;
+        strcpy(out, "?model?");
+        return;
     }
+
+    const char *slash = dot;
+    while (slash > in && *slash != '/')
+        slash--;
+
+    if (*slash == '/')
+        slash++;
+    else
+        slash = in;
+
+    if (dot <= slash)
+    {
+        strcpy(out, "?model?");
+        return;
+    }
+
+    size_t len = (size_t)(dot - slash);
+    memcpy(out, slash, len);
+    out[len] = '\0';
 }
 
 /*
@@ -625,21 +629,11 @@ COM_DefaultExtension
 */
 void COM_DefaultExtension(char *path, char *extension)
 {
-    char *src;
-    //
-    // if path doesn't have a .EXT, append extension
-    // (extension should include the .)
-    //
-    src = path + strlen(path) - 1;
+    char *base = strrchr(path, '/');
+    base = base ? base + 1 : path;
 
-    while (*src != '/' && src != path)
-    {
-        if (*src == '.')
-            return; // it has an extension
-        src--;
-    }
-
-    strcat(path, extension);
+    if (!strchr(base, '.'))
+        strcat(path, extension);
 }
 
 /*
@@ -652,27 +646,26 @@ Parse a token out of a string
 char *COM_Parse(char *data)
 {
     int32_t c;
-    int32_t len;
-
-    len = 0;
+    int32_t len = 0;
     com_token[0] = 0;
 
     if (!data)
         return NULL;
 
-// skip whitespace
+    // skip whitespace
 skipwhite:
     while ((c = *data) <= ' ')
     {
         if (c == 0)
-            return NULL; // end of file;
+            return NULL; // end of file
         data++;
     }
 
     // skip // comments
     if (c == '/' && data[1] == '/')
     {
-        while (*data && *data != '\n')
+        data += strcspn(data, "\n");
+        if (*data == '\n')
             data++;
         goto skipwhite;
     }
@@ -681,7 +674,7 @@ skipwhite:
     if (c == '\"')
     {
         data++;
-        while (1)
+        for (;;)
         {
             c = *data++;
             if (c == '\"' || !c)
@@ -689,16 +682,14 @@ skipwhite:
                 com_token[len] = 0;
                 return data;
             }
-            com_token[len] = c;
-            len++;
+            com_token[len++] = (char)c;
         }
     }
 
     // parse single characters
     if (c == '{' || c == '}' || c == ')' || c == '(' || c == '\'' || c == ':')
     {
-        com_token[len] = c;
-        len++;
+        com_token[len++] = (char)c;
         com_token[len] = 0;
         return data + 1;
     }
@@ -706,9 +697,8 @@ skipwhite:
     // parse a regular word
     do
     {
-        com_token[len] = c;
+        com_token[len++] = (char)c;
         data++;
-        len++;
         c = *data;
         if (c == '{' || c == '}' || c == ')' || c == '(' || c == '\'' || c == ':')
             break;
@@ -723,23 +713,21 @@ skipwhite:
 COM_CheckParm
 
 Returns the position (1 to argc-1) in the program's argument list
-where the given parameter apears, or 0 if not present
+where the given parameter appears, or 0 if not present
 ================
 */
 int32_t COM_CheckParm(char *parm)
 {
-    int32_t i;
-
-    for (i = 1; i < com_argc; i++)
+    for (int32_t i = 1; i < com_argc; i++)
     {
         if (!com_argv[i])
             continue; // NEXTSTEP sometimes clears appkit vars.
-        if (!Q_strcmp(parm, com_argv[i]))
+        if (strcmp(parm, com_argv[i]) == 0)
             return i;
     }
-
     return 0;
 }
+
 
 void COM_Path_f(void);
 
