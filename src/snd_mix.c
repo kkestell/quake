@@ -155,7 +155,7 @@ void S_PaintChannels(int32_t endtime)
             end = paintedtime + PAINTBUFFER_SIZE;
 
         // clear the paint buffer
-        Q_memset(paintbuffer, 0, (end - paintedtime) * sizeof(portable_samplepair_t));
+        memset(paintbuffer, 0, (end - paintedtime) * sizeof(portable_samplepair_t));
 
         // paint in the channels.
         ch = channels;

@@ -118,10 +118,10 @@ void InsertLinkAfter(link_t *l, link_t *after)
     l->next->prev = l;
 }
 
-void Q_memset(void *dest, int32_t fill, int32_t count)
-{
-    memset(dest, fill, (size_t)count);
-}
+// void Q_memset(void *dest, int32_t fill, int32_t count)
+// {
+//     memset(dest, fill, (size_t)count);
+// }
 
 void Q_memcpy(void *dest, void *src, int32_t count)
 {

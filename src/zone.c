@@ -123,7 +123,7 @@ void *Z_Malloc(int32_t size)
     buf = Z_TagMalloc(size, 1);
     if (!buf)
         Sys_Error("Z_Malloc: failed on allocation of %i bytes", size);
-    Q_memset(buf, 0, size);
+    memset(buf, 0, size);
 
     return buf;
 }

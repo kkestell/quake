@@ -386,7 +386,7 @@ given point.
 uint8_t *SV_FatPVS(vec3_t org)
 {
     fatbytes = (sv.worldmodel->numleafs + 31) >> 3;
-    Q_memset(fatpvs, 0, fatbytes);
+    memset(fatpvs, 0, fatbytes);
     SV_AddToFatPVS(org, sv.worldmodel->nodes);
     return fatpvs;
 }
