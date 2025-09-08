@@ -173,8 +173,8 @@ int32_t Datagram_SendMessage(qsocket_t *sock, sizebuf_t *data)
     }
     packetLen = NET_HEADERSIZE + dataLen;
 
-    packetBuffer.length = BigLong(packetLen | (NETFLAG_DATA | eom));
-    packetBuffer.sequence = BigLong(sock->sendSequence++);
+    packetBuffer.length =   (packetLen | (NETFLAG_DATA | eom));
+    packetBuffer.sequence =   (sock->sendSequence++);
     memcpy(packetBuffer.data, sock->sendMessage, dataLen);
 
     sock->canSend = false;
@@ -205,8 +205,8 @@ int32_t SendMessageNext(qsocket_t *sock)
     }
     packetLen = NET_HEADERSIZE + dataLen;
 
-    packetBuffer.length = BigLong(packetLen | (NETFLAG_DATA | eom));
-    packetBuffer.sequence = BigLong(sock->sendSequence++);
+    packetBuffer.length =   (packetLen | (NETFLAG_DATA | eom));
+    packetBuffer.sequence =   (sock->sendSequence++);
     memcpy(packetBuffer.data, sock->sendMessage, dataLen);
 
     sock->sendNext = false;
@@ -237,8 +237,8 @@ int32_t ReSendMessage(qsocket_t *sock)
     }
     packetLen = NET_HEADERSIZE + dataLen;
 
-    packetBuffer.length = BigLong(packetLen | (NETFLAG_DATA | eom));
-    packetBuffer.sequence = BigLong(sock->sendSequence - 1);
+    packetBuffer.length =   (packetLen | (NETFLAG_DATA | eom));
+    packetBuffer.sequence =   (sock->sendSequence - 1);
     memcpy(packetBuffer.data, sock->sendMessage, dataLen);
 
     sock->sendNext = false;
@@ -278,8 +278,8 @@ int32_t Datagram_SendUnreliableMessage(qsocket_t *sock, sizebuf_t *data)
 
     packetLen = NET_HEADERSIZE + data->cursize;
 
-    packetBuffer.length = BigLong(packetLen | NETFLAG_UNRELIABLE);
-    packetBuffer.sequence = BigLong(sock->unreliableSendSequence++);
+    packetBuffer.length =   (packetLen | NETFLAG_UNRELIABLE);
+    packetBuffer.sequence =   (sock->unreliableSendSequence++);
     memcpy(packetBuffer.data, data->data, data->cursize);
 
     if (sfunc.Write(sock->socket, (uint8_t *)&packetBuffer, packetLen, &sock->addr) == -1)
@@ -334,14 +334,14 @@ int32_t Datagram_GetMessage(qsocket_t *sock)
             continue;
         }
 
-        length = BigLong(packetBuffer.length);
+        length =   (packetBuffer.length);
         flags = length & (~NETFLAG_LENGTH_MASK);
         length &= NETFLAG_LENGTH_MASK;
 
         if (flags & NETFLAG_CTL)
             continue;
 
-        sequence = BigLong(packetBuffer.sequence);
+        sequence =   (packetBuffer.sequence);
         packetsReceived++;
 
         if (flags & NETFLAG_UNRELIABLE)
@@ -403,8 +403,8 @@ int32_t Datagram_GetMessage(qsocket_t *sock)
 
         if (flags & NETFLAG_DATA)
         {
-            packetBuffer.length = BigLong(NET_HEADERSIZE | NETFLAG_ACK);
-            packetBuffer.sequence = BigLong(sequence);
+            packetBuffer.length =   (NET_HEADERSIZE | NETFLAG_ACK);
+            packetBuffer.sequence =   (sequence);
             sfunc.Write(sock->socket, (uint8_t *)&packetBuffer, NET_HEADERSIZE, &readaddr);
 
             if (sequence != sock->receiveSequence)
@@ -517,7 +517,7 @@ static void Test_Poll(void)
         net_message.cursize = len;
 
         MSG_BeginReading();
-        control = BigLong(*((int32_t *)net_message.data));
+        control =   (*((int32_t *)net_message.data));
         MSG_ReadLong();
         if (control == -1)
             break;
@@ -608,7 +608,7 @@ JustDoIt:
         MSG_WriteLong(&net_message, 0);
         MSG_WriteByte(&net_message, CCREQ_PLAYER_INFO);
         MSG_WriteByte(&net_message, n);
-        *((int32_t *)net_message.data) = BigLong(NETFLAG_CTL | (net_message.cursize & NETFLAG_LENGTH_MASK));
+        *((int32_t *)net_message.data) =   (NETFLAG_CTL | (net_message.cursize & NETFLAG_LENGTH_MASK));
         dfunc.Write(testSocket, net_message.data, net_message.cursize, &sendaddr);
     }
     SZ_Clear(&net_message);
@@ -640,7 +640,7 @@ static void Test2_Poll(void)
     net_message.cursize = len;
 
     MSG_BeginReading();
-    control = BigLong(*((int32_t *)net_message.data));
+    control =   (*((int32_t *)net_message.data));
     MSG_ReadLong();
     if (control == -1)
         goto Error;
@@ -664,7 +664,7 @@ static void Test2_Poll(void)
     MSG_WriteLong(&net_message, 0);
     MSG_WriteByte(&net_message, CCREQ_RULE_INFO);
     MSG_WriteString(&net_message, name);
-    *((int32_t *)net_message.data) = BigLong(NETFLAG_CTL | (net_message.cursize & NETFLAG_LENGTH_MASK));
+    *((int32_t *)net_message.data) =   (NETFLAG_CTL | (net_message.cursize & NETFLAG_LENGTH_MASK));
     dfunc.Write(test2Socket, net_message.data, net_message.cursize, &clientaddr);
     SZ_Clear(&net_message);
 
@@ -731,7 +731,7 @@ JustDoIt:
     MSG_WriteLong(&net_message, 0);
     MSG_WriteByte(&net_message, CCREQ_RULE_INFO);
     MSG_WriteString(&net_message, "");
-    *((int32_t *)net_message.data) = BigLong(NETFLAG_CTL | (net_message.cursize & NETFLAG_LENGTH_MASK));
+    *((int32_t *)net_message.data) =   (NETFLAG_CTL | (net_message.cursize & NETFLAG_LENGTH_MASK));
     dfunc.Write(test2Socket, net_message.data, net_message.cursize, &sendaddr);
     SZ_Clear(&net_message);
     SchedulePollProcedure(&test2PollProcedure, 0.05);
@@ -822,7 +822,7 @@ static qsocket_t *_Datagram_CheckNewConnections(void)
     net_message.cursize = len;
 
     MSG_BeginReading();
-    control = BigLong(*((int32_t *)net_message.data));
+    control =   (*((int32_t *)net_message.data));
     MSG_ReadLong();
     if (control == -1)
         return NULL;
@@ -848,7 +848,7 @@ static qsocket_t *_Datagram_CheckNewConnections(void)
         MSG_WriteByte(&net_message, net_activeconnections);
         MSG_WriteByte(&net_message, svs.maxclients);
         MSG_WriteByte(&net_message, NET_PROTOCOL_VERSION);
-        *((int32_t *)net_message.data) = BigLong(NETFLAG_CTL | (net_message.cursize & NETFLAG_LENGTH_MASK));
+        *((int32_t *)net_message.data) =   (NETFLAG_CTL | (net_message.cursize & NETFLAG_LENGTH_MASK));
         dfunc.Write(acceptsock, net_message.data, net_message.cursize, &clientaddr);
         SZ_Clear(&net_message);
         return NULL;
@@ -885,7 +885,7 @@ static qsocket_t *_Datagram_CheckNewConnections(void)
         MSG_WriteLong(&net_message, (int32_t)client->edict->v.frags);
         MSG_WriteLong(&net_message, (int32_t)(net_time - client->netconnection->connecttime));
         MSG_WriteString(&net_message, client->netconnection->address);
-        *((int32_t *)net_message.data) = BigLong(NETFLAG_CTL | (net_message.cursize & NETFLAG_LENGTH_MASK));
+        *((int32_t *)net_message.data) =   (NETFLAG_CTL | (net_message.cursize & NETFLAG_LENGTH_MASK));
         dfunc.Write(acceptsock, net_message.data, net_message.cursize, &clientaddr);
         SZ_Clear(&net_message);
 
@@ -928,7 +928,7 @@ static qsocket_t *_Datagram_CheckNewConnections(void)
             MSG_WriteString(&net_message, var->name);
             MSG_WriteString(&net_message, var->string);
         }
-        *((int32_t *)net_message.data) = BigLong(NETFLAG_CTL | (net_message.cursize & NETFLAG_LENGTH_MASK));
+        *((int32_t *)net_message.data) =   (NETFLAG_CTL | (net_message.cursize & NETFLAG_LENGTH_MASK));
         dfunc.Write(acceptsock, net_message.data, net_message.cursize, &clientaddr);
         SZ_Clear(&net_message);
 
@@ -948,7 +948,7 @@ static qsocket_t *_Datagram_CheckNewConnections(void)
         MSG_WriteLong(&net_message, 0);
         MSG_WriteByte(&net_message, CCREP_REJECT);
         MSG_WriteString(&net_message, "Incompatible version.\n");
-        *((int32_t *)net_message.data) = BigLong(NETFLAG_CTL | (net_message.cursize & NETFLAG_LENGTH_MASK));
+        *((int32_t *)net_message.data) =   (NETFLAG_CTL | (net_message.cursize & NETFLAG_LENGTH_MASK));
         dfunc.Write(acceptsock, net_message.data, net_message.cursize, &clientaddr);
         SZ_Clear(&net_message);
         return NULL;
@@ -967,7 +967,7 @@ static qsocket_t *_Datagram_CheckNewConnections(void)
             MSG_WriteLong(&net_message, 0);
             MSG_WriteByte(&net_message, CCREP_REJECT);
             MSG_WriteString(&net_message, "You have been banned.\n");
-            *((int32_t *)net_message.data) = BigLong(NETFLAG_CTL | (net_message.cursize & NETFLAG_LENGTH_MASK));
+            *((int32_t *)net_message.data) =   (NETFLAG_CTL | (net_message.cursize & NETFLAG_LENGTH_MASK));
             dfunc.Write(acceptsock, net_message.data, net_message.cursize, &clientaddr);
             SZ_Clear(&net_message);
             return NULL;
@@ -993,7 +993,7 @@ static qsocket_t *_Datagram_CheckNewConnections(void)
                 MSG_WriteByte(&net_message, CCREP_ACCEPT);
                 dfunc.GetSocketAddr(s->socket, &newaddr);
                 MSG_WriteLong(&net_message, dfunc.GetSocketPort(&newaddr));
-                *((int32_t *)net_message.data) = BigLong(NETFLAG_CTL | (net_message.cursize & NETFLAG_LENGTH_MASK));
+                *((int32_t *)net_message.data) =   (NETFLAG_CTL | (net_message.cursize & NETFLAG_LENGTH_MASK));
                 dfunc.Write(acceptsock, net_message.data, net_message.cursize, &clientaddr);
                 SZ_Clear(&net_message);
                 return NULL;
@@ -1015,7 +1015,7 @@ static qsocket_t *_Datagram_CheckNewConnections(void)
         MSG_WriteLong(&net_message, 0);
         MSG_WriteByte(&net_message, CCREP_REJECT);
         MSG_WriteString(&net_message, "Server is full.\n");
-        *((int32_t *)net_message.data) = BigLong(NETFLAG_CTL | (net_message.cursize & NETFLAG_LENGTH_MASK));
+        *((int32_t *)net_message.data) =   (NETFLAG_CTL | (net_message.cursize & NETFLAG_LENGTH_MASK));
         dfunc.Write(acceptsock, net_message.data, net_message.cursize, &clientaddr);
         SZ_Clear(&net_message);
         return NULL;
@@ -1051,7 +1051,7 @@ static qsocket_t *_Datagram_CheckNewConnections(void)
     dfunc.GetSocketAddr(newsock, &newaddr);
     MSG_WriteLong(&net_message, dfunc.GetSocketPort(&newaddr));
     //	MSG_WriteString(&net_message, dfunc.AddrToString(&newaddr));
-    *((int32_t *)net_message.data) = BigLong(NETFLAG_CTL | (net_message.cursize & NETFLAG_LENGTH_MASK));
+    *((int32_t *)net_message.data) =   (NETFLAG_CTL | (net_message.cursize & NETFLAG_LENGTH_MASK));
     dfunc.Write(acceptsock, net_message.data, net_message.cursize, &clientaddr);
     SZ_Clear(&net_message);
 
@@ -1087,7 +1087,7 @@ static void _Datagram_SearchForHosts(bool xmit)
         MSG_WriteByte(&net_message, CCREQ_SERVER_INFO);
         MSG_WriteString(&net_message, "QUAKE");
         MSG_WriteByte(&net_message, NET_PROTOCOL_VERSION);
-        *((int32_t *)net_message.data) = BigLong(NETFLAG_CTL | (net_message.cursize & NETFLAG_LENGTH_MASK));
+        *((int32_t *)net_message.data) =   (NETFLAG_CTL | (net_message.cursize & NETFLAG_LENGTH_MASK));
         dfunc.Broadcast(dfunc.controlSock, net_message.data, net_message.cursize);
         SZ_Clear(&net_message);
     }
@@ -1107,7 +1107,7 @@ static void _Datagram_SearchForHosts(bool xmit)
             continue;
 
         MSG_BeginReading();
-        control = BigLong(*((int32_t *)net_message.data));
+        control =   (*((int32_t *)net_message.data));
         MSG_ReadLong();
         if (control == -1)
             continue;
@@ -1222,7 +1222,7 @@ static qsocket_t *_Datagram_Connect(char *host)
         MSG_WriteByte(&net_message, CCREQ_CONNECT);
         MSG_WriteString(&net_message, "QUAKE");
         MSG_WriteByte(&net_message, NET_PROTOCOL_VERSION);
-        *((int32_t *)net_message.data) = BigLong(NETFLAG_CTL | (net_message.cursize & NETFLAG_LENGTH_MASK));
+        *((int32_t *)net_message.data) =   (NETFLAG_CTL | (net_message.cursize & NETFLAG_LENGTH_MASK));
         dfunc.Write(newsock, net_message.data, net_message.cursize, &sendaddr);
         SZ_Clear(&net_message);
         do
@@ -1253,7 +1253,7 @@ static qsocket_t *_Datagram_Connect(char *host)
                 net_message.cursize = ret;
                 MSG_BeginReading();
 
-                control = BigLong(*((int32_t *)net_message.data));
+                control =   (*((int32_t *)net_message.data));
                 MSG_ReadLong();
                 if (control == -1)
                 {

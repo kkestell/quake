@@ -949,7 +949,7 @@ bool IsID(struct qsockaddr *addr)
     if (addr->sa_family != 2)
         return false;
 
-    if ((BigLong(*(int32_t *)&addr->sa_data[2]) & 0xffffff00) == IDNET)
+    if ((  (*(int32_t *)&addr->sa_data[2]) & 0xffffff00) == IDNET)
         return true;
     return false;
 }

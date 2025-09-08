@@ -530,14 +530,14 @@ void WritePCXfile(char *filename, uint8_t *data, int32_t width, int32_t height, 
     pcx->bits_per_pixel = 8;  // 256 color
     pcx->xmin = 0;
     pcx->ymin = 0;
-    pcx->xmax = LittleShort((int16_t)(width - 1));
-    pcx->ymax = LittleShort((int16_t)(height - 1));
-    pcx->hres = LittleShort((int16_t)width);
-    pcx->vres = LittleShort((int16_t)height);
+    pcx->xmax = ((int16_t)(width - 1));
+    pcx->ymax = ((int16_t)(height - 1));
+    pcx->hres = ((int16_t)width);
+    pcx->vres = ((int16_t)height);
     memset(pcx->palette, 0, sizeof(pcx->palette));
     pcx->color_planes = 1; // chunky image
-    pcx->bytes_per_line = LittleShort((int16_t)width);
-    pcx->palette_type = LittleShort(2); // not a grey scale
+    pcx->bytes_per_line = ((int16_t)width);
+    pcx->palette_type = (2); // not a grey scale
     memset(pcx->filler, 0, sizeof(pcx->filler));
 
     // pack the image

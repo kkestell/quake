@@ -49,11 +49,11 @@ void CL_WriteDemoMessage(void)
     int32_t i;
     float f;
 
-    len = LittleLong(net_message.cursize);
+    len =  (net_message.cursize);
     fwrite(&len, 4, 1, cls.demofile);
     for (i = 0; i < 3; i++)
     {
-        f = LittleFloat(cl.viewangles[i]);
+        f = (cl.viewangles[i]);
         fwrite(&f, 4, 1, cls.demofile);
     }
     fwrite(net_message.data, net_message.cursize, 1, cls.demofile);
@@ -99,10 +99,10 @@ int32_t CL_GetMessage(void)
         for (i = 0; i < 3; i++)
         {
             r = fread(&f, 4, 1, cls.demofile);
-            cl.mviewangles[0][i] = LittleFloat(f);
+            cl.mviewangles[0][i] = (f);
         }
 
-        net_message.cursize = LittleLong(net_message.cursize);
+        net_message.cursize =  (net_message.cursize);
         if (net_message.cursize > MAX_MSGLEN)
             Sys_Error("Demo message > MAX_MSGLEN");
         r = fread(net_message.data, net_message.cursize, 1, cls.demofile);

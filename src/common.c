@@ -202,67 +202,6 @@ float Q_atof(char *str)
 ============================================================================
 */
 
-bool bigendien;
-
-int16_t (*BigShort)(int16_t l);
-int16_t (*LittleShort)(int16_t l);
-int32_t (*BigLong)(int32_t l);
-int32_t (*LittleLong)(int32_t l);
-float (*BigFloat)(float l);
-float (*LittleFloat)(float l);
-
-int16_t ShortSwap(int16_t l)
-{
-    uint8_t b1, b2;
-
-    b1 = l & 255;
-    b2 = (l >> 8) & 255;
-
-    return (b1 << 8) + b2;
-}
-
-int16_t ShortNoSwap(int16_t l)
-{
-    return l;
-}
-
-int32_t LongSwap(int32_t l)
-{
-    uint8_t b1, b2, b3, b4;
-
-    b1 = l & 255;
-    b2 = (l >> 8) & 255;
-    b3 = (l >> 16) & 255;
-    b4 = (l >> 24) & 255;
-
-    return ((int32_t)b1 << 24) + ((int32_t)b2 << 16) + ((int32_t)b3 << 8) + b4;
-}
-
-int32_t LongNoSwap(int32_t l)
-{
-    return l;
-}
-
-float FloatSwap(float f)
-{
-    union {
-        float f;
-        uint8_t b[4];
-    } dat1, dat2;
-
-    dat1.f = f;
-    dat2.b[0] = dat1.b[3];
-    dat2.b[1] = dat1.b[2];
-    dat2.b[2] = dat1.b[1];
-    dat2.b[3] = dat1.b[0];
-    return dat2.f;
-}
-
-float FloatNoSwap(float f)
-{
-    return f;
-}
-
 /*
 ==============================================================================
 
@@ -320,7 +259,7 @@ void MSG_WriteFloat(sizebuf_t *sb, float f)
     } dat;
 
     dat.f = f;
-    dat.l = LittleLong(dat.l);
+    dat.l =  (dat.l);
 
     SZ_Write(sb, &dat.l, 4);
 }
@@ -437,7 +376,7 @@ float MSG_ReadFloat(void)
     dat.b[3] = net_message.data[msg_readcount + 3];
     msg_readcount += 4;
 
-    dat.l = LittleLong(dat.l);
+    dat.l =  (dat.l);
 
     return dat.f;
 }
@@ -804,30 +743,6 @@ COM_Init
 */
 void COM_Init(char *basedir)
 {
-    uint8_t swaptest[2] = {1, 0};
-
-    // set the byte swapping variables in a portable manner
-    if (*(int16_t *)swaptest == 1)
-    {
-        bigendien = false;
-        BigShort = ShortSwap;
-        LittleShort = ShortNoSwap;
-        BigLong = LongSwap;
-        LittleLong = LongNoSwap;
-        BigFloat = FloatSwap;
-        LittleFloat = FloatNoSwap;
-    }
-    else
-    {
-        bigendien = true;
-        BigShort = ShortNoSwap;
-        LittleShort = ShortSwap;
-        BigLong = LongNoSwap;
-        LittleLong = LongSwap;
-        BigFloat = FloatNoSwap;
-        LittleFloat = FloatSwap;
-    }
-
     Cvar_RegisterVariable(&registered);
     Cvar_RegisterVariable(&cmdline);
     Cmd_AddCommand("path", COM_Path_f);
@@ -1307,8 +1222,8 @@ pack_t *COM_LoadPackFile(char *packfile)
     Sys_FileRead(packhandle, (void *)&header, sizeof(header));
     if (header.id[0] != 'P' || header.id[1] != 'A' || header.id[2] != 'C' || header.id[3] != 'K')
         Sys_Error("%s is not a packfile", packfile);
-    header.dirofs = LittleLong(header.dirofs);
-    header.dirlen = LittleLong(header.dirlen);
+    header.dirofs =  (header.dirofs);
+    header.dirlen =  (header.dirlen);
 
     numpackfiles = header.dirlen / sizeof(dpackfile_t);
 
@@ -1334,8 +1249,8 @@ pack_t *COM_LoadPackFile(char *packfile)
     for (i = 0; i < numpackfiles; i++)
     {
         strcpy(newfiles[i].name, info[i].name);
-        newfiles[i].filepos = LittleLong(info[i].filepos);
-        newfiles[i].filelen = LittleLong(info[i].filelen);
+        newfiles[i].filepos =  (info[i].filepos);
+        newfiles[i].filelen =  (info[i].filelen);
     }
 
     pack = Hunk_Alloc(sizeof(pack_t));

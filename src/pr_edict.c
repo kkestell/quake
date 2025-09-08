@@ -972,7 +972,7 @@ void PR_LoadProgs(void)
 
     // byte swap the header
     for (i = 0; i < sizeof(*progs) / 4; i++)
-        ((int32_t *)progs)[i] = LittleLong(((int32_t *)progs)[i]);
+        ((int32_t *)progs)[i] =  (((int32_t *)progs)[i]);
 
     if (progs->version != PROG_VERSION)
         Sys_Error("progs.dat has wrong version number (%i should be %i)", progs->version, PROG_VERSION);
@@ -993,40 +993,40 @@ void PR_LoadProgs(void)
     // byte swap the lumps
     for (i = 0; i < progs->numstatements; i++)
     {
-        pr_statements[i].op = LittleShort(pr_statements[i].op);
-        pr_statements[i].a = LittleShort(pr_statements[i].a);
-        pr_statements[i].b = LittleShort(pr_statements[i].b);
-        pr_statements[i].c = LittleShort(pr_statements[i].c);
+        pr_statements[i].op = (pr_statements[i].op);
+        pr_statements[i].a = (pr_statements[i].a);
+        pr_statements[i].b = (pr_statements[i].b);
+        pr_statements[i].c = (pr_statements[i].c);
     }
 
     for (i = 0; i < progs->numfunctions; i++)
     {
-        pr_functions[i].first_statement = LittleLong(pr_functions[i].first_statement);
-        pr_functions[i].parm_start = LittleLong(pr_functions[i].parm_start);
-        pr_functions[i].s_name = LittleLong(pr_functions[i].s_name);
-        pr_functions[i].s_file = LittleLong(pr_functions[i].s_file);
-        pr_functions[i].numparms = LittleLong(pr_functions[i].numparms);
-        pr_functions[i].locals = LittleLong(pr_functions[i].locals);
+        pr_functions[i].first_statement =  (pr_functions[i].first_statement);
+        pr_functions[i].parm_start =  (pr_functions[i].parm_start);
+        pr_functions[i].s_name =  (pr_functions[i].s_name);
+        pr_functions[i].s_file =  (pr_functions[i].s_file);
+        pr_functions[i].numparms =  (pr_functions[i].numparms);
+        pr_functions[i].locals =  (pr_functions[i].locals);
     }
 
     for (i = 0; i < progs->numglobaldefs; i++)
     {
-        pr_globaldefs[i].type = LittleShort(pr_globaldefs[i].type);
-        pr_globaldefs[i].ofs = LittleShort(pr_globaldefs[i].ofs);
-        pr_globaldefs[i].s_name = LittleLong(pr_globaldefs[i].s_name);
+        pr_globaldefs[i].type = (pr_globaldefs[i].type);
+        pr_globaldefs[i].ofs = (pr_globaldefs[i].ofs);
+        pr_globaldefs[i].s_name =  (pr_globaldefs[i].s_name);
     }
 
     for (i = 0; i < progs->numfielddefs; i++)
     {
-        pr_fielddefs[i].type = LittleShort(pr_fielddefs[i].type);
+        pr_fielddefs[i].type = (pr_fielddefs[i].type);
         if (pr_fielddefs[i].type & DEF_SAVEGLOBAL)
             Sys_Error("PR_LoadProgs: pr_fielddefs[i].type & DEF_SAVEGLOBAL");
-        pr_fielddefs[i].ofs = LittleShort(pr_fielddefs[i].ofs);
-        pr_fielddefs[i].s_name = LittleLong(pr_fielddefs[i].s_name);
+        pr_fielddefs[i].ofs = (pr_fielddefs[i].ofs);
+        pr_fielddefs[i].s_name =  (pr_fielddefs[i].s_name);
     }
 
     for (i = 0; i < progs->numglobals; i++)
-        ((int32_t *)pr_globals)[i] = LittleLong(((int32_t *)pr_globals)[i]);
+        ((int32_t *)pr_globals)[i] =  (((int32_t *)pr_globals)[i]);
 }
 
 /*
