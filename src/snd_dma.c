@@ -732,26 +732,22 @@ void GetSoundtime(void)
 
 // it is possible to miscount buffers if it has wrapped twice between
 // calls to S_Update.  Oh well.
-#ifdef __sun__
-    soundtime = SNDDMA_GetSamples();
-#else
-    samplepos = SNDDMA_GetDMAPos();
+samplepos = SNDDMA_GetDMAPos();
 
-    if (samplepos < oldsamplepos)
-    {
-        buffers++; // buffer wrapped
+if (samplepos < oldsamplepos)
+{
+    buffers++; // buffer wrapped
 
-        if (paintedtime > 0x40000000)
-        { // time to chop things off to avoid 32 bit limits
-            buffers = 0;
-            paintedtime = fullsamples;
-            S_StopAllSounds(true);
-        }
+    if (paintedtime > 0x40000000)
+    { // time to chop things off to avoid 32 bit limits
+        buffers = 0;
+        paintedtime = fullsamples;
+        S_StopAllSounds(true);
     }
-    oldsamplepos = samplepos;
+}
+oldsamplepos = samplepos;
 
-    soundtime = buffers * fullsamples + samplepos / shm->channels;
-#endif
+soundtime = buffers * fullsamples + samplepos / shm->channels;
 }
 
 void S_ExtraUpdate(void)

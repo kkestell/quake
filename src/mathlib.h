@@ -8,10 +8,6 @@ typedef int32_t fixed4_t;
 typedef int32_t fixed8_t;
 typedef int32_t fixed16_t;
 
-#ifndef M_PI
-#define M_PI 3.14159265358979323846 // matches value in gcc v2 math.h
-#endif
-
 struct mplane_s;
 
 extern vec3_t vec3_origin;

@@ -33,7 +33,7 @@ float Cvar_VariableValue(char *var_name)
     var = Cvar_FindVar(var_name);
     if (!var)
         return 0;
-    return Q_atof(var->string);
+    return atof(var->string);
 }
 
 /*

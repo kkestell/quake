@@ -23,22 +23,6 @@
 // <endrepeat>
 //-------------------------------------------------------
 
-#ifdef INCLUDELIBS
-
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#include "cmdlib.h"
-#include "dictlib.h"
-#include "lbmlib.h"
-#include "mathlib.h"
-#include "scriplib.h"
-#include "trilib.h"
-
-#endif
-
 #define SPRITE_VERSION 1
 
 // must match definition in modelgen.h

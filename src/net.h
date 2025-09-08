@@ -217,25 +217,6 @@ typedef struct
 extern int32_t hostCacheCount;
 extern hostcache_t hostcache[HOSTCACHESIZE];
 
-#if !defined(_WIN32) && !defined(__linux__) && !defined(__sun__)
-#ifndef htonl
-extern uint32_t htonl(uint32_t hostlong);
-#endif
-#ifndef htons
-extern uint16_t htons(uint16_t hostshort);
-#endif
-#ifndef ntohl
-extern uint32_t ntohl(uint32_t netlong);
-#endif
-#ifndef ntohs
-extern uint16_t ntohs(uint16_t netshort);
-#endif
-#endif
-
-#ifdef IDGODS
-bool IsID(struct qsockaddr *addr);
-#endif
-
 //============================================================================
 //
 // public network functions

@@ -1,8 +1,6 @@
 // console.c
 
-#ifndef _MSC_VER
 #include <unistd.h>
-#endif
 #include "quakedef.h"
 #include <fcntl.h>
 

@@ -8,21 +8,6 @@
 // * pass data from one to the other via model files.      *
 // *********************************************************
 
-#ifdef INCLUDELIBS
-
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#include "cmdlib.h"
-#include "lbmlib.h"
-#include "mathlib.h"
-#include "scriplib.h"
-#include "trilib.h"
-
-#endif
-
 #define ALIAS_VERSION 6
 
 #define ALIAS_ONSEAM 0x0020

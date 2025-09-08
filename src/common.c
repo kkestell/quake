@@ -118,90 +118,6 @@ void InsertLinkAfter(link_t *l, link_t *after)
     l->next->prev = l;
 }
 
-// void Q_memset(void *dest, int32_t fill, int32_t count)
-// {
-//     memset(dest, fill, (size_t)count);
-// }
-
-void Q_memcpy(void *dest, void *src, int32_t count)
-{
-    memcpy(dest, src, (size_t)count);
-}
-
-int32_t Q_memcmp(void *m1, void *m2, int32_t count)
-{
-    return memcmp(m1, m2, (size_t)count) == 0 ? 0 : -1;
-}
-
-void Q_strcpy(char *dest, char *src)
-{
-    strcpy(dest, src);
-}
-
-void Q_strncpy(char *dest, char *src, int32_t count)
-{
-    if (count <= 0) return;
-    strncpy(dest, src, (size_t)count);
-    dest[(size_t)count - 1] = '\0';
-}
-
-int32_t Q_strlen(char *str)
-{
-    return (int32_t)strlen(str);
-}
-
-char *Q_strrchr(char *s, char c)
-{
-    return (char *)strrchr(s, (unsigned char)c);
-}
-
-void Q_strcat(char *dest, char *src)
-{
-    strcat(dest, src);
-}
-
-int32_t Q_strcmp(char *s1, char *s2)
-{
-    return strcmp(s1, s2) == 0 ? 0 : -1;
-}
-
-int32_t Q_strncmp(char *s1, char *s2, int32_t count)
-{
-    return strncmp(s1, s2, (size_t)count) == 0 ? 0 : -1;
-}
-
-int32_t Q_strncasecmp(char *s1, char *s2, int32_t n)
-{
-    return strncasecmp(s1, s2, (size_t)n) == 0 ? 0 : -1;
-}
-
-int32_t Q_strcasecmp(char *s1, char *s2)
-{
-    return strcasecmp(s1, s2) == 0 ? 0 : -1;
-}
-
-int32_t Q_atoi(char *str)
-{
-    if (str && str[0] == '\'' && str[1])
-        return (unsigned char)str[1];
-    return (int32_t)strtol(str, NULL, 0);
-}
-
-float Q_atof(char *str)
-{
-    if (str && str[0] == '\'' && str[1])
-        return (float)(unsigned char)str[1];
-    return (float)strtod(str, NULL);
-}
-
-/*
-============================================================================
-
-                                        BYTE ORDER FUNCTIONS
-
-============================================================================
-*/
-
 /*
 ==============================================================================
 
@@ -769,17 +685,6 @@ char *va(char *format, ...)
     va_end(argptr);
 
     return string;
-}
-
-/// just for debugging
-int32_t memsearch(uint8_t *start, int32_t count, int32_t search)
-{
-    int32_t i;
-
-    for (i = 0; i < count; i++)
-        if (start[i] == search)
-            return i;
-    return -1;
 }
 
 /*

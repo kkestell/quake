@@ -40,10 +40,6 @@ void InsertLinkAfter(link_t *l, link_t *after);
 
 //============================================================================
 
-#ifndef NULL
-#define NULL ((void *)0)
-#endif
-
 #define Q_MAXCHAR ((char)0x7f)
 #define Q_MAXSHORT ((int16_t)0x7fff)
 #define Q_MAXINT ((int32_t)0x7fffffff)
@@ -82,23 +78,6 @@ char *MSG_ReadString(void);
 
 float MSG_ReadCoord(void);
 float MSG_ReadAngle(void);
-
-//============================================================================
-
-// void Q_memset(void *dest, int32_t fill, int32_t count);
-void Q_memcpy(void *dest, void *src, int32_t count);
-int32_t Q_memcmp(void *m1, void *m2, int32_t count);
-void Q_strcpy(char *dest, char *src);
-void Q_strncpy(char *dest, char *src, int32_t count);
-int32_t Q_strlen(char *str);
-char *Q_strrchr(char *s, char c);
-void Q_strcat(char *dest, char *src);
-int32_t Q_strcmp(char *s1, char *s2);
-int32_t Q_strncmp(char *s1, char *s2, int32_t count);
-int32_t Q_strcasecmp(char *s1, char *s2);
-int32_t Q_strncasecmp(char *s1, char *s2, int32_t n);
-int32_t Q_atoi(char *str);
-float Q_atof(char *str);
 
 //============================================================================
 
