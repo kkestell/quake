@@ -33,7 +33,7 @@ void R_InitParticles(void)
 
     if (i)
     {
-        r_numparticles = (int32_t)(Q_atoi(com_argv[i + 1]));
+        r_numparticles = (int32_t)((int32_t)strtol(com_argv[i + 1], NULL, 0));
         if (r_numparticles < ABSOLUTE_MIN_PARTICLES)
             r_numparticles = ABSOLUTE_MIN_PARTICLES;
     }

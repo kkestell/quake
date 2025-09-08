@@ -237,7 +237,7 @@ void IN_JumpUp(void)
 
 void IN_Impulse(void)
 {
-    in_impulse = Q_atoi(Cmd_Argv(1));
+    in_impulse = (int32_t)strtol(Cmd_Argv(1), NULL, 0);
 }
 
 /*

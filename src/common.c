@@ -330,7 +330,7 @@ void MSG_WriteString(sizebuf_t *sb, char *s)
     if (!s)
         SZ_Write(sb, "", 1);
     else
-        SZ_Write(sb, s, Q_strlen(s) + 1);
+        SZ_Write(sb, s, strlen(s) + 1);
 }
 
 void MSG_WriteCoord(sizebuf_t *sb, float f)
@@ -521,20 +521,20 @@ void *SZ_GetSpace(sizebuf_t *buf, int32_t length)
 
 void SZ_Write(sizebuf_t *buf, void *data, int32_t length)
 {
-    Q_memcpy(SZ_GetSpace(buf, length), data, length);
+    memcpy(SZ_GetSpace(buf, length), data, length);
 }
 
 void SZ_Print(sizebuf_t *buf, char *data)
 {
     int32_t len;
 
-    len = Q_strlen(data) + 1;
+    len = strlen(data) + 1;
 
     // byte * cast to keep VC++ happy
     if (buf->data[buf->cursize - 1])
-        Q_memcpy((uint8_t *)SZ_GetSpace(buf, len), data, len); // no trailing 0
+        memcpy((uint8_t *)SZ_GetSpace(buf, len), data, len); // no trailing 0
     else
-        Q_memcpy((uint8_t *)SZ_GetSpace(buf, len - 1) - 1, data,
+        memcpy((uint8_t *)SZ_GetSpace(buf, len - 1) - 1, data,
                  len); // write over trailing 0
 }
 
@@ -766,7 +766,7 @@ void COM_InitArgv(int32_t argc, char **argv)
     for (com_argc = 0; (com_argc < MAX_NUM_ARGVS) && (com_argc < argc); com_argc++)
     {
         largv[com_argc] = argv[com_argc];
-        if (!Q_strcmp("-safe", argv[com_argc]))
+        if (!strcmp("-safe", argv[com_argc]))
             safe = true;
     }
 

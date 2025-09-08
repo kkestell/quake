@@ -66,7 +66,7 @@ int32_t R_ClipSpriteFace(int32_t nump, clipplane_t *pclipplane)
 
     // handle wraparound case
     dists[nump] = dists[0];
-    Q_memcpy(instep, in, sizeof(vec5_t));
+    memcpy(instep, in, sizeof(vec5_t));
 
     // clip the winding
     instep = in;
@@ -76,7 +76,7 @@ int32_t R_ClipSpriteFace(int32_t nump, clipplane_t *pclipplane)
     {
         if (dists[i] >= 0)
         {
-            Q_memcpy(outstep, instep, sizeof(vec5_t));
+            memcpy(outstep, instep, sizeof(vec5_t));
             outstep += sizeof(vec5_t) / sizeof(float);
             outcount++;
         }

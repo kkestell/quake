@@ -105,7 +105,7 @@ qsocket_t *NET_NewQSocket(void)
 
     sock->disconnected = false;
     sock->connecttime = net_time;
-    Q_strcpy(sock->address, "UNSET ADDRESS");
+    strcpy(sock->address, "UNSET ADDRESS");
     sock->driver = net_driverlevel;
     sock->socket = 0;
     sock->driverdata = NULL;
@@ -156,7 +156,7 @@ static void NET_Listen_f(void)
         return;
     }
 
-    listening = Q_atoi(Cmd_Argv(1)) ? true : false;
+    listening = (int32_t)strtol(Cmd_Argv(1), NULL, 0) ? true : false;
 
     for (net_driverlevel = 0; net_driverlevel < net_numdrivers; net_driverlevel++)
     {
@@ -182,7 +182,7 @@ static void MaxPlayers_f(void)
         return;
     }
 
-    n = Q_atoi(Cmd_Argv(1));
+    n = (int32_t)strtol(Cmd_Argv(1), NULL, 0);
     if (n < 1)
         n = 1;
     if (n > svs.maxclientslimit)
@@ -214,7 +214,7 @@ static void NET_Port_f(void)
         return;
     }
 
-    n = Q_atoi(Cmd_Argv(1));
+    n = (int32_t)strtol(Cmd_Argv(1), NULL, 0);
     if (n < 1 || n > 65534)
     {
         Con_Printf("Bad value, must be between 1 and 65534\n");
@@ -346,7 +346,7 @@ qsocket_t *NET_Connect(char *host)
 
     if (host)
     {
-        if (Q_strcasecmp(host, "local") == 0)
+        if (strcasecmp(host, "local") == 0)
         {
             numdrivers = 1;
             goto JustDoIt;
@@ -355,7 +355,7 @@ qsocket_t *NET_Connect(char *host)
         if (hostCacheCount)
         {
             for (n = 0; n < hostCacheCount; n++)
-                if (Q_strcasecmp(host, hostcache[n].name) == 0)
+                if (strcasecmp(host, hostcache[n].name) == 0)
                 {
                     host = hostcache[n].cname;
                     break;
@@ -381,7 +381,7 @@ qsocket_t *NET_Connect(char *host)
 
     if (hostCacheCount)
         for (n = 0; n < hostCacheCount; n++)
-            if (Q_strcasecmp(host, hostcache[n].name) == 0)
+            if (strcasecmp(host, hostcache[n].name) == 0)
             {
                 host = hostcache[n].cname;
                 break;
@@ -785,7 +785,7 @@ void NET_Init(void)
     if (i)
     {
         if (i < com_argc - 1)
-            DEFAULTnet_hostport = Q_atoi(com_argv[i + 1]);
+            DEFAULTnet_hostport = (int32_t)strtol(com_argv[i + 1], NULL, 0);
         else
             Sys_Error("NET_Init: you must specify a number after -port");
     }

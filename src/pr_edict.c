@@ -531,7 +531,7 @@ void ED_PrintEdict_f(void)
 {
     int32_t i;
 
-    i = Q_atoi(Cmd_Argv(1));
+    i = (int32_t)strtol(Cmd_Argv(1), NULL, 0);
     if (i >= sv.num_edicts)
     {
         Con_Printf("Bad edict number\n");

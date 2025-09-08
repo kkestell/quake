@@ -50,8 +50,8 @@ void VID_Init(unsigned char *palette)
     {
         if (pnum >= com_argc - 2)
             Sys_Error("VID: -winsize <width> <height>\n");
-        vid.width = Q_atoi(com_argv[pnum + 1]);
-        vid.height = Q_atoi(com_argv[pnum + 2]);
+        vid.width = (int32_t)strtol(com_argv[pnum + 1], NULL, 0);
+        vid.height = (int32_t)strtol(com_argv[pnum + 2], NULL, 0);
         if (!vid.width || !vid.height)
             Sys_Error("VID: Bad window width/height\n");
     }
