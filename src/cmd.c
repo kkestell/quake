@@ -13,12 +13,9 @@ typedef struct cmdalias_s
     char *value;
 } cmdalias_t;
 
-cmdalias_t *cmd_alias;
+static cmdalias_t *cmd_alias;
 
-int32_t trashtest;
-int32_t *trashspot;
-
-bool cmd_wait;
+static bool cmd_wait;
 
 //=============================================================================
 
@@ -44,7 +41,7 @@ void Cmd_Wait_f(void)
 =============================================================================
 */
 
-sizebuf_t cmd_text;
+static sizebuf_t cmd_text;
 
 /*
 ============

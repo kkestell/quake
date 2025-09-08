@@ -15,9 +15,9 @@ typedef struct
 
 static rectdesc_t r_rectdesc;
 
-uint8_t *draw_chars; // 8*8 graphic characters
+static uint8_t *draw_chars; // 8*8 graphic characters
 qpic_t *draw_disc;
-qpic_t *draw_backtile;
+static qpic_t *draw_backtile;
 
 //=============================================================================
 /* Support Routines */
@@ -29,8 +29,8 @@ typedef struct cachepic_s
 } cachepic_t;
 
 #define MAX_CACHED_PICS 128
-cachepic_t menu_cachepics[MAX_CACHED_PICS];
-int32_t menu_numcachepics;
+static cachepic_t menu_cachepics[MAX_CACHED_PICS];
+static int32_t menu_numcachepics;
 
 qpic_t *Draw_PicFromWad(char *name)
 {

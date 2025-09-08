@@ -26,13 +26,25 @@ state bit 2 is edge triggered on the down to up transition
 ===============================================================================
 */
 
-kbutton_t in_mlook, in_klook;
-kbutton_t in_left, in_right, in_forward, in_back;
-kbutton_t in_lookup, in_lookdown, in_moveleft, in_moveright;
-kbutton_t in_strafe, in_speed, in_use, in_jump, in_attack;
-kbutton_t in_up, in_down;
+kbutton_t in_mlook;
+kbutton_t in_klook;
+static kbutton_t in_left;
+static kbutton_t in_right;
+kbutton_t in_forward;
+kbutton_t in_back;
+static kbutton_t in_lookup;
+static kbutton_t in_lookdown;
+static kbutton_t in_moveleft;
+static kbutton_t in_moveright;
+kbutton_t in_strafe;
+kbutton_t in_speed;
+static kbutton_t in_use;
+static kbutton_t in_jump;
+static kbutton_t in_attack;
+static kbutton_t in_up;
+static kbutton_t in_down;
 
-int32_t in_impulse;
+static int32_t in_impulse;
 
 void KeyDown(kbutton_t *b)
 {

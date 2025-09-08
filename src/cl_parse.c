@@ -2,7 +2,7 @@
 
 #include "quakedef.h"
 
-char *svc_strings[] = {"svc_bad", "svc_nop", "svc_disconnect", "svc_updatestat",
+static char *svc_strings[] = {"svc_bad", "svc_nop", "svc_disconnect", "svc_updatestat",
                        "svc_version",   // [long] server version
                        "svc_setview",   // [short] entity number
                        "svc_sound",     // <see code>
@@ -290,7 +290,8 @@ If an entities model or origin changes from frame to frame, it must be
 relinked.  Other attributes can change without relinking.
 ==================
 */
-int32_t bitcounts[16];
+
+static int32_t bitcounts[16];
 
 void CL_ParseUpdate(int32_t bits)
 {

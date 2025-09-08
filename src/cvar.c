@@ -3,7 +3,7 @@
 #include "quakedef.h"
 
 cvar_t *cvar_vars;
-char *cvar_null_string = "";
+static char *cvar_null_string = "";
 
 /*
 ============

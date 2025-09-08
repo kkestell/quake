@@ -14,7 +14,7 @@ int32_t vstartscan;
 extern void R_RotateBmodel(void);
 extern void R_TransformFrustum(void);
 
-vec3_t transformed_modelorg;
+static vec3_t transformed_modelorg;
 
 /*
 ==============

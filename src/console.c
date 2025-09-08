@@ -4,9 +4,9 @@
 #include "quakedef.h"
 #include <fcntl.h>
 
-int32_t con_linewidth;
+static int32_t con_linewidth;
 
-float con_cursorspeed = 4;
+static float con_cursorspeed = 4;
 
 #define CON_TEXTSIZE 16384
 
@@ -14,19 +14,19 @@ bool con_forcedup; // because no entities to refresh
 
 int32_t con_totallines; // total lines in console scrollback
 int32_t con_backscroll; // lines up from bottom to display
-int32_t con_current;    // where next message will be printed
-int32_t con_x;          // offset in current line for next print
-char *con_text = 0;
+static int32_t con_current;    // where next message will be printed
+static int32_t con_x;          // offset in current line for next print
+static char *con_text = 0;
 
-cvar_t con_notifytime = {"con_notifytime", "3"}; // seconds
+static cvar_t con_notifytime = {"con_notifytime", "3"}; // seconds
 
 #define NUM_CON_TIMES 4
-float con_times[NUM_CON_TIMES]; // realtime time the line was generated
+static float con_times[NUM_CON_TIMES]; // realtime time the line was generated
                                 // for transparent notify lines
 
-int32_t con_vislines;
+static int32_t con_vislines;
 
-bool con_debuglog;
+static bool con_debuglog;
 
 #define MAXCMDLINE 256
 extern char key_lines[32][MAXCMDLINE];

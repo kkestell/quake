@@ -9,22 +9,22 @@ key up events are sent even if in console mode
 #define MAXCMDLINE 256
 char key_lines[32][MAXCMDLINE];
 int32_t key_linepos;
-int32_t shift_down = false;
+static int32_t shift_down = false;
 int32_t key_lastpress;
 
 int32_t edit_line = 0;
-int32_t history_line = 0;
+static int32_t history_line = 0;
 
 keydest_t key_dest;
 
 int32_t key_count; // incremented every key event
 
 char *keybindings[256];
-bool consolekeys[256];    // if true, can't be rebound while in console
-bool menubound[256];      // if true, can't be rebound while in menu
-int32_t keyshift[256];    // key to map to if shift held down in console
+static bool consolekeys[256];    // if true, can't be rebound while in console
+static bool menubound[256];      // if true, can't be rebound while in menu
+static int32_t keyshift[256];    // key to map to if shift held down in console
 int32_t key_repeats[256]; // if > 1, it is autorepeating
-bool keydown[256];
+static bool keydown[256];
 
 typedef struct
 {
@@ -32,7 +32,7 @@ typedef struct
     int32_t keynum;
 } keyname_t;
 
-keyname_t keynames[] = {{"TAB", K_TAB},
+static keyname_t keynames[] = {{"TAB", K_TAB},
                         {"ENTER", K_ENTER},
                         {"ESCAPE", K_ESCAPE},
                         {"SPACE", K_SPACE},

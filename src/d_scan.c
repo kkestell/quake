@@ -6,10 +6,14 @@
 #include "r_local.h"
 #include "d_local.h"
 
-unsigned char *r_turb_pbase, *r_turb_pdest;
-fixed16_t r_turb_s, r_turb_t, r_turb_sstep, r_turb_tstep;
-int32_t *r_turb_turb;
-int32_t r_turb_spancount;
+static unsigned char *r_turb_pbase;
+static unsigned char *r_turb_pdest;
+static fixed16_t r_turb_s;
+static fixed16_t r_turb_t;
+static fixed16_t r_turb_sstep;
+static fixed16_t r_turb_tstep;
+static int32_t *r_turb_turb;
+static int32_t r_turb_spancount;
 
 void D_DrawTurbulent8Span(void);
 

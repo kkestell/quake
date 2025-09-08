@@ -83,9 +83,9 @@ void M_GameOptions_Key(int32_t key);
 void M_Search_Key(int32_t key);
 void M_ServerList_Key(int32_t key);
 
-bool m_entersound; // play after drawing a frame, so caching
+static bool m_entersound; // play after drawing a frame, so caching
                    // won't disrupt the sound
-bool m_recursiveDraw;
+static bool m_recursiveDraw;
 
 int32_t m_return_state;
 bool m_return_onerror;
@@ -142,8 +142,8 @@ void M_DrawPic(int32_t x, int32_t y, qpic_t *pic)
     Draw_Pic(x + ((vid.width - 320) >> 1), y, pic);
 }
 
-uint8_t identityTable[256];
-uint8_t translationTable[256];
+static uint8_t identityTable[256];
+static uint8_t translationTable[256];
 
 void M_BuildTranslationTable(int32_t top, int32_t bottom)
 {
@@ -231,7 +231,7 @@ void M_DrawTextBox(int32_t x, int32_t y, int32_t width, int32_t lines)
 
 //=============================================================================
 
-int32_t m_save_demonum;
+static int32_t m_save_demonum;
 
 /*
 ================
@@ -266,7 +266,7 @@ void M_ToggleMenu_f(void)
 //=============================================================================
 /* MAIN MENU */
 
-int32_t m_main_cursor;
+static int32_t m_main_cursor;
 #define MAIN_ITEMS 5
 
 void M_Menu_Main_f(void)
@@ -351,7 +351,7 @@ void M_Main_Key(int32_t key)
 //=============================================================================
 /* SINGLE PLAYER MENU */
 
-int32_t m_singleplayer_cursor;
+static int32_t m_singleplayer_cursor;
 #define SINGLEPLAYER_ITEMS 3
 
 void M_Menu_SinglePlayer_f(void)
@@ -426,11 +426,11 @@ void M_SinglePlayer_Key(int32_t key)
 //=============================================================================
 /* LOAD/SAVE MENU */
 
-int32_t load_cursor; // 0 < load_cursor < MAX_SAVEGAMES
+static int32_t load_cursor; // 0 < load_cursor < MAX_SAVEGAMES
 
 #define MAX_SAVEGAMES 12
-char m_filenames[MAX_SAVEGAMES][SAVEGAME_COMMENT_LENGTH + 1];
-int32_t loadable[MAX_SAVEGAMES];
+static char m_filenames[MAX_SAVEGAMES][SAVEGAME_COMMENT_LENGTH + 1];
+static int32_t loadable[MAX_SAVEGAMES];
 
 void M_ScanSaves(void)
 {
@@ -588,7 +588,7 @@ void M_Save_Key(int32_t k)
 //=============================================================================
 /* MULTIPLAYER MENU */
 
-int32_t m_multiplayer_cursor;
+static int32_t m_multiplayer_cursor;
 #define MULTIPLAYER_ITEMS 3
 
 void M_Menu_MultiPlayer_f(void)
@@ -661,15 +661,15 @@ void M_MultiPlayer_Key(int32_t key)
 //=============================================================================
 /* SETUP MENU */
 
-int32_t setup_cursor = 4;
-int32_t setup_cursor_table[] = {40, 56, 80, 104, 140};
+static int32_t setup_cursor = 4;
+static int32_t setup_cursor_table[] = {40, 56, 80, 104, 140};
 
-char setup_hostname[16];
-char setup_myname[16];
-int32_t setup_oldtop;
-int32_t setup_oldbottom;
-int32_t setup_top;
-int32_t setup_bottom;
+static char setup_hostname[16];
+static char setup_myname[16];
+static int32_t setup_oldtop;
+static int32_t setup_oldbottom;
+static int32_t setup_top;
+static int32_t setup_bottom;
 
 #define NUM_SETUP_CMDS 5
 
@@ -835,11 +835,11 @@ void M_Setup_Key(int32_t k)
 //=============================================================================
 /* NET MENU */
 
-int32_t m_net_cursor;
-int32_t m_net_items;
-int32_t m_net_saveHeight;
+static int32_t m_net_cursor;
+static int32_t m_net_items;
+static int32_t m_net_saveHeight;
 
-char *net_helpMessage[] = {
+static char *net_helpMessage[] = {
     /* .........1.........2.... */
     "                        ", " Two computers connected", "   through two modems.  ", "                        ",
 
@@ -997,7 +997,7 @@ again:
 
 #define SLIDER_RANGE 10
 
-int32_t options_cursor;
+static int32_t options_cursor;
 
 void M_Menu_Options_f(void)
 {
@@ -1227,7 +1227,7 @@ void M_Options_Key(int32_t k)
 //=============================================================================
 /* KEYS MENU */
 
-char *bindnames[][2] = {{"+attack", "attack"},       {"impulse 10", "change weapon"},
+static char *bindnames[][2] = {{"+attack", "attack"},       {"impulse 10", "change weapon"},
                         {"+jump", "jump / swim up"}, {"+forward", "walk forward"},
                         {"+back", "backpedal"},      {"+left", "turn left"},
                         {"+right", "turn right"},    {"+speed", "run"},
@@ -1239,8 +1239,8 @@ char *bindnames[][2] = {{"+attack", "attack"},       {"impulse 10", "change weap
 
 #define NUMCOMMANDS (sizeof(bindnames) / sizeof(bindnames[0]))
 
-int32_t keys_cursor;
-int32_t bind_grab;
+static int32_t keys_cursor;
+static int32_t bind_grab;
 
 void M_Menu_Keys_f(void)
 {
@@ -1426,7 +1426,7 @@ void M_Video_Key(int32_t key)
 //=============================================================================
 /* HELP MENU */
 
-int32_t help_page;
+static int32_t help_page;
 #define NUM_HELP_PAGES 6
 
 void M_Menu_Help_f(void)
@@ -1469,11 +1469,11 @@ void M_Help_Key(int32_t key)
 //=============================================================================
 /* QUIT MENU */
 
-int32_t msgNumber;
-int32_t m_quit_prevstate;
-bool wasInMenus;
+static int32_t msgNumber;
+static int32_t m_quit_prevstate;
+static bool wasInMenus;
 
-char *quitMessage[] = {
+static char *quitMessage[] = {
     /* .........1.........2.... */
     "  Are you gonna quit    ", "  this game just like   ", "   everything else?     ", "                        ",
 
@@ -1554,18 +1554,18 @@ void M_Quit_Draw(void)
 
 /* SERIAL CONFIG MENU */
 
-int32_t serialConfig_cursor;
-int32_t serialConfig_cursor_table[] = {48, 64, 80, 96, 112, 132};
+static int32_t serialConfig_cursor;
+static int32_t serialConfig_cursor_table[] = {48, 64, 80, 96, 112, 132};
 #define NUM_SERIALCONFIG_CMDS 6
 
 static int32_t ISA_uarts[] = {0x3f8, 0x2f8, 0x3e8, 0x2e8};
 static int32_t ISA_IRQs[] = {4, 3, 4, 3};
-int32_t serialConfig_baudrate[] = {9600, 14400, 19200, 28800, 38400, 57600};
+static int32_t serialConfig_baudrate[] = {9600, 14400, 19200, 28800, 38400, 57600};
 
-int32_t serialConfig_comport;
-int32_t serialConfig_irq;
-int32_t serialConfig_baud;
-char serialConfig_phone[16];
+static int32_t serialConfig_comport;
+static int32_t serialConfig_irq;
+static int32_t serialConfig_baud;
+static char serialConfig_phone[16];
 
 void M_Menu_SerialConfig_f(void)
 {
@@ -1843,14 +1843,14 @@ void M_SerialConfig_Key(int32_t key)
 //=============================================================================
 /* MODEM CONFIG MENU */
 
-int32_t modemConfig_cursor;
-int32_t modemConfig_cursor_table[] = {40, 56, 88, 120, 156};
+static int32_t modemConfig_cursor;
+static int32_t modemConfig_cursor_table[] = {40, 56, 88, 120, 156};
 #define NUM_MODEMCONFIG_CMDS 5
 
-char modemConfig_dialing;
-char modemConfig_clear[16];
-char modemConfig_init[32];
-char modemConfig_hangup[16];
+static char modemConfig_dialing;
+static char modemConfig_clear[16];
+static char modemConfig_init[32];
+static char modemConfig_hangup[16];
 
 void M_Menu_ModemConfig_f(void)
 {
@@ -2017,13 +2017,13 @@ void M_ModemConfig_Key(int32_t key)
 //=============================================================================
 /* LAN CONFIG MENU */
 
-int32_t lanConfig_cursor = -1;
-int32_t lanConfig_cursor_table[] = {72, 92, 124};
+static int32_t lanConfig_cursor = -1;
+static int32_t lanConfig_cursor_table[] = {72, 92, 124};
 #define NUM_LANCONFIG_CMDS 3
 
-int32_t lanConfig_port;
-char lanConfig_portname[6];
-char lanConfig_joinname[22];
+static int32_t lanConfig_port;
+static char lanConfig_portname[6];
+static char lanConfig_joinname[22];
 
 void M_Menu_LanConfig_f(void)
 {
@@ -2225,7 +2225,7 @@ typedef struct
     char *description;
 } level_t;
 
-level_t levels[] = {{"start", "Entrance"}, // 0
+static level_t levels[] = {{"start", "Entrance"}, // 0
 
                     {"e1m1", "Slipgate Complex"}, // 1
                     {"e1m2", "Castle of the Damned"},
@@ -2271,7 +2271,7 @@ level_t levels[] = {{"start", "Entrance"}, // 0
                     {"dm6", "The Dark Zone"}};
 
 // MED 01/06/97 added hipnotic levels
-level_t hipnoticlevels[] = {
+static level_t hipnoticlevels[] = {
     {"start", "Command HQ"}, // 0
 
     {"hip1m1", "The Pumping Station"}, // 1
@@ -2299,7 +2299,7 @@ level_t hipnoticlevels[] = {
 
 // PGM 01/07/97 added rogue levels
 // PGM 03/02/97 added dmatch level
-level_t roguelevels[] = {{"start", "Split Decision"},  {"r1m1", "Deviant's Domain"},     {"r1m2", "Dread Portal"},
+static level_t roguelevels[] = {{"start", "Split Decision"},  {"r1m1", "Deviant's Domain"},     {"r1m2", "Dread Portal"},
                          {"r1m3", "Judgement Call"},   {"r1m4", "Cave of Death"},        {"r1m5", "Towers of Wrath"},
                          {"r1m6", "Temple of Pain"},   {"r1m7", "Tomb of the Overlord"}, {"r2m1", "Tempus Fugit"},
                          {"r2m2", "Elemental Fury I"}, {"r2m3", "Elemental Fury II"},    {"r2m4", "Curse of Osiris"},
@@ -2313,25 +2313,25 @@ typedef struct
     int32_t levels;
 } episode_t;
 
-episode_t episodes[] = {{"Welcome to Quake", 0, 1}, {"Doomed Dimension", 1, 8}, {"Realm of Black Magic", 9, 7},
+static episode_t episodes[] = {{"Welcome to Quake", 0, 1}, {"Doomed Dimension", 1, 8}, {"Realm of Black Magic", 9, 7},
                         {"Netherworld", 16, 7},     {"The Elder World", 23, 8}, {"Final Level", 31, 1},
                         {"Deathmatch Arena", 32, 6}};
 
 // MED 01/06/97  added hipnotic episodes
-episode_t hipnoticepisodes[] = {{"Scourge of Armagon", 0, 1},   {"Fortress of the Dead", 1, 5},
+static episode_t hipnoticepisodes[] = {{"Scourge of Armagon", 0, 1},   {"Fortress of the Dead", 1, 5},
                                 {"Dominion of Darkness", 6, 6}, {"The Rift", 12, 4},
                                 {"Final Level", 16, 1},         {"Deathmatch Arena", 17, 1}};
 
 // PGM 01/07/97 added rogue episodes
 // PGM 03/02/97 added dmatch episode
-episode_t rogueepisodes[] = {
+static episode_t rogueepisodes[] = {
     {"Introduction", 0, 1}, {"Hell's Fortress", 1, 7}, {"Corridors of Time", 8, 8}, {"Deathmatch Arena", 16, 1}};
 
-int32_t startepisode;
-int32_t startlevel;
-int32_t maxplayers;
-bool m_serverInfoMessage = false;
-double m_serverInfoMessageTime;
+static int32_t startepisode;
+static int32_t startlevel;
+static int32_t maxplayers;
+static bool m_serverInfoMessage = false;
+static double m_serverInfoMessageTime;
 
 void M_Menu_GameOptions_f(void)
 {
@@ -2344,9 +2344,9 @@ void M_Menu_GameOptions_f(void)
         maxplayers = svs.maxclientslimit;
 }
 
-int32_t gameoptions_cursor_table[] = {40, 56, 64, 72, 80, 88, 96, 112, 120};
+static int32_t gameoptions_cursor_table[] = {40, 56, 64, 72, 80, 88, 96, 112, 120};
 #define NUM_GAMEOPTIONS 9
-int32_t gameoptions_cursor;
+static int32_t gameoptions_cursor;
 
 void M_GameOptions_Draw(void)
 {
@@ -2659,8 +2659,8 @@ void M_GameOptions_Key(int32_t key)
 //=============================================================================
 /* SEARCH MENU */
 
-bool searchComplete = false;
-double searchCompleteTime;
+static bool searchComplete = false;
+static double searchCompleteTime;
 
 void M_Menu_Search_f(void)
 {
@@ -2716,8 +2716,8 @@ void M_Search_Key(int32_t key)
 //=============================================================================
 /* SLIST MENU */
 
-int32_t slist_cursor;
-bool slist_sorted;
+static int32_t slist_cursor;
+static bool slist_sorted;
 
 void M_Menu_ServerList_f(void)
 {

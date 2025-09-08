@@ -33,16 +33,16 @@ typedef struct
     int32_t *prightedgevert2;
 } edgetable;
 
-int32_t r_p0[6], r_p1[6], r_p2[6];
+static int32_t r_p0[6], r_p1[6], r_p2[6];
 
-uint8_t *d_pcolormap;
+static uint8_t *d_pcolormap;
 
 int32_t d_aflatcolor;
-int32_t d_xdenom;
+static int32_t d_xdenom;
 
-edgetable *pedgetable;
+static edgetable *pedgetable;
 
-edgetable edgetables[12] = {
+static edgetable edgetables[12] = {
     {0, 1, r_p0, r_p2, NULL, 2, r_p0, r_p1, r_p2}, {0, 2, r_p1, r_p0, r_p2, 1, r_p1, r_p2, NULL},
     {1, 1, r_p0, r_p2, NULL, 1, r_p1, r_p2, NULL}, {0, 1, r_p1, r_p0, NULL, 2, r_p1, r_p2, r_p0},
     {0, 2, r_p0, r_p2, r_p1, 1, r_p0, r_p1, NULL}, {0, 1, r_p2, r_p1, NULL, 1, r_p2, r_p0, NULL},
@@ -51,24 +51,48 @@ edgetable edgetables[12] = {
     {1, 1, r_p1, r_p0, NULL, 1, r_p2, r_p0, NULL}, {0, 1, r_p0, r_p2, NULL, 1, r_p0, r_p1, NULL},
 };
 
-// FIXME: some of these can become statics
-int32_t a_sstepxfrac, a_tstepxfrac, r_lstepx, a_ststepxwhole;
-int32_t r_sstepx, r_tstepx, r_lstepy, r_sstepy, r_tstepy;
-int32_t r_zistepx, r_zistepy;
-int32_t d_aspancount, d_countextrastep;
+static int32_t a_sstepxfrac;
+static int32_t a_tstepxfrac;
+static int32_t r_lstepx;
+static int32_t a_ststepxwhole;
+static int32_t r_sstepx;
+static int32_t r_tstepx;
+static int32_t r_lstepy;
+static int32_t r_sstepy;
+static int32_t r_tstepy;
+static int32_t r_zistepx;
+static int32_t r_zistepy;
+static int32_t d_aspancount;
+static int32_t d_countextrastep;
 
-spanpackage_t *a_spans;
-spanpackage_t *d_pedgespanpackage;
+static spanpackage_t *a_spans;
+static spanpackage_t *d_pedgespanpackage;
+
 static int32_t ystart;
-uint8_t *d_pdest, *d_ptex;
-int16_t *d_pz;
-int32_t d_sfrac, d_tfrac, d_light, d_zi;
-int32_t d_ptexextrastep, d_sfracextrastep;
-int32_t d_tfracextrastep, d_lightextrastep, d_pdestextrastep;
-int32_t d_lightbasestep, d_pdestbasestep, d_ptexbasestep;
-int32_t d_sfracbasestep, d_tfracbasestep;
-int32_t d_ziextrastep, d_zibasestep;
-int32_t d_pzextrastep, d_pzbasestep;
+
+static uint8_t *d_pdest;
+static uint8_t *d_ptex;
+
+static int16_t *d_pz;
+
+static int32_t d_sfrac;
+static int32_t d_tfrac;
+static int32_t d_light;
+static int32_t d_zi;
+static int32_t d_ptexextrastep;
+static int32_t d_sfracextrastep;
+static int32_t d_tfracextrastep;
+static int32_t d_lightextrastep;
+static int32_t d_pdestextrastep;
+static int32_t d_lightbasestep;
+static int32_t d_pdestbasestep;
+static int32_t d_ptexbasestep;
+static int32_t d_sfracbasestep;
+static int32_t d_tfracbasestep;
+static int32_t d_ziextrastep;
+static int32_t d_zibasestep;
+static int32_t d_pzextrastep;
+static int32_t d_pzbasestep;
 
 typedef struct
 {
@@ -80,9 +104,9 @@ static adivtab_t adivtab[32 * 32] = {
 #include "adivtab.h"
 };
 
-uint8_t *skintable[MAX_LBM_HEIGHT];
+static uint8_t *skintable[MAX_LBM_HEIGHT];
 int32_t skinwidth;
-uint8_t *skinstart;
+static uint8_t *skinstart;
 
 void D_PolysetDrawSpans8(spanpackage_t *pspanpackage);
 void D_PolysetCalcGradients(int32_t skinwidth);

@@ -21,10 +21,10 @@ bool host_initialized; // true if into command execution
 double host_frametime;
 double host_time;
 double realtime;    // without any filtering or bounding
-double oldrealtime; // last frame run
+static double oldrealtime; // last frame run
 int32_t host_framecount;
 
-int32_t host_hunklevel;
+static int32_t host_hunklevel;
 
 int32_t minimum_memory;
 
@@ -35,18 +35,18 @@ jmp_buf host_abortserver;
 uint8_t *host_basepal;
 uint8_t *host_colormap;
 
-cvar_t host_framerate = {"host_framerate", "0"}; // set for slow motion
-cvar_t host_speeds = {"host_speeds", "0"};       // set for running times
+static cvar_t host_framerate = {"host_framerate", "0"}; // set for slow motion
+static cvar_t host_speeds = {"host_speeds", "0"};       // set for running times
 
 cvar_t sys_ticrate = {"sys_ticrate", "0.05"};
-cvar_t serverprofile = {"serverprofile", "0"};
+static cvar_t serverprofile = {"serverprofile", "0"};
 
 cvar_t fraglimit = {"fraglimit", "0", false, true};
 cvar_t timelimit = {"timelimit", "0", false, true};
 cvar_t teamplay = {"teamplay", "0", false, true};
 
-cvar_t samelevel = {"samelevel", "0"};
-cvar_t noexit = {"noexit", "0", false, true};
+static cvar_t samelevel = {"samelevel", "0"};
+static cvar_t noexit = {"noexit", "0", false, true};
 
 cvar_t developer = {"developer", "0"};
 
@@ -56,7 +56,7 @@ cvar_t coop = {"coop", "0"};             // 0 or 1
 
 cvar_t pausable = {"pausable", "1"};
 
-cvar_t temp1 = {"temp1", "0"};
+static cvar_t temp1 = {"temp1", "0"};
 
 /*
 ================

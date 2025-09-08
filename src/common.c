@@ -16,13 +16,13 @@ static char *safeargvs[NUM_SAFE_ARGVS] = {"-stdvid", "-nolan",   "-nosound", "-n
                                           "-nojoy",  "-nomouse", "-dibonly"};
 
 cvar_t registered = {"registered", "0"};
-cvar_t cmdline = {"cmdline", "0", false, true};
+static cvar_t cmdline = {"cmdline", "0", false, true};
 
-bool com_modified; // set true if using non-id files
+static bool com_modified; // set true if using non-id files
 
-bool proghack;
+static bool proghack;
 
-int32_t static_registered = 1; // only for startup check, then set
+static int32_t static_registered = 1; // only for startup check, then set
 
 bool msg_suppress_1 = 0;
 
@@ -37,12 +37,12 @@ int32_t com_argc;
 char **com_argv;
 
 #define CMDLINE_LENGTH 256
-char com_cmdline[CMDLINE_LENGTH];
+static char com_cmdline[CMDLINE_LENGTH];
 
 bool standard_quake = true, rogue, hipnotic;
 
 // this graphic needs to be in the pak file to use registered features
-uint16_t pop[] = {0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x6600, 0x0000,
+static uint16_t pop[] = {0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x6600, 0x0000,
                   0x0000, 0x0000, 0x6600, 0x0000, 0x0000, 0x0066, 0x0000, 0x0000, 0x0000, 0x0000, 0x0067, 0x0000,
                   0x0000, 0x6665, 0x0000, 0x0000, 0x0000, 0x0000, 0x0065, 0x6600, 0x0063, 0x6561, 0x0000, 0x0000,
                   0x0000, 0x0000, 0x0061, 0x6563, 0x0064, 0x6561, 0x0000, 0x0000, 0x0000, 0x0000, 0x0061, 0x6564,
@@ -733,7 +733,7 @@ typedef struct
 
 #define MAX_FILES_IN_PACK 2048
 
-char com_cachedir[MAX_OSPATH];
+static char com_cachedir[MAX_OSPATH];
 char com_gamedir[MAX_OSPATH];
 
 typedef struct searchpath_s
@@ -743,7 +743,7 @@ typedef struct searchpath_s
     struct searchpath_s *next;
 } searchpath_t;
 
-searchpath_t *com_searchpaths;
+static searchpath_t *com_searchpaths;
 
 /*
 ============
@@ -1019,9 +1019,9 @@ Filename are reletive to the quake directory.
 Allways appends a 0 uint8_t.
 ============
 */
-cache_user_t *loadcache;
-uint8_t *loadbuf;
-int32_t loadsize;
+static cache_user_t *loadcache;
+static uint8_t *loadbuf;
+static int32_t loadsize;
 uint8_t *COM_LoadFile(char *path, int32_t usehunk)
 {
     int32_t h;

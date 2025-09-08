@@ -4,11 +4,12 @@
 #include "d_local.h"
 #include "r_local.h"
 
-float surfscale;
+static float surfscale;
 bool r_cache_thrash; // set if surface cache is thrashing
 
-int32_t sc_size;
-surfcache_t *sc_rover, *sc_base;
+static int32_t sc_size;
+surfcache_t *sc_rover;
+static surfcache_t *sc_base;
 
 #define GUARDSIZE 4
 
