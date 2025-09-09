@@ -1,6 +1,6 @@
 // snd_raylib.c
+#include <raylib.h>
 #include "quakedef.h"
-#include "raylib.h"
 
 static dma_t the_shm;
 static int32_t snd_inited;

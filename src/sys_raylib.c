@@ -5,9 +5,9 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <raylib.h>
 
 #include "quakedef.h"
-#include "raylib.h"
 
 bool isDedicated;
 char *basedir = ".";

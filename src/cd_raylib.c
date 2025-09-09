@@ -1,6 +1,5 @@
-// cd_raylib.c
+#include <raylib.h>
 #include "quakedef.h"
-#include "raylib.h"
 
 static Music music = (Music){ 0 };
 
