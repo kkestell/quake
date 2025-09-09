@@ -16,6 +16,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stddef.h>
 #include <setjmp.h>
 
 void VID_LockBuffer(void);

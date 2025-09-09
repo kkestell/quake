@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include <raylib.h>
 #include "quakedef.h"
 #include "d_local.h"
@@ -67,7 +68,7 @@ void VID_Init(unsigned char *palette)
     }
 
     InitWindow(window_width, window_height, "Quake");
-    SetTargetFPS(60);
+    // SetTargetFPS(60);
 
     image8bpp.data = MemAlloc(vid.width * vid.height);
     image8bpp.width = vid.width;

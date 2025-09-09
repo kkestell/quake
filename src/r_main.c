@@ -1,9 +1,5 @@
-// r_main.c
-
 #include "quakedef.h"
 #include "r_local.h"
-
-// define	PASSAGES
 
 void *colormap;
 static vec3_t viewlightvec;
@@ -72,10 +68,6 @@ int32_t d_spanpixcount;
 int32_t r_polycount;
 int32_t r_drawnpolycount;
 int32_t r_wholepolycount;
-
-#define VIEWMODNAME_LENGTH 256
-static char viewmodname[VIEWMODNAME_LENGTH + 1];
-static int32_t modcount;
 
 int32_t *pfrustum_indexes[4];
 int32_t r_frustum_indexes[4 * 6];
@@ -966,20 +958,19 @@ void R_RenderView_(void)
 void R_RenderView(void)
 {
     int32_t dummy;
-    int32_t delta;
+    ptrdiff_t delta = (uint8_t *)&dummy - r_stack_start;
 
-    delta = (uint8_t *)&dummy - r_stack_start;
     if (delta < -10000 || delta > 10000)
         Sys_Error("R_RenderView: called without enough stack");
 
     if (Hunk_LowMark() & 3)
-        Sys_Error("Hunk is missaligned");
+        Sys_Error("Hunk is misaligned");
 
-    if ((int32_t)(&dummy) & 3)
-        Sys_Error("Stack is missaligned");
+    if (((uintptr_t)&dummy) & 3u)
+        Sys_Error("Stack is misaligned");
 
-    if ((int32_t)(&r_warpbuffer) & 3)
-        Sys_Error("Globals are missaligned");
+    if (((uintptr_t)&r_warpbuffer) & 3u)
+        Sys_Error("Globals are misaligned");
 
     R_RenderView_();
 }

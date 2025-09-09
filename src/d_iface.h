@@ -154,7 +154,7 @@ void D_StartParticles(void);
 void D_TurnZOn(void);
 void D_WarpScreen(void);
 
-void D_FillRect(vrect_t *vrect, int32_t color);
+void D_FillRect(const vrect_t *vrect, int32_t color);
 void D_DrawRect(void);
 void D_UpdateRects(vrect_t *prect);
 

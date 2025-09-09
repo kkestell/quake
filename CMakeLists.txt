@@ -17,6 +17,7 @@ target_compile_options(quake PRIVATE
         -fno-omit-frame-pointer
         -Wno-implicit-function-declaration
         -fcommon
+        -ffast-math
 )
 
 # Use the variables from find_path and find_library
