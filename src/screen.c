@@ -10,25 +10,25 @@ int32_t scr_copyeverything;
 float scr_con_current;
 float scr_conlines; // lines of console to display
 
-float oldscreensize, oldfov;
+static float oldscreensize, oldfov;
 cvar_t scr_viewsize = {"viewsize", "100", true};
 cvar_t scr_fov = {"fov", "90"}; // 10 - 170
-cvar_t scr_conspeed = {"scr_conspeed", "300"};
-cvar_t scr_centertime = {"scr_centertime", "2"};
-cvar_t scr_showram = {"showram", "1"};
-cvar_t scr_showturtle = {"showturtle", "0"};
-cvar_t scr_showpause = {"showpause", "1"};
-cvar_t scr_printspeed = {"scr_printspeed", "8"};
+static cvar_t scr_conspeed = {"scr_conspeed", "300"};
+static cvar_t scr_centertime = {"scr_centertime", "2"};
+static cvar_t scr_showram = {"showram", "1"};
+static cvar_t scr_showturtle = {"showturtle", "0"};
+static cvar_t scr_showpause = {"showpause", "1"};
+static cvar_t scr_printspeed = {"scr_printspeed", "8"};
 
-bool scr_initialized; // ready to draw
+static bool scr_initialized; // ready to draw
 
-qpic_t *scr_ram;
-qpic_t *scr_net;
-qpic_t *scr_turtle;
+static qpic_t *scr_ram;
+static qpic_t *scr_net;
+static qpic_t *scr_turtle;
 
 int32_t scr_fullupdate;
 
-int32_t clearconsole;
+static int32_t clearconsole;
 int32_t clearnotify;
 
 viddef_t vid; // global video state
@@ -37,8 +37,8 @@ vrect_t *pconupdate;
 vrect_t scr_vrect;
 
 bool scr_disabled_for_loading;
-bool scr_drawloading;
-float scr_disabled_time;
+static bool scr_drawloading;
+static float scr_disabled_time;
 bool scr_skipupdate;
 
 bool block_drawing;
@@ -53,12 +53,12 @@ CENTER PRINTING
 ===============================================================================
 */
 
-char scr_centerstring[1024];
-float scr_centertime_start; // for slow victory printing
+static char scr_centerstring[1024];
+static float scr_centertime_start; // for slow victory printing
 float scr_centertime_off;
-int32_t scr_center_lines;
-int32_t scr_erase_lines;
-int32_t scr_erase_center;
+static int32_t scr_center_lines;
+static int32_t scr_erase_lines;
+static int32_t scr_erase_center;
 
 /*
 ==============
@@ -661,8 +661,8 @@ void SCR_EndLoadingPlaque(void)
 
 //=============================================================================
 
-char *scr_notifystring;
-bool scr_drawdialog;
+static char *scr_notifystring;
+static bool scr_drawdialog;
 
 void SCR_DrawNotifyString(void)
 {

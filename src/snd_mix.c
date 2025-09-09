@@ -5,10 +5,10 @@
 #define DWORD uint32_t
 
 #define PAINTBUFFER_SIZE 512
-portable_samplepair_t paintbuffer[PAINTBUFFER_SIZE];
-int32_t snd_scaletable[32][256];
-int32_t *snd_p, snd_linear_count, snd_vol;
-int16_t *snd_out;
+static portable_samplepair_t paintbuffer[PAINTBUFFER_SIZE];
+static int32_t snd_scaletable[32][256];
+static int32_t *snd_p, snd_linear_count, snd_vol;
+static int16_t *snd_out;
 
 void Snd_WriteLinearBlastStereo16(void);
 

@@ -13,7 +13,7 @@ is not a staircase.
 
 =============
 */
-int32_t c_yes, c_no;
+static int32_t c_yes, c_no;
 
 bool SV_CheckBottom(edict_t *ent)
 {

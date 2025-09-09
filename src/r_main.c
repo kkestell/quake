@@ -6,8 +6,8 @@
 // define	PASSAGES
 
 void *colormap;
-vec3_t viewlightvec;
-alight_t r_viewlighting = {128, 192, viewlightvec};
+static vec3_t viewlightvec;
+static alight_t r_viewlighting = {128, 192, viewlightvec};
 float r_time1;
 int32_t r_numallocatededges;
 bool r_drawpolys;
@@ -32,7 +32,7 @@ int32_t r_clipflags;
 
 uint8_t *r_warpbuffer;
 
-uint8_t *r_stack_start;
+static uint8_t *r_stack_start;
 
 bool r_fov_greater_than_90;
 
@@ -74,8 +74,8 @@ int32_t r_drawnpolycount;
 int32_t r_wholepolycount;
 
 #define VIEWMODNAME_LENGTH 256
-char viewmodname[VIEWMODNAME_LENGTH + 1];
-int32_t modcount;
+static char viewmodname[VIEWMODNAME_LENGTH + 1];
+static int32_t modcount;
 
 int32_t *pfrustum_indexes[4];
 int32_t r_frustum_indexes[4 * 6];
@@ -104,7 +104,7 @@ cvar_t r_clearcolor = {"r_clearcolor", "2"};
 cvar_t r_waterwarp = {"r_waterwarp", "1"};
 cvar_t r_fullbright = {"r_fullbright", "0"};
 cvar_t r_drawentities = {"r_drawentities", "1"};
-cvar_t r_drawviewmodel = {"r_drawviewmodel", "1"};
+static cvar_t r_drawviewmodel = {"r_drawviewmodel", "1"};
 cvar_t r_aliasstats = {"r_polymodelstats", "0"};
 cvar_t r_dspeeds = {"r_dspeeds", "0"};
 cvar_t r_drawflat = {"r_drawflat", "0"};
@@ -115,8 +115,8 @@ cvar_t r_numsurfs = {"r_numsurfs", "0"};
 cvar_t r_reportedgeout = {"r_reportedgeout", "0"};
 cvar_t r_maxedges = {"r_maxedges", "0"};
 cvar_t r_numedges = {"r_numedges", "0"};
-cvar_t r_aliastransbase = {"r_aliastransbase", "200"};
-cvar_t r_aliastransadj = {"r_aliastransadj", "100"};
+static cvar_t r_aliastransbase = {"r_aliastransbase", "200"};
+static cvar_t r_aliastransadj = {"r_aliastransadj", "100"};
 
 extern cvar_t scr_fov;
 

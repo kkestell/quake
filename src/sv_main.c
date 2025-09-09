@@ -5,7 +5,7 @@
 server_t sv;
 server_static_t svs;
 
-char localmodels[MAX_MODELS][5]; // inline model names for precache
+static char localmodels[MAX_MODELS][5]; // inline model names for precache
 
 //============================================================================
 
@@ -332,8 +332,8 @@ crosses a waterline.
 =============================================================================
 */
 
-int32_t fatbytes;
-uint8_t fatpvs[MAX_MAP_LEAFS / 8];
+static int32_t fatbytes;
+static uint8_t fatpvs[MAX_MAP_LEAFS / 8];
 
 void SV_AddToFatPVS(vec3_t org, mnode_t *node)
 {

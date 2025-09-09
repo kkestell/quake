@@ -115,7 +115,7 @@ LIGHT SAMPLING
 =============================================================================
 */
 
-int32_t RecursiveLightPoint(mnode_t *node, vec3_t start, vec3_t end)
+static int32_t RecursiveLightPoint(mnode_t *node, vec3_t start, vec3_t end)
 {
     int32_t r;
     float front, back, frac;

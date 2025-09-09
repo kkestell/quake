@@ -1,4 +1,3 @@
-
 #include "quakedef.h"
 
 #define RETURN_EDICT(e) (((int32_t *)pr_globals)[OFS_RETURN] = EDICT_TO_PROG(e))
@@ -621,7 +620,7 @@ void PF_checkpos(void)
 
 //============================================================================
 
-uint8_t checkpvs[MAX_MAP_LEAFS / 8];
+static uint8_t checkpvs[MAX_MAP_LEAFS / 8];
 
 int32_t PF_newcheckclient(int32_t check)
 {
@@ -688,8 +687,12 @@ it is not returned at all.
 name checkclient ()
 =================
 */
+
 #define MAX_CHECK 16
-int32_t c_invis, c_notvis;
+
+static int32_t c_invis;
+static int32_t c_notvis;
+
 void PF_checkclient(void)
 {
     edict_t *ent, *self;
@@ -858,7 +861,7 @@ void PF_dprint(void)
     Con_DPrintf("%s", PF_VarString(0));
 }
 
-char pr_string_temp[128];
+static char pr_string_temp[128];
 
 void PF_ftos(void)
 {
@@ -1484,7 +1487,7 @@ void PF_Fixme(void)
     PR_RunError("unimplemented bulitin");
 }
 
-builtin_t pr_builtin[] = {
+static builtin_t pr_builtin[] = {
     PF_Fixme,
     PF_makevectors,    // void(entity e)	makevectors 		= #1;
     PF_setorigin,      // void(entity e, vector o) setorigin	= #2;

@@ -224,7 +224,7 @@ void CL_NextDemo(void)
 CL_PrintEntities_f
 ==============
 */
-void CL_PrintEntities_f(void)
+static void CL_PrintEntities_f(void)
 {
     entity_t *ent;
     int32_t i;
@@ -249,7 +249,7 @@ SetPal
 Debugging tool, just flashes the screen
 ===============
 */
-void SetPal(int32_t i)
+static void SetPal(int32_t i)
 {
 #if 0
 	static int32_t old;
@@ -363,7 +363,7 @@ Determines the fraction between the last two messages that the objects
 should be put at.
 ===============
 */
-float CL_LerpPoint(void)
+static float CL_LerpPoint(void)
 {
     float f, frac;
 
@@ -413,7 +413,7 @@ float CL_LerpPoint(void)
 CL_RelinkEntities
 ===============
 */
-void CL_RelinkEntities(void)
+static void CL_RelinkEntities(void)
 {
     entity_t *ent;
     int32_t i, j;

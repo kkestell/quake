@@ -15,7 +15,7 @@ static fixed16_t r_turb_tstep;
 static int32_t *r_turb_turb;
 static int32_t r_turb_spancount;
 
-void D_DrawTurbulent8Span(void);
+static void D_DrawTurbulent8Span(void);
 
 /*
 =============
@@ -77,7 +77,7 @@ void D_WarpScreen(void)
 D_DrawTurbulent8Span
 =============
 */
-void D_DrawTurbulent8Span(void)
+static void D_DrawTurbulent8Span(void)
 {
     int32_t sturb, tturb;
 

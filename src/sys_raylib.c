@@ -65,7 +65,7 @@ void Sys_Warn(char *warning, ...)
 }
 
 #define MAX_HANDLES 10
-FILE *sys_handles[MAX_HANDLES];
+static FILE *sys_handles[MAX_HANDLES];
 
 int32_t findhandle(void)
 {

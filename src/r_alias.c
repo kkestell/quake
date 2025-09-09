@@ -14,13 +14,13 @@ affinetridesc_t r_affinetridesc;
 
 void *acolormap; // FIXME: should go away
 
-trivertx_t *r_apverts;
+static trivertx_t *r_apverts;
 
 // TODO: these probably will go away with optimized rasterization
 mdl_t *pmdl;
-vec3_t r_plightvec;
-int32_t r_ambientlight;
-float r_shadelight;
+static vec3_t r_plightvec;
+static int32_t r_ambientlight;
+static float r_shadelight;
 aliashdr_t *paliashdr;
 finalvert_t *pfinalverts;
 auxvert_t *pauxverts;
@@ -33,9 +33,9 @@ static maliasskindesc_t *pskindesc;
 
 int32_t r_amodels_drawn;
 int32_t a_skinwidth;
-int32_t r_anumverts;
+static int32_t r_anumverts;
 
-float aliastransform[3][4];
+static float aliastransform[3][4];
 
 typedef struct
 {

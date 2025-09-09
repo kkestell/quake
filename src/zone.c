@@ -41,7 +41,7 @@ all big things are allocated on the hunk.
 ==============================================================================
 */
 
-memzone_t *mainzone;
+static memzone_t *mainzone;
 
 void Z_ClearZone(memzone_t *zone, int32_t size);
 
@@ -245,14 +245,14 @@ typedef struct
     char name[8];
 } hunk_t;
 
-uint8_t *hunk_base;
-int32_t hunk_size;
+static uint8_t *hunk_base;
+static int32_t hunk_size;
 
-int32_t hunk_low_used;
-int32_t hunk_high_used;
+static int32_t hunk_low_used;
+static int32_t hunk_high_used;
 
-bool hunk_tempactive;
-int32_t hunk_tempmark;
+static bool hunk_tempactive;
+static int32_t hunk_tempmark;
 
 void R_FreeTextures(void);
 
@@ -526,7 +526,7 @@ typedef struct cache_system_s
 
 cache_system_t *Cache_TryAlloc(int32_t size, bool nobottom);
 
-cache_system_t cache_head;
+static cache_system_t cache_head;
 
 /*
 ===========

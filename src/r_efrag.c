@@ -15,11 +15,11 @@ mnode_t *r_pefragtopnode;
 ===============================================================================
 */
 
-efrag_t **lastlink;
+static efrag_t **lastlink;
 
 vec3_t r_emins, r_emaxs;
 
-entity_t *r_addent;
+static entity_t *r_addent;
 
 /*
 ================
@@ -67,7 +67,7 @@ void R_RemoveEfrags(entity_t *ent)
 R_SplitEntityOnNode
 ===================
 */
-void R_SplitEntityOnNode(mnode_t *node)
+static void R_SplitEntityOnNode(mnode_t *node)
 {
     efrag_t *ef;
     mplane_t *splitplane;

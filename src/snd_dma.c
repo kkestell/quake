@@ -30,32 +30,32 @@ vec3_t listener_right;
 vec3_t listener_up;
 vec_t sound_nominal_clip_dist = 1000.0;
 
-int32_t soundtime;   // sample PAIRS
+static int32_t soundtime;   // sample PAIRS
 int32_t paintedtime; // sample PAIRS
 
 #define MAX_SFX 512
-sfx_t *known_sfx; // hunk allocated [MAX_SFX]
-int32_t num_sfx;
+static sfx_t *known_sfx; // hunk allocated [MAX_SFX]
+static int32_t num_sfx;
 
-sfx_t *ambient_sfx[NUM_AMBIENTS];
+static sfx_t *ambient_sfx[NUM_AMBIENTS];
 
 int32_t desired_speed = 44100;
 int32_t desired_bits = 16;
 
-int32_t sound_started = 0;
+static int32_t sound_started = 0;
 
 cvar_t bgmvolume = {"bgmvolume", "1", true};
 cvar_t volume = {"volume", "0.7", true};
 
-cvar_t nosound = {"nosound", "0"};
-cvar_t precache = {"precache", "1"};
+static cvar_t nosound = {"nosound", "0"};
+static cvar_t precache = {"precache", "1"};
 cvar_t loadas8bit = {"loadas8bit", "0"};
-cvar_t bgmbuffer = {"bgmbuffer", "4096"};
+static cvar_t bgmbuffer = {"bgmbuffer", "4096"};
 cvar_t ambient_level = {"ambient_level", "0.3"};
-cvar_t ambient_fade = {"ambient_fade", "100"};
-cvar_t snd_noextraupdate = {"snd_noextraupdate", "0"};
-cvar_t snd_show = {"snd_show", "0"};
-cvar_t _snd_mixahead = {"_snd_mixahead", "0.1", true};
+static cvar_t ambient_fade = {"ambient_fade", "100"};
+static cvar_t snd_noextraupdate = {"snd_noextraupdate", "0"};
+static cvar_t snd_show = {"snd_show", "0"};
+static cvar_t _snd_mixahead = {"_snd_mixahead", "0.1", true};
 
 // ====================================================================
 // User-setable variables

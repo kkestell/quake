@@ -9,14 +9,14 @@
     512 // no fewer than this no matter what's
         //  on the command line
 
-int32_t ramp1[8] = {0x6f, 0x6d, 0x6b, 0x69, 0x67, 0x65, 0x63, 0x61};
-int32_t ramp2[8] = {0x6f, 0x6e, 0x6d, 0x6c, 0x6b, 0x6a, 0x68, 0x66};
-int32_t ramp3[8] = {0x6d, 0x6b, 6, 5, 4, 3};
+static int32_t ramp1[8] = {0x6f, 0x6d, 0x6b, 0x69, 0x67, 0x65, 0x63, 0x61};
+static int32_t ramp2[8] = {0x6f, 0x6e, 0x6d, 0x6c, 0x6b, 0x6a, 0x68, 0x66};
+static int32_t ramp3[8] = {0x6d, 0x6b, 6, 5, 4, 3};
 
-particle_t *active_particles, *free_particles;
+static particle_t *active_particles, *free_particles;
 
-particle_t *particles;
-int32_t r_numparticles;
+static particle_t *particles;
+static int32_t r_numparticles;
 
 vec3_t r_pright, r_pup, r_ppn;
 
@@ -53,11 +53,11 @@ R_EntityParticles
 
 #define NUMVERTEXNORMALS 162
 extern float r_avertexnormals[NUMVERTEXNORMALS][3];
-vec3_t avelocities[NUMVERTEXNORMALS];
+static vec3_t avelocities[NUMVERTEXNORMALS];
 float beamlength = 16;
 vec3_t avelocity = {23, 7, 3};
-float partstep = 0.01;
-float timescale = 0.01;
+static float partstep = 0.01;
+static float timescale = 0.01;
 
 void R_EntityParticles(entity_t *ent)
 {

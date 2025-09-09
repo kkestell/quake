@@ -4,8 +4,8 @@
 #include "r_local.h"
 #include "d_local.h"
 
-int32_t iskyspeed = 8;
-int32_t iskyspeed2 = 2;
+static int32_t iskyspeed = 8;
+static int32_t iskyspeed2 = 2;
 float skyspeed, skyspeed2;
 
 float skytime;
@@ -17,9 +17,9 @@ int32_t r_skydirect; // not used?
 
 // TODO: clean up these routines
 
-uint8_t bottomsky[128 * 131];
-uint8_t bottommask[128 * 131];
-uint8_t newsky[128 * 256]; // newsky and topsky both pack in here, 128 bytes
+static uint8_t bottomsky[128 * 131];
+static uint8_t bottommask[128 * 131];
+static uint8_t newsky[128 * 256]; // newsky and topsky both pack in here, 128 bytes
                            //  of newsky on the left of each scan, 128 bytes
                            //  of topsky on the right, because the low-level
                            //  drawers need 256-byte scan widths

@@ -15,7 +15,7 @@ static char *argvdummy = " ";
 static char *safeargvs[NUM_SAFE_ARGVS] = {"-stdvid", "-nolan",   "-nosound", "-nocdaudio",
                                           "-nojoy",  "-nomouse", "-dibonly"};
 
-cvar_t registered = {"registered", "0"};
+cvar_t registered = {"registered", "1"};
 static cvar_t cmdline = {"cmdline", "0", false, true};
 
 static bool com_modified; // set true if using non-id files
@@ -26,7 +26,7 @@ static int32_t static_registered = 1; // only for startup check, then set
 
 bool msg_suppress_1 = 0;
 
-void COM_InitFilesystem(void);
+static void COM_InitFilesystem(void);
 
 // if a packfile directory differs from this, it is assumed to be hacked
 #define PAK0_COUNT 339
@@ -423,7 +423,7 @@ void COM_StripExtension(char *in, char *out)
 COM_FileExtension
 ============
 */
-char *COM_FileExtension(char *in)
+static char *COM_FileExtension(char *in)
 {
     static char exten[8];
     const char *dot = strchr(in, '.');
@@ -584,7 +584,7 @@ int32_t COM_CheckParm(char *parm)
 }
 
 
-void COM_Path_f(void);
+static void COM_Path_f(void);
 
 /*
 ================
@@ -751,7 +751,7 @@ COM_Path_f
 
 ============
 */
-void COM_Path_f(void)
+static void COM_Path_f(void)
 {
     searchpath_t *s;
 
@@ -800,7 +800,7 @@ COM_CreatePath
 Only used for CopyFile
 ============
 */
-void COM_CreatePath(char *path)
+static void COM_CreatePath(char *path)
 {
     char *ofs;
 
@@ -823,7 +823,7 @@ Copies a file over from the net to the local cache, creating any directories
 needed.  This is for the convenience of developers using ISDN from home.
 ===========
 */
-void COM_CopyFile(char *netpath, char *cachepath)
+static void COM_CopyFile(char *netpath, char *cachepath)
 {
     int32_t in, out;
     int32_t remaining, count;
@@ -856,7 +856,7 @@ Finds the file in the search path.
 Sets com_filesize and one of handle or file
 ===========
 */
-int32_t COM_FindFile(char *filename, int32_t *handle, FILE **file)
+static int32_t COM_FindFile(char *filename, int32_t *handle, FILE **file)
 {
     searchpath_t *search;
     char netpath[MAX_OSPATH];
@@ -1019,10 +1019,12 @@ Filename are reletive to the quake directory.
 Allways appends a 0 uint8_t.
 ============
 */
+
 static cache_user_t *loadcache;
 static uint8_t *loadbuf;
 static int32_t loadsize;
-uint8_t *COM_LoadFile(char *path, int32_t usehunk)
+
+static uint8_t *COM_LoadFile(char *path, int32_t usehunk)
 {
     int32_t h;
     uint8_t *buf;
@@ -1108,7 +1110,7 @@ Loads the header and directory, adding the files at the beginning
 of the list so they override previous pack files.
 =================
 */
-pack_t *COM_LoadPackFile(char *packfile)
+static pack_t *COM_LoadPackFile(char *packfile)
 {
     dpackheader_t header;
     int32_t i;
@@ -1176,7 +1178,7 @@ Sets com_gamedir, adds the directory to the head of the path,
 then loads and adds pak1.pak pak2.pak ...
 ================
 */
-void COM_AddGameDirectory(char *dir)
+static void COM_AddGameDirectory(char *dir)
 {
     int32_t i;
     searchpath_t *search;
@@ -1218,7 +1220,7 @@ void COM_AddGameDirectory(char *dir)
 COM_InitFilesystem
 ================
 */
-void COM_InitFilesystem(void)
+static void COM_InitFilesystem(void)
 {
     int32_t i, j;
     char basedir[MAX_OSPATH];

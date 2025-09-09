@@ -172,7 +172,7 @@ void D_SpriteDrawSpans(sspan_t *pspan)
 D_SpriteScanLeftEdge
 =====================
 */
-void D_SpriteScanLeftEdge(void)
+static void D_SpriteScanLeftEdge(void)
 {
     int32_t i, v, itop, ibottom, lmaxindex;
     emitpoint_t *pvert, *pnext;
@@ -232,7 +232,7 @@ void D_SpriteScanLeftEdge(void)
 D_SpriteScanRightEdge
 =====================
 */
-void D_SpriteScanRightEdge(void)
+static void D_SpriteScanRightEdge(void)
 {
     int32_t i, v, itop, ibottom;
     emitpoint_t *pvert, *pnext;
@@ -312,7 +312,7 @@ void D_SpriteScanRightEdge(void)
 D_SpriteCalculateGradients
 =====================
 */
-void D_SpriteCalculateGradients(void)
+static void D_SpriteCalculateGradients(void)
 {
     vec3_t p_normal, p_saxis, p_taxis, p_temp1;
     float distinv;

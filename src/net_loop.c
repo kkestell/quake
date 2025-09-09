@@ -3,9 +3,9 @@
 #include "quakedef.h"
 #include "net_loop.h"
 
-bool localconnectpending = false;
-qsocket_t *loop_client = NULL;
-qsocket_t *loop_server = NULL;
+static bool localconnectpending = false;
+static qsocket_t *loop_client = NULL;
+static qsocket_t *loop_server = NULL;
 
 int32_t Loop_Init(void)
 {

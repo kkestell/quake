@@ -5,18 +5,18 @@
 
 drawsurf_t r_drawsurf;
 
-int32_t lightleft, sourcesstep, blocksize, sourcetstep;
-int32_t lightdelta, lightdeltastep;
-int32_t lightright, lightleftstep, lightrightstep, blockdivshift;
-uint32_t blockdivmask;
-void *prowdestbase;
-unsigned char *pbasesource;
-int32_t surfrowbytes; // used by ASM files
-uint32_t *r_lightptr;
-int32_t r_stepback;
-int32_t r_lightwidth;
-int32_t r_numhblocks, r_numvblocks;
-unsigned char *r_source, *r_sourcemax;
+static int32_t lightleft, sourcesstep, blocksize, sourcetstep;
+static int32_t lightdelta, lightdeltastep;
+static int32_t lightright, lightleftstep, lightrightstep, blockdivshift;
+static uint32_t blockdivmask;
+static void *prowdestbase;
+static unsigned char *pbasesource;
+static int32_t surfrowbytes; // used by ASM files
+static uint32_t *r_lightptr;
+static int32_t r_stepback;
+static int32_t r_lightwidth;
+static int32_t r_numhblocks, r_numvblocks;
+static unsigned char *r_source, *r_sourcemax;
 
 void R_DrawSurfaceBlock8_mip0(void);
 void R_DrawSurfaceBlock8_mip1(void);
@@ -26,7 +26,7 @@ void R_DrawSurfaceBlock8_mip3(void);
 static void (*surfmiptable[4])(void) = {R_DrawSurfaceBlock8_mip0, R_DrawSurfaceBlock8_mip1, R_DrawSurfaceBlock8_mip2,
                                         R_DrawSurfaceBlock8_mip3};
 
-uint32_t blocklights[18 * 18];
+static uint32_t blocklights[18 * 18];
 
 /*
 ===============

@@ -32,8 +32,8 @@ static int32_t slistLastShown;
 
 static void Slist_Send(void);
 static void Slist_Poll(void);
-PollProcedure slistSendProcedure = {NULL, 0.0, Slist_Send};
-PollProcedure slistPollProcedure = {NULL, 0.0, Slist_Poll};
+static PollProcedure slistSendProcedure = {NULL, 0.0, Slist_Send};
+static PollProcedure slistPollProcedure = {NULL, 0.0, Slist_Poll};
 
 sizebuf_t net_message;
 int32_t net_activeconnections = 0;
@@ -43,21 +43,21 @@ int32_t messagesReceived = 0;
 int32_t unreliableMessagesSent = 0;
 int32_t unreliableMessagesReceived = 0;
 
-cvar_t net_messagetimeout = {"net_messagetimeout", "300"};
+static cvar_t net_messagetimeout = {"net_messagetimeout", "300"};
 cvar_t hostname = {"hostname", "UNNAMED"};
 
-bool configRestored = false;
-cvar_t config_com_port = {"_config_com_port", "0x3f8", true};
-cvar_t config_com_irq = {"_config_com_irq", "4", true};
-cvar_t config_com_baud = {"_config_com_baud", "57600", true};
-cvar_t config_com_modem = {"_config_com_modem", "1", true};
-cvar_t config_modem_dialtype = {"_config_modem_dialtype", "T", true};
-cvar_t config_modem_clear = {"_config_modem_clear", "ATZ", true};
-cvar_t config_modem_init = {"_config_modem_init", "", true};
-cvar_t config_modem_hangup = {"_config_modem_hangup", "AT H", true};
+static bool configRestored = false;
+static cvar_t config_com_port = {"_config_com_port", "0x3f8", true};
+static cvar_t config_com_irq = {"_config_com_irq", "4", true};
+static cvar_t config_com_baud = {"_config_com_baud", "57600", true};
+static cvar_t config_com_modem = {"_config_com_modem", "1", true};
+static cvar_t config_modem_dialtype = {"_config_modem_dialtype", "T", true};
+static cvar_t config_modem_clear = {"_config_modem_clear", "ATZ", true};
+static cvar_t config_modem_init = {"_config_modem_init", "", true};
+static cvar_t config_modem_hangup = {"_config_modem_hangup", "AT H", true};
 
 int32_t vcrFile = -1;
-bool recording = false;
+static bool recording = false;
 
 // these two macros are to make the code more readable
 #define sfunc net_drivers[sock->driver]
@@ -410,7 +410,7 @@ NET_CheckNewConnections
 ===================
 */
 
-struct
+static struct
 {
     double time;
     int32_t op;
@@ -488,7 +488,7 @@ returns -1 if connection is invalid
 =================
 */
 
-struct
+static struct
 {
     double time;
     int32_t op;
@@ -574,7 +574,7 @@ returns 1 if the message was sent properly
 returns -1 if the connection died
 ==================
 */
-struct
+static struct
 {
     double time;
     int32_t op;

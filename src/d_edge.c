@@ -59,7 +59,7 @@ D_DrawSolidSurface
 
 // FIXME: clean this up
 
-void D_DrawSolidSurface(surf_t *surf, int32_t color)
+static void D_DrawSolidSurface(surf_t *surf, int32_t color)
 {
     espan_t *span;
     uint8_t *pdest;
@@ -98,7 +98,7 @@ void D_DrawSolidSurface(surf_t *surf, int32_t color)
 D_CalcGradients
 ==============
 */
-void D_CalcGradients(msurface_t *pface)
+static void D_CalcGradients(msurface_t *pface)
 {
     mplane_t *pplane;
     float mipscale;

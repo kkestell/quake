@@ -12,7 +12,7 @@
 D_Sky_uv_To_st
 =================
 */
-void D_Sky_uv_To_st(int32_t u, int32_t v, fixed16_t *s, fixed16_t *t)
+static void D_Sky_uv_To_st(int32_t u, int32_t v, fixed16_t *s, fixed16_t *t)
 {
     float wu, wv, temp;
     vec3_t end;

@@ -43,7 +43,7 @@ CL_EntityNum
 This error checks and tracks the total number of entities
 ===============
 */
-entity_t *CL_EntityNum(int32_t num)
+static entity_t *CL_EntityNum(int32_t num)
 {
     if (num >= cl.num_entities)
     {
@@ -64,7 +64,7 @@ entity_t *CL_EntityNum(int32_t num)
 CL_ParseStartSoundPacket
 ==================
 */
-void CL_ParseStartSoundPacket(void)
+static void CL_ParseStartSoundPacket(void)
 {
     vec3_t pos;
     int32_t channel, ent;
@@ -109,7 +109,7 @@ When the client is taking a long time to load stuff, send keepalive messages
 so the server doesn't disconnect.
 ==================
 */
-void CL_KeepaliveMessage(void)
+static void CL_KeepaliveMessage(void)
 {
     float time;
     static float lastmsg;
@@ -167,7 +167,7 @@ void CL_KeepaliveMessage(void)
 CL_ParseServerInfo
 ==================
 */
-void CL_ParseServerInfo(void)
+static void CL_ParseServerInfo(void)
 {
     char *str;
     int32_t i;
@@ -293,7 +293,7 @@ relinked.  Other attributes can change without relinking.
 
 static int32_t bitcounts[16];
 
-void CL_ParseUpdate(int32_t bits)
+static void CL_ParseUpdate(int32_t bits)
 {
     int32_t i;
     model_t *model;
@@ -436,7 +436,7 @@ void CL_ParseUpdate(int32_t bits)
 CL_ParseBaseline
 ==================
 */
-void CL_ParseBaseline(entity_t *ent)
+static void CL_ParseBaseline(entity_t *ent)
 {
     int32_t i;
 
@@ -458,7 +458,7 @@ CL_ParseClientdata
 Server information pertaining to this client only
 ==================
 */
-void CL_ParseClientdata(int32_t bits)
+static void CL_ParseClientdata(int32_t bits)
 {
     int32_t i, j;
 
@@ -609,7 +609,7 @@ void CL_NewTranslation(int32_t slot)
 CL_ParseStatic
 =====================
 */
-void CL_ParseStatic(void)
+static void CL_ParseStatic(void)
 {
     entity_t *ent;
     int32_t i;
@@ -638,7 +638,7 @@ void CL_ParseStatic(void)
 CL_ParseStaticSound
 ===================
 */
-void CL_ParseStaticSound(void)
+static void CL_ParseStaticSound(void)
 {
     vec3_t org;
     int32_t sound_num, vol, atten;

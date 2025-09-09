@@ -28,7 +28,7 @@ next frame.  This allows commands like:
 bind g "impulse 5 ; +attack ; wait ; -attack ; impulse 2"
 ============
 */
-void Cmd_Wait_f(void)
+static void Cmd_Wait_f(void)
 {
     cmd_wait = true;
 }
@@ -185,7 +185,7 @@ quake +prog jctest.qp +cmd amlev1
 quake -nosound +cmd amlev1
 ===============
 */
-void Cmd_StuffCmds_f(void)
+static void Cmd_StuffCmds_f(void)
 {
     int32_t i, j;
     int32_t s;
@@ -254,7 +254,7 @@ void Cmd_StuffCmds_f(void)
 Cmd_Exec_f
 ===============
 */
-void Cmd_Exec_f(void)
+static void Cmd_Exec_f(void)
 {
     char *f;
     int32_t mark;
@@ -285,7 +285,7 @@ Cmd_Echo_f
 Just prints the rest of the line to the console
 ===============
 */
-void Cmd_Echo_f(void)
+static void Cmd_Echo_f(void)
 {
     int32_t i;
 
@@ -302,7 +302,7 @@ Creates a new command that executes a command string (possibly ; seperated)
 ===============
 */
 
-char *CopyString(char *in)
+static char *CopyString(char *in)
 {
     char *out;
 
@@ -311,7 +311,7 @@ char *CopyString(char *in)
     return out;
 }
 
-void Cmd_Alias_f(void)
+static void Cmd_Alias_f(void)
 {
     cmdalias_t *a;
     char cmd[1024];

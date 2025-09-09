@@ -27,31 +27,31 @@ surf_t *surfaces, *surface_p, *surf_max;
 edge_t *newedges[MAXHEIGHT];
 edge_t *removeedges[MAXHEIGHT];
 
-espan_t *span_p, *max_span_p;
+static espan_t *span_p, *max_span_p;
 
 int32_t r_currentkey;
 
 extern int32_t screenwidth;
 
-int32_t current_iv;
+static int32_t current_iv;
 
-int32_t edge_head_u_shift20, edge_tail_u_shift20;
+static int32_t edge_head_u_shift20, edge_tail_u_shift20;
 
 static void (*pdrawfunc)(void);
 
 edge_t edge_head;
 edge_t edge_tail;
 edge_t edge_aftertail;
-edge_t edge_sentinel;
+static edge_t edge_sentinel;
 
 float fv;
 
-void R_GenerateSpans(void);
-void R_GenerateSpansBackward(void);
+static void R_GenerateSpans(void);
+static void R_GenerateSpansBackward(void);
 
-void R_LeadingEdge(edge_t *edge);
-void R_LeadingEdgeBackwards(edge_t *edge);
-void R_TrailingEdge(surf_t *surf, edge_t *edge);
+static void R_LeadingEdge(edge_t *edge);
+static void R_LeadingEdgeBackwards(edge_t *edge);
+static void R_TrailingEdge(surf_t *surf, edge_t *edge);
 
 //=============================================================================
 
@@ -262,7 +262,7 @@ void R_StepActiveU(edge_t *pedge)
 R_CleanupSpan
 ==============
 */
-void R_CleanupSpan()
+static void R_CleanupSpan()
 {
     surf_t *surf;
     int32_t iu;
@@ -295,7 +295,7 @@ void R_CleanupSpan()
 R_LeadingEdgeBackwards
 ==============
 */
-void R_LeadingEdgeBackwards(edge_t *edge)
+static void R_LeadingEdgeBackwards(edge_t *edge)
 {
     espan_t *span;
     surf_t *surf, *surf2;
@@ -374,7 +374,7 @@ void R_LeadingEdgeBackwards(edge_t *edge)
 R_TrailingEdge
 ==============
 */
-void R_TrailingEdge(surf_t *surf, edge_t *edge)
+static void R_TrailingEdge(surf_t *surf, edge_t *edge)
 {
     espan_t *span;
     int32_t iu;
@@ -415,7 +415,7 @@ void R_TrailingEdge(surf_t *surf, edge_t *edge)
 R_LeadingEdge
 ==============
 */
-void R_LeadingEdge(edge_t *edge)
+static void R_LeadingEdge(edge_t *edge)
 {
     espan_t *span;
     surf_t *surf, *surf2;
@@ -538,7 +538,7 @@ void R_LeadingEdge(edge_t *edge)
 R_GenerateSpans
 ==============
 */
-void R_GenerateSpans(void)
+static void R_GenerateSpans(void)
 {
     edge_t *edge;
     surf_t *surf;
@@ -574,7 +574,7 @@ void R_GenerateSpans(void)
 R_GenerateSpansBackward
 ==============
 */
-void R_GenerateSpansBackward(void)
+static void R_GenerateSpansBackward(void)
 {
     edge_t *edge;
 

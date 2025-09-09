@@ -6,19 +6,19 @@
 #include "quakedef.h"
 #include "r_local.h"
 
-model_t *loadmodel;
-char loadname[32]; // for hunk tags
+static model_t *loadmodel;
+static char loadname[32]; // for hunk tags
 
 void Mod_LoadSpriteModel(model_t *mod, void *buffer);
 void Mod_LoadBrushModel(model_t *mod, void *buffer);
 void Mod_LoadAliasModel(model_t *mod, void *buffer);
 model_t *Mod_LoadModel(model_t *mod, bool crash);
 
-uint8_t mod_novis[MAX_MAP_LEAFS / 8];
+static uint8_t mod_novis[MAX_MAP_LEAFS / 8];
 
 #define MAX_MOD_KNOWN 256
-model_t mod_known[MAX_MOD_KNOWN];
-int32_t mod_numknown;
+static model_t mod_known[MAX_MOD_KNOWN];
+static int32_t mod_numknown;
 
 // values for model_t's needload
 #define NL_PRESENT 0
@@ -324,7 +324,7 @@ model_t *Mod_ForName(char *name, bool crash)
 ===============================================================================
 */
 
-uint8_t *mod_base;
+static uint8_t *mod_base;
 
 /*
 =================

@@ -35,7 +35,7 @@ void CL_InitTEnts(void)
 CL_ParseBeam
 =================
 */
-void CL_ParseBeam(model_t *m)
+static void CL_ParseBeam(model_t *m)
 {
     int32_t ent;
     vec3_t start, end;
@@ -236,7 +236,7 @@ void CL_ParseTEnt(void)
 CL_NewTempEntity
 =================
 */
-entity_t *CL_NewTempEntity(void)
+static entity_t *CL_NewTempEntity(void)
 {
     entity_t *ent;
 

@@ -13,16 +13,16 @@
 static int32_t net_landriverlevel;
 
 /* statistic counters */
-int32_t packetsSent = 0;
-int32_t packetsReSent = 0;
-int32_t packetsReceived = 0;
-int32_t receivedDuplicateCount = 0;
-int32_t shortPacketCount = 0;
-int32_t droppedDatagrams;
+static int32_t packetsSent = 0;
+static int32_t packetsReSent = 0;
+static int32_t packetsReceived = 0;
+static int32_t receivedDuplicateCount = 0;
+static int32_t shortPacketCount = 0;
+static int32_t droppedDatagrams;
 
 static int32_t myDriverLevel;
 
-struct
+static struct
 {
     uint32_t length;
     uint32_t sequence;
@@ -361,7 +361,7 @@ static int32_t testDriver;
 static int32_t testSocket;
 
 static void Test_Poll(void);
-PollProcedure testPollProcedure = {NULL, 0.0, Test_Poll};
+static PollProcedure testPollProcedure = {NULL, 0.0, Test_Poll};
 
 static void Test_Poll(void)
 {
@@ -489,7 +489,7 @@ static int32_t test2Driver;
 static int32_t test2Socket;
 
 static void Test2_Poll(void);
-PollProcedure test2PollProcedure = {NULL, 0.0, Test2_Poll};
+static PollProcedure test2PollProcedure = {NULL, 0.0, Test2_Poll};
 
 static void Test2_Poll(void)
 {

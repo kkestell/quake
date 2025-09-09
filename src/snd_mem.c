@@ -2,7 +2,7 @@
 
 #include "quakedef.h"
 
-int32_t cache_full_cycle;
+static int32_t cache_full_cycle;
 
 uint8_t *S_Alloc(int32_t size);
 
@@ -139,11 +139,11 @@ WAV loading
 ===============================================================================
 */
 
-uint8_t *data_p;
-uint8_t *iff_end;
-uint8_t *last_chunk;
-uint8_t *iff_data;
-int32_t iff_chunk_len;
+static uint8_t *data_p;
+static uint8_t *iff_end;
+static uint8_t *last_chunk;
+static uint8_t *iff_data;
+static int32_t iff_chunk_len;
 
 int16_t GetLittleShort(void)
 {
